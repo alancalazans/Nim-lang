@@ -141,7 +141,7 @@ Por exemplo, podemos declarar a aceleração da gravidade como ***const g = 9.81
 
 ```nim
 const g = 35
-g = -27         # error	(1)
+g = -27         # error (1)
 
 var h = -5
 const i = h + 7 # error (2)
