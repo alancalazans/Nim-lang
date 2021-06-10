@@ -6,7 +6,7 @@ Para verificar se a instalação foi bem-sucedida, escreveremos um programa que 
 
 Em um novo arquivo de texto chamado por exemplo `helloworld.nim` precisamos escrever apenas uma linha de código:
 
-```php
+```nim
 echo "Hello World!"
 ```
 
@@ -63,13 +63,13 @@ Nim é uma linguagem de programação com tipagem estática, o que significa que
 
 Em Nim, também distinguimos valores que podem mudar, ou sofrer mutação, daqueles que não podem, mas mais sobre isso mais tarde. Podemos declarar uma variável (uma atribuição mutável) usando a palavra-chave var, apenas declarando seu nome e tipo (o valor pode ser adicionado posteriormente) usando esta sintaxe:
 
-```php
+```nim
 var <name>: <type>
 ```
 
 Se já sabemos seu valor, podemos declarar uma variável e dar a ela um valor imediatamente:
 
-```php
+```nim
 var <name>: <type> = <value>
 ```
 
@@ -80,15 +80,15 @@ Nim também possui capacidade de inferência de tipo: o compilador pode detectar
 
 Portanto, podemos atribuir uma variável sem um tipo explícito como este:
 
-```php
+```nim
 var <name> = <value>
 ```
 
 Um exemplo disso em Nim é assim:
 
 ```nim
-var a: int	# (1)  
-var b = 7		# (2)
+var a: int  # (1)  
+var b = 7   # (2)
 ```
 
 1. A variável ***a*** é do tipo ***int*** (inteiro) sem nenhum valor definido explicitamente. 
@@ -100,7 +100,7 @@ Observe, entretanto, que Nim não faz distinção entre maiúsculas e minúscula
 
 Em vez de digitar ***var*** para cada variável, várias variáveis (não necessariamente do mesmo tipo) podem ser declaradas no mesmo bloco ***var***. No Nim, os blocos são partes do código com o mesmo recuo (mesmo número de espaços antes do primeiro caractere) e o nível de recuo padrão é de dois espaços. Você verá esses blocos em todos os lugares em um programa Nim, não apenas para atribuir nomes.
 
-```php
+```nim
 var
   c = -11
   d = "Hello"
@@ -113,12 +113,12 @@ var
 
 Como as variáveis mencionadas anteriormente são mutáveis, ou seja, seu valor pode mudar (várias vezes), mas seu tipo deve permanecer o mesmo que o declarado.
 
-```php
-var f = 7	# (1)           
+```nim
+var f = 7 # (1)           
 
-f = -3		# (2)              
-f = 19		# (3)
-f = "Hello" # error	(4)  
+f = -3    # (2)              
+f = 19    # (3)
+f = "Hello" # error (4)  
 ```
 
 1. A variável ***f*** tem um valor inicial de ***7*** e seu tipo é inferido como ***int***.
@@ -139,7 +139,7 @@ O valor de uma atribuição imutável declarada com a palavra-chave ***const*** 
 
 Por exemplo, podemos declarar a aceleração da gravidade como ***const g = 9.81*** ou ***pi*** como ***const pi = 3.14***, pois sabemos seus valores de antemão e esses valores não mudarão durante a execução de nosso programa.
 
-```php
+```nim
 const g = 35
 g = -27         # error	(1)
 
@@ -157,12 +157,12 @@ Em algumas linguagens de programação, é uma prática comum ter os nomes das c
 
 Atribuições imutáveis declaradas com let não precisam ser conhecidas em tempo de compilação, seu valor pode ser definido a qualquer momento durante a execução de um programa, mas uma vez definido, seu valor não pode ser alterado.
 
-```php
+```nim
 let j = 35
-j = -27			# error (1)
+j = -27 # error (1)
 
 var k = -5
-let l = k + 7	# (2)
+let l = k + 7 # (2)
 ```
 
 1. O valor de um imutável não pode ser alterado.
@@ -186,7 +186,7 @@ A divisão inteira (divisão em que a parte fracionária é descartada) pode ser
 
 ***integers.nim***
 
-```javascript
+```nim
 let
   a = 11
   b = 4
@@ -222,7 +222,7 @@ Também podemos usar as quatro operações matemáticas básicas entre dois flut
 
 ***floats.nim***
 
-```javascript
+```nim
 let
   c = 6.75
   d = 2.25
@@ -244,7 +244,7 @@ Observe que nos exemplos de ***adição*** e ***divisão***, embora obtenhamos u
 
 A precedência das operações matemáticas é como seria de esperar: ***multiplicação*** e ***divisão*** têm prioridade mais alta do que ***adição*** e ***subtração***.
 
-```php
+```nim
 echo 2 + 3 * 4
 echo 24 - 8 / 4
 ```
@@ -258,7 +258,7 @@ echo 24 - 8 / 4
 
 Operações matemáticas entre variáveis de diferentes tipos numéricos não são possíveis no Nim e irão produzir um erro:
 
-```php
+```nim
 let
   e = 5
   f = 23.456
@@ -268,16 +268,16 @@ echo e + f   # error
 
 Os valores das variáveis precisam ser convertidos para o mesmo tipo. A conversão é direta: para converter para um inteiro, usamos a função ***int***, e para converter para um ***float***, a função ***float*** é usada.
 
-```php
+```nim
 let
   e = 5
   f = 23.987
 
 echo float(e) # (1)      
-echo int(f) # (2)        
+echo int(f)   # (2)        
 
 echo float(e) + f # (3)  
-echo e + int(f) # (4)    
+echo e + int(f)   # (4)    
 ```
 
 1. Imprimir uma versão flutuante de um inteiro e. (e permanece do tipo inteiro)
@@ -301,7 +301,7 @@ O tipo ***char*** é usado para representar um único caractere ***ASCII***.
 
 Os caracteres são escritos entre duas aspas simples ( ***'*** ). Os caracteres podem ser letras, símbolos ou dígitos únicos. Vários dígitos ou várias letras produzem um erro.
 
-```php
+```nim
 let
   h = 'z'
   i = '+'
@@ -316,13 +316,13 @@ let
 
 Podemos pensar em ***strings*** como palavras, mas elas podem conter mais de uma palavra, alguns símbolos ou dígitos.
 
-```php
+```nim
 let
   m = "word"
   n = "A sentence with interpunction."
-  o = ""	# (1)    
-  p = "32"	# (2)  
-  q = "!"	# (3)   
+  o = ""    # (1)    
+  p = "32"  # (2)  
+  q = "!"   # (3)   
 ```
 
 1. Uma ***string*** vazia.
@@ -333,7 +333,7 @@ let
 
 Se tentarmos imprimir a seguinte string:
 
-```php
+```nim
 echo "some\nim\tips"
 ```
 
@@ -355,7 +355,7 @@ Se quisermos imprimir o exemplo acima como foi escrito, temos duas possibilidade
 - Use **\\\\** em vez de **\\** para imprimir barras invertidas ou
 - Use ***strings*** brutas com sintaxe ***r '...'*** (colocando uma letra ***r*** imediatamente antes da primeira aspa), nas quais não haja caracteres de escape e nenhum significado especial: tudo é impresso como está.
 
-```php
+```nim
 echo "some\\nim\\tips"
 echo r"some\nim\tips"
 ```
@@ -373,19 +373,19 @@ Existem mais caracteres especiais do que os listados acima, e todos eles são en
 
 ***stringConcat.nim***
 
-```php
-var				# (1)                     
+```nim
+var # (1)                     
   p = "abc"
   q = "xy"
   r = 'z'
 
-p.add("def")	# (2)            
+p.add("def") # (2)            
 echo "p is now: ", p
 
-q.add(r)		# (3)                
+q.add(r) # (3)                
 echo "q is now: ", q
 
-echo "concat: ", p & q	# (4)  
+echo "concat: ", p & q  # (4)  
 
 echo "p is still: ", p
 echo "q is still: ", q
@@ -420,7 +420,7 @@ Aqui estão todos os operadores relacionais definidos para inteiros:
 
 ***relationalOperators.nim***
 
-```php
+```nim
 let
   g = 31
   h = 99
@@ -446,14 +446,14 @@ Também podemos comparar ***caracteres*** e ***strings***:
 
 ***relationalOperators.nim***
 
-```php
+```nim
 let
   i = 'a'
   j = 'd'
   k = 'Z'
 
 echo i < j
-echo i < k	# (1)  
+echo i < k # (1)  
 
 let
   m = "axyb"
@@ -461,9 +461,9 @@ let
   o = "ba"
   p = "ba "
 
-echo m < n	# (2)  
-echo n < o  # (3)
-echo o < p  # (4)
+echo m < n # (2)  
+echo n < o # (3)
+echo o < p # (4)
 ```
 
 1. Todas as letras maiúsculas vêm antes das letras minúsculas.
@@ -490,7 +490,7 @@ Operadores lógicos são usados para testar a veracidade de uma expressão que c
 
 ***logicalOperators.nim***
 
-```php
+```nim
 echo "T and T: ", true and true
 echo "T and F: ", true and false
 echo "F and F: ", false and false
@@ -536,7 +536,7 @@ Se pensarmos em nosso programa como uma estrada, podemos pensar no fluxo de cont
 
 Escritos em pseudocódigo, esses dois exemplos seriam assim:
 
-```php
+```nim
 if precoOvos < precoEsperado:
   compreOvos
 
@@ -554,9 +554,9 @@ Uma instrução ***if***, conforme mostrado acima, é a maneira mais simples de 
 
 A sintaxe Nim para escrever a instrução ***if*** é:
 
-```php
-if <condition>:		# (1)
-  <indented block>  # (2)
+```nim
+if <condition>: # (1)
+  <indented block> # (2)
 ```
 
 1. A condição deve ser do tipo booleano: uma variável booleana ou uma expressão relacional ***and*** / ***or*** lógico.
@@ -566,7 +566,7 @@ As instruções ***if*** podem ser aninhadas, ou seja, dentro de um bloco ***if*
 
 ***if.nim***
 
-```php
+```nim
 let
   a = 11
   b = 22
@@ -574,17 +574,17 @@ let
 
 if a < b:
   echo "a is smaller than b"
-  if 10*a < b:	# (1)  
+  if 10*a < b: # (1)  
     echo "not only that, a is *much* smaller than b"
 
 if b < c:
   echo "b is smaller than c"
-  if 10*b < c:	# (2)  
+  if 10*b < c: # (2)  
     echo "not only that, b is *much* smaller than c"
 
-if a+b > c:	# (3)     
+if a+b > c: # (3)     
   echo "a and b are larger than c"
-  if 1 < 100 and 321 > 123:	# (4)  
+  if 1 < 100 and 321 > 123: # (4)  
     echo "did you know that 1 is smaller than 100?"
     echo "and 321 is larger than 123! wow!"
 ```
@@ -606,7 +606,7 @@ not only that, b is *much* smaller than c
 
 ***else.nim***
 
-```php
+```nim
 let
   d = 63
   e = 2.718
@@ -637,7 +637,7 @@ O programa testa cada afirmação até encontrar uma que seja verdadeira. Depois
 
 ***elif.nim***
 
-```php
+```nim
 let
   f = 3456
   g = 7
@@ -672,7 +672,7 @@ Uma instrução ***case*** é outra maneira de escolher apenas um dos vários ca
 
 Código escrito em bloco ***if-elif*** parecido com este:
 
-```php
+```nim
 if x == 5:
   echo "Five!"
 elif x == 7:
@@ -685,7 +685,7 @@ else:
 
 Pode ser escrito com uma instrução ***case*** como esta:
 
-```php
+```nim
 case x
 of 5:
   echo "Five!"
@@ -701,7 +701,7 @@ Ao contrário da instrução ***if***, a instrução case deve cobrir todos os c
 
 ***case.nim***
 
-```php
+```nim
 let h = 'y'
 
 case h
@@ -711,7 +711,7 @@ of 'y':
   echo "You've chosen y"
 of 'z':
   echo "You've chosen z"
-else: discard	# (1)  
+else: discard # (1)  
 ```
 
 1. Mesmo que estejamos interessados em apenas três valores de ***h***, devemos incluir esta linha para cobrir todos os outros casos possíveis (todos os outros caracteres). Sem ele, o código não seria compilado.
@@ -724,7 +724,7 @@ Também podemos usar vários valores para cada ramificação se a mesma ação o
 
 ***multipleCase.nim***
 
-```php
+```nim
 let i = 7
 
 case i
@@ -755,7 +755,7 @@ Neste capítulo, conheceremos dois tipos de ***loops***:
 
 ### A sintaxe de um loop for é:
 
-```php
+```nim
 for <loopVariable> in <iterable>:
   <loop body>
 ```
@@ -774,13 +774,13 @@ Se quisermos iterar até um número (sem incluí-lo), podemos usar **`..<`**:
 
 ***for1.nim***
 
-```php
-for n in 5 .. 9:	# (1)  
+```nim
+for n in 5 .. 9: # (1)  
   echo n
 
 echo ""
 
-for n in 5 ..< 9:	# (2) 
+for n in 5 ..< 9: # (2) 
   echo n
 ```
 
@@ -804,8 +804,8 @@ Se quisermos iterar por meio de um intervalo de números com um tamanho de passo
 
 ***for2.nim***
 
-```php
-for n in countup(0, 16, 4):	# (1)  
+```nim
+for n in countup(0, 16, 4): # (1)  
   echo n
 ```
 
@@ -823,13 +823,13 @@ Para iterar por um intervalo de números onde o início é maior do que o final,
 
 ***for2.nim***
 
-```php
-for n in countdown(4, 0):	# (1)       
+```nim
+for n in countdown(4, 0): # (1)       
   echo n
 
 echo ""
 
-for n in countdown(-3, -9, 2):	# (2)  
+for n in countdown(-3, -9, 2): # (2)  
   echo n
 ```
 
@@ -853,7 +853,7 @@ Como a ***string*** é iterável, podemos usar um loop for para iterar por meio 
 
 ***for3.nim***
 
-```php
+```nim
 let word = "alphabet"
 
 for letter in word:
@@ -875,7 +875,7 @@ Se também precisarmos ter um contador de iteração (começando do zero), podem
 
 ***for3.nim***
 
-```php
+```nim
 for i, letter in word:
   echo "letter ", i, " is: ", letter
 ```
@@ -899,12 +899,12 @@ Devemos ter certeza de que o loop terminará em algum ponto e não se tornará u
 
 ***while.nim***
 
-```php
+```nim
 var a = 1
 
-while a*a < 10:		# (1) 
+while a*a < 10: # (1) 
   echo "a is: ", a
-  inc a				# (2)
+  inc a # (2)
 
 echo "final value of a: ", a
 ```
@@ -927,7 +927,7 @@ No próximo exemplo, se não houvesse uma instrução ***if*** com ***break***, 
 
 ***break.nim***
 
-```php
+```nim
 var i = 1
 
 while i < 1000:
@@ -946,7 +946,7 @@ A instrução continue inicia a próxima iteração de um loop imediatamente, se
 
 ***continue.nim***
 
-```php
+```nim
 for i in 1 .. 8:
   if (i == 3) or (i == 6):
     continue
@@ -1002,12 +1002,12 @@ O tipo de array é declarado usando array [comprimento, tipo], onde comprimento 
 
 Os elementos de uma matriz são colocados entre colchetes.
 
-```php
+```nim
 var
   a: array[3, int] = [5, 7, 9]
-  b = [5, 7, 9]			# (1)        
-  c = []  # error		  (2)      
-  d: array[7, string]	# (3) 
+  b = [5, 7, 9] # (1)        
+  c = []  # error (2)      
+  d: array[7, string] # (3) 
 ```
 
 1. Se fornecermos os valores, o comprimento e o tipo do array b são conhecidos em tempo de compilação. Embora correto, não há necessidade de declará-lo especificamente como o array a.
@@ -1016,12 +1016,12 @@ var
 
 Uma vez que o comprimento de uma matriz deve ser conhecido em tempo de compilação, isso não funcionará:
 
-```php
+```nim
 const m = 3
 let n = 5
 
 var a: array[m, char]
-var b: array[n, char] # error	(1) 
+var b: array[n, char] # error (1) 
 ```
 
 1. Isso produz um erro porque n é declarado usando let - seu valor não é conhecido em tempo de compilação. Só podemos usar valores declarados com const como um parâmetro de comprimento para uma inicialização de array.
@@ -1032,10 +1032,10 @@ Sequências são contêineres semelhantes a arrays, mas seu comprimento não pre
 
 Os elementos de uma sequência são colocados entre **@ [** e **]**.
 
-```php
+```nim
 var
-  e1: seq[int] = @[]	# (1)   
-  f = @["abc", "def"]	# (2)  
+  e1: seq[int] = @[] # (1)   
+  f = @["abc", "def"] # (2)  
 ```
 
 1. O tipo de uma sequência vazia deve ser declarado.
@@ -1043,9 +1043,9 @@ var
 
 Outra maneira de inicializar uma sequência vazia é chamar o procedimento newSeq. Veremos mais chamadas de procedimento no próximo capítulo, mas por enquanto apenas saiba que esta também é uma possibilidade:
 
-```php
+```nim
 var
-  e = newSeq[int]()		# (1) 
+  e = newSeq[int]() # (1) 
 ```
 
 1. Fornecer o parâmetro de tipo entre colchetes permite que o procedimento saiba que deve retornar uma sequência de um determinado tipo.
@@ -1055,15 +1055,15 @@ Podemos adicionar novos elementos a uma sequência com a função add, semelhant
 
 ***seq.nim***
 
-```php
+```nim
 var
   g = @['x', 'y']
   h = @['1', '2', '3']
 
-g.add('z')	# (1)  
+g.add('z') # (1)  
 echo g
 
-h.add(g)	# (2)    
+h.add(g) # (2)    
 echo h
 ```
 
@@ -1077,7 +1077,7 @@ echo h
 
 Tentar passar tipos diferentes para as sequências existentes produzirá um erro:
 
-```php
+```nim
 var i = @[9, 8, 7]
 
 i.add(9.81) # error (1) 
@@ -1089,7 +1089,7 @@ g.add(i)    # error (2)
 
 Como as sequências podem variar em comprimento, precisamos encontrar uma maneira de obter seu comprimento, para isso podemos usar a função ***len***.
 
-```php
+```nim
 var i = @[9, 8, 7]
 echo i.len
 
@@ -1114,11 +1114,11 @@ A sintaxe para indexação é **`<container>[<index>]`**.
 
 ***indexing.nim***
 
-```php
+```nim
 let j = ['a', 'b', 'c', 'd', 'e']
 
-echo j[1]	# (1)   
-echo j[^1]	# (2)  
+echo j[1] # (1)   
+echo j[^1] # (2)  
 ```
 
 1. Indexação baseada em zero: o elemento no índice 1 é b.
@@ -1137,7 +1137,7 @@ A sintaxe para fatiar é **`<container>[<start> .. <stop>]`**.
 
 ***indexing.nim***
 
-```php
+```nim
 echo j[0 .. 3]
 echo j[0 ..< 3]
 ```
@@ -1151,20 +1151,20 @@ Tanto a indexação quanto o fracionamento podem ser usados para atribuir novos 
 
 ***assign.nim***
 
-```php
+```nim
 var
   k: array[5, int]
   l = @['p', 'w', 'r']
   m = "Tom and Jerry"
 
-for i in 0 .. 4:	# (1)  
+for i in 0 .. 4: # (1)  
   k[i] = 7 * i
 echo k
 
-l[1] = 'q'			# (2)        
+l[1] = 'q' # (2)        
 echo l
 
-m[8 .. 9] = "Ba"	# (3)  
+m[8 .. 9] = "Ba" # (3)  
 echo m
 ```
 
@@ -1186,8 +1186,8 @@ Os elementos de uma tupla são colocados entre parênteses.
 
 ***tuples.nim***
 
-```php
-let n = ("Banana", 2, 'c')	# (1)  
+```nim
+let n = ("Banana", 2, 'c') # (1)  
 echo n
 ```
 
@@ -1201,11 +1201,11 @@ Também podemos nomear cada campo em uma tupla para distingui-los. Isso pode ser
 
 ***tuples.nim***
 
-```php
+```nim
 var o = (name: "Banana", weight: 2, rating: 'c')
 
-o[1] = 7			# (1)          
-o.name = "Apple"	# (2)  
+o[1] = 7 # (1)          
+o.name = "Apple" # (2)  
 echo o
 ```
 
@@ -1271,10 +1271,10 @@ O corpo de um procedimento é escrito no bloco recuado seguindo a declaração a
 
 ***callProcs.nim***
 
-```php
-proc findMax(x: int, y: int): int =		# (1)  
+```nim
+proc findMax(x: int, y: int): int = # (1)  
   if x > y:
-    return x	# (2)  
+    return x # (2)  
   else:
     return y
   # this is inside of the procedure
@@ -1284,8 +1284,8 @@ proc findMax(x: int, y: int): int =		# (1)
 1. Procedimento de declaração denominado findMax, que possui dois parâmetros, x e y, e retorna um tipo int.
 2. Para retornar um valor de um procedimento, usamos a palavra-chave return.
 
-```php
-proc echoLanguageRating(language: string) =		# (1) 
+```nim
+proc echoLanguageRating(language: string) = # (1) 
   case language
   of "Nim", "nim", "NIM":
     echo language, " is the best language!"
@@ -1297,7 +1297,7 @@ proc echoLanguageRating(language: string) =		# (1)
 
 Normalmente não temos permissão para alterar nenhum dos parâmetros que recebemos. Fazer algo assim gerará um erro:
 
-```php
+```nim
 proc changeArgument(argument: int) =
   argument += 5
 
@@ -1307,8 +1307,8 @@ changeArgument(ourVariable)
 
 Para que isso funcione, precisamos permitir que Nim e o programador usando nosso procedimento alterem o argumento declarando-o como uma variável:
 
-```php
-proc changeArgument(argument: var int) =	# (1) 
+```nim
+proc changeArgument(argument: var int) = # (1) 
   argument += 5
 
 var ourVariable = 10
@@ -1324,12 +1324,12 @@ Isso, é claro, significa que o nome que passamos deve ser declarado também com
 
 Embora seja uma boa prática passar as coisas como argumentos, também é possível usar nomes declarados fora do procedimento, tanto variáveis quanto constantes:
 
-```php
+```nim
 var x = 100
 
 proc echoX() =
-  echo x	# (1)  
-  x += 1	# (2)  
+  echo x # (1)  
+  x += 1 # (2)  
 
 echoX()
 echoX()
@@ -1357,11 +1357,11 @@ Se quisermos chamar nosso procedimento findMax do exemplo acima e salvar o valor
 
 ***callProcs.nim***
 
-```php
+```nim
 let
   a = findMax(987, 789)
   b = findMax(123, 321)
-  c = findMax(a, b)		# (1)  
+  c = findMax(a, b) # (1)  
 
 echo a
 echo b
@@ -1400,8 +1400,8 @@ A sintaxe de chamada uniforme permite um encadeamento mais legível de vários p
 
 ***ufcs.nim***
 
-```php
-proc plus(x, y: int): int =		# (1)  
+```nim
+proc plus(x, y: int): int = # (1)  
   return x + y
 
 proc multi(x, y: int): int =
@@ -1416,8 +1416,8 @@ echo a.plus(b) == plus(a, b)
 echo c.multi(a) == multi(c, a)
 
 
-echo a.plus(b).multi(c)		# (2)  
-echo c.multi(b).plus(a)		# (3)  
+echo a.plus(b).multi(c) # (2)  
+echo c.multi(b).plus(a) # (3)  
 ```
 
 1. Se vários parâmetros forem do mesmo tipo, podemos declarar seu tipo desta forma compacta.
@@ -1437,12 +1437,12 @@ No Nim, todo procedimento que retorna um valor tem uma variável de resultado de
 
 ***result.nim***
 
-```php
-proc findBiggest(a: seq[int]): int =	# (1)  
+```nim
+proc findBiggest(a: seq[int]): int = # (1)  
   for number in a:
     if number > result:
       result = number
-  # the end of proc						  (2)                   
+  # the end of proc (2)                   
 
 let d = @[3, -5, 11, 33, 7, -15]
 echo findBiggest(d)
@@ -1461,9 +1461,9 @@ Observe que este procedimento serve para demonstrar a variável ***result***, e 
 
 ***result.nim***
 
-```php
+```nim
 proc keepOdds(a: seq[int]): seq[int] =
-  # result = @[]						(1)          
+  # result = @[] (1)          
   for number in a:
     if number mod 2 == 1:
       result.add(number)
@@ -1484,14 +1484,14 @@ Dentro de um procedimento, também podemos chamar outros procedimentos.
 
 ***filterOdds.nim***
 
-```php
+```nim
 proc isDivisibleBy3(x: int): bool =
   return x mod 3 == 0
 
 proc filterMultiplesOf3(a: seq[int]): seq[int] =
-  # result = @[]				  (1)            
+  # result = @[] (1)            
   for i in a:
-    if i.isDivisibleBy3():		# (2)  
+    if i.isDivisibleBy3(): # (2)  
       result.add(i)
 
 
@@ -1502,7 +1502,7 @@ let
 
 echo filterMultiplesOf3(g)
 echo h.filterMultiplesOf3()
-echo filterMultiplesOf3 i		# (3)
+echo filterMultiplesOf3 i # (3)
 ```
 
 1. Mais uma vez, esta linha não é necessária nas versões mais recentes do Nim.
@@ -1519,10 +1519,10 @@ echo filterMultiplesOf3 i		# (3)
 
 Conforme mencionado no início desta seção, podemos declarar um procedimento sem um bloco de código. A razão para isso é que temos que declarar os procedimentos antes de podermos chamá-los, fazer isso não funcionará:
 
-```php
-echo 5.plus(10) # error			  (1)      
+```nim
+echo 5.plus(10) # error (1)      
 
-proc plus(x, y: int): int =		# (2)  
+proc plus(x, y: int): int = # (2)  
   return x + y
 ```
 
@@ -1531,12 +1531,12 @@ proc plus(x, y: int): int =		# (2)
 
 A maneira de contornar isso é chamada de declaração de encaminhamento:
 
-```php
-proc plus(x, y: int): int		# (1)    
+```nim
+proc plus(x, y: int): int # (1)    
 
-echo 5.plus(10)					# (2)              
+echo 5.plus(10) # (2)              
 
-proc plus(x, y: int): int =		# (3)  
+proc plus(x, y: int): int = # (3)  
   return x + y
 ```
 
@@ -1575,16 +1575,16 @@ Se quisermos importar um módulo e todas as suas funcionalidades, basta colocar 
 
 ***stringutils.nim***
 
-```php
-import strutils		# (1)       
+```nim
+import strutils # (1)       
 
 let
   a = "My string with whitespace."
   b = '!'
 
-echo a.split()				# (2)        
-echo a.toUpperAscii()		# (3) 
-echo b.repeat(5)			# (4)      
+echo a.split() # (2)        
+echo a.toUpperAscii() # (3) 
+echo b.repeat(5) # (4)      
 ```
 
 1. Importando ***strutils***.
@@ -1602,17 +1602,17 @@ MY STRING WITH WHITESPACE.
 
 ***maths.nim***
 
-```php
-import math						# (1)                 
+```nim
+import math # (1)                 
 
 let
   c = 30.0 # degrees
-  cRadians = c.degToRad()		# (2)   
+  cRadians = c.degToRad() # (2)   
 
 echo cRadians
-echo sin(cRadians).round(2)		# (3) 
+echo sin(cRadians).round(2) # (3) 
 
-echo 2^5						# (4)                    
+echo 2^5 # (4)                    
 ```
 
 1. Importando ***math***.
@@ -1632,11 +1632,11 @@ Freqüentemente, temos tanto código em um projeto que faz sentido dividi-lo em 
 
 ***firstFile.nim***
 
-```php
-proc plus*(a, b: int): int =	# (1) 
+```nim
+proc plus*(a, b: int): int = # (1) 
   return a + b
 
-proc minus(a, b: int): int =	# (2) 
+proc minus(a, b: int): int = # (2) 
   return a - b
 ```
 
@@ -1645,11 +1645,11 @@ proc minus(a, b: int): int =	# (2)
 
 ***secondFile.nim***
 
-```php
-import firstFile			# (1)          
+```nim
+import firstFile # (1)          
 
-echo plus(5, 10)			# (2)          
-echo minus(10, 5) # error	  (3) 
+echo plus(5, 10) # (2)          
+echo minus(10, 5) # error (3) 
 ```
 
 1. Aqui, importamos ***firstFile.nim***. Não precisamos colocar a extensão ***.nim*** aqui.
@@ -1673,7 +1673,7 @@ Se você quiser importar todos os outros arquivos em seu ***secondFile.nim***, f
 
 ***secondFile.nim***
 
-```javascript
+```nim
 import firstFile
 import mySubdir/thirdFile
 import myOtherSubdir / [fourthFile, fifthFile]
@@ -1699,25 +1699,25 @@ Carol C.
 
 ***readFromFile.nim***
 
-```php
+```nim
 import strutils
 
-let contents = readFile("people.txt")	# (1) 
+let contents = readFile("people.txt") # (1) 
 echo contents
 
-let people = contents.splitLines()      # (2)
+let people = contents.splitLines() # (2)
 echo people
 ```
 
 1. Para ler o conteúdo de um arquivo, usamos o procedimento ***readFile*** e fornecemos um caminho para o arquivo a ser lido (se o arquivo estiver no mesmo diretório de nosso programa Nim, basta fornecer um nome de arquivo). O resultado é uma ***string*** multilinha.
 2. Para dividir uma ***string*** multilinha em uma sequência de ***strings*** (cada string contém todo o conteúdo de uma única linha), usamos ***splitLines*** do módulo ***strutils***.
 
-```perl
+```nim
 Alice A.
 Bob B.
 Carol C.
             # (1)
-@["Alice A.", "Bob B.", "Carol C.", ""]  # (2)
+@["Alice A.", "Bob B.", "Carol C.", ""] # (2)
 ```
 
 1. Havia uma nova linha final (última linha vazia) no arquivo original, que também está presente aqui.
@@ -1727,10 +1727,10 @@ Para resolver o problema de uma nova linha final, podemos usar o procedimento de
 
 ***readFromFile2.nim***
 
-```javascript
+```nim
 import strutils
 
-let contents = readFile("people.txt").strip()	# (1) 
+let contents = readFile("people.txt").strip() # (1) 
 echo contents
 
 let people = contents.splitLines()
@@ -1752,9 +1752,9 @@ Se quisermos interagir com um usuário, devemos ser capazes de pedir-lhe uma ent
 
 ***interaction1.nim***
 
-```php
+```nim
 echo "Please enter your name:"
-let name = readLine(stdin)	# (1)  
+let name = readLine(stdin) # (1)  
 
 echo "Hello ", name, ", nice to meet you!"
 ```
@@ -1780,11 +1780,11 @@ A leitura de um arquivo ou de uma entrada do usuário sempre fornece uma ***stri
 
 ***interaction2.nim***
 
-```php
+```nim
 import strutils
 
 echo "Please enter your year of birth:"
-let yearOfBirth = readLine(stdin).parseInt()	# (1) 
+let yearOfBirth = readLine(stdin).parseInt() # (1) 
 
 let age = 2018 - yearOfBirth
 
@@ -1815,16 +1815,16 @@ E queremos ler esse arquivo e encontrar a soma e a média dos números fornecido
 
 ***interaction3.nim***
 
-```php
-import strutils, sequtils, math		# (1)        
+```nim
+import strutils, sequtils, math # (1)        
 
 let
-  strNums = readFile("numbers.txt").strip().splitLines()	# (2)  
-  nums = strNums.map(parseFloat)	# (3)       
+  strNums = readFile("numbers.txt").strip().splitLines() # (2)  
+  nums = strNums.map(parseFloat) # (3)       
 
 let
-  sumNums = sum(nums)	# (4)                  
-  average = sumNums / float(nums.len)	# (5)  
+  sumNums = sum(nums) # (4)                  
+  average = sumNums / float(nums.len) # (5)  
 
 echo sumNums
 echo average
