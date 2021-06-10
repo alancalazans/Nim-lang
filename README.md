@@ -86,9 +86,9 @@ var <name> = <value>
 
 Um exemplo disso em Nim é assim:
 
-```php
+```nim
 var a: int	# (1)  
-var b = 7   # (2)
+var b = 7		# (2)
 ```
 
 1. A variável ***a*** é do tipo ***int*** (inteiro) sem nenhum valor definido explicitamente. 
