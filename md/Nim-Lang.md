@@ -316,3 +316,77 @@ else:
 
 ## Loops
 
+### *for*
+
+```python
+for n in 5 .. 9: # [5, 9]
+  echo n # Em cada linha: 5, 6, 7, 8, 9
+echo "---"
+for n in 5 ..< 9: # [5, 9[
+  echo n # Em cada linha: 5, 6, 7, 8
+echo "---"
+for n in countup(0, 16, 4): # [0, 16] de 4 em 4
+  echo n # Em cada linha: 0, 4, 8, 12, 16
+echo "---"
+for n in countdown(4, 0): # [4, 0]
+  echo n # Em cada linha: 4, 3, 2, 1, 0
+echo "---"
+for n in countdown(-3, -9, 2): # [-3, -9] de 2 em 2
+  echo n # Em cada linha: -3, -5, -7, -9
+echo "---"
+let palavra = "alfabeto"
+for letra in palavra:
+  echo letra # Em cada linha: a, l, f, a, b, e, t, o
+echo "---"
+# for incluindo contador (i)
+for i, letra in palavra:
+  echo "letra ", i, " é: ", letra # letra 0 é: a
+                                  # letra 1 é: l
+                                  # letra 2 é: f
+                                  # letra 3 é: a
+                                  # letra 4 é: b
+                                  # letra 5 é: e
+                                  # letra 6 é: t
+                                  # letra 7 é: o
+```
+
+### *while*
+
+```python
+var a = 1
+while a*a < 10:
+  echo "a é: ", a # a é: 1
+                  # a é: 2
+                  # a é: 3
+  inc a # incremento de a, poderia ser:
+        # a = a + 1 ou a += 1
+echo "valor final de a: ", a # valor final de a: 4
+```
+
+## break e continue
+
+### *break*
+
+```python
+var i = 1
+while i < 1000:
+  if i == 3:
+    break
+  echo i # 1
+         # 2
+  inc i
+```
+
+### *continue*
+
+```nim
+for i in 1 .. 5:
+  if (i == 2) or (i == 4):
+    continue
+  echo i # 1
+         # 3
+         # 5
+```
+
+## Containers
+
