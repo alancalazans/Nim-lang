@@ -6,7 +6,7 @@
 
 *ola.nim*
 
-```python
+```php
 echo "Olá Mundo!"
 ```
 
@@ -28,7 +28,7 @@ Olá Mundo!
 
 ## Variáveis e Constantes
 
-```python
+```php
 # ---
 # Variáveis mutáveis.
 # Tipagem estática:
@@ -77,7 +77,7 @@ echo 4 * porcento # 0.04
 
 **Inteiros:**
 
-```python
+```php
 # Underline (_) pode ser usado para separar milhares
 var dezMilhoes = 10_000_000
 echo dezMilhoes # 10000000
@@ -94,7 +94,7 @@ echo "a mod b = ", a mod b # a mod b = 3
 
 **Flutuantes:**
 
-```python
+```php
 # 2e3 = 2*10³
 echo 2e3 # 2000.0
 # Operadores 'div' e 'mod' não
@@ -114,7 +114,7 @@ echo 24 - 8 / 4 # 22.0
 
 ## Convertendo floats e inteiros
 
-```python
+```php
 let
   e = 5
   f = 2.6
@@ -128,7 +128,7 @@ echo "float(e) + f = ", float(e) + f # float(e) + f = 7.6
 
 ## Characters
 
-```python
+```php
 # Caracteres são escritos entre aspas simples
 let
   h = 'z'
@@ -142,7 +142,7 @@ let
 
 ## Strings
 
-```python
+```php
 let
   m = "palavra"
   n = "Esta é uma frase."
@@ -153,7 +153,7 @@ let
 
 ## Concatenação de string
 
-```python
+```php
 var
   frase = "Ser ou não ser "
   continuacao = "eis a questão?"
@@ -170,7 +170,7 @@ echo "Concat: ", frase2 & continuacao2 # Concat: Vida longa ao rei!
 
 ## Operadores relacionais
 
-```python
+```php
 let
   n1 = 10
   n2 = 20
@@ -192,7 +192,7 @@ echo "s1 < s2: ", s1 < s2 # false
 
 ## Operadores lógicos
 
-```python
+```php
 echo "true and true: ", true and true # true
 echo "true and false: ", true and false # false
 echo "false and false: ", false and false # false
@@ -213,7 +213,7 @@ echo "not false: ", not false # true
 
 ### *if*
 
-```python
+```php
 let
   a = 10
   b = 20
@@ -234,7 +234,7 @@ if a+b == c: # true
 
 ### *else*
 
-```python
+```php
 let
   a = 15
   b = 5
@@ -250,7 +250,7 @@ else:
 
 ### *elif*
 
-```python
+```php
 let
   a = 3000
   b = 7
@@ -272,7 +272,7 @@ elif b < 10:
 
 ### *case*
 
-```python
+```php
 let x = 7
 case x
 of 5:
@@ -287,7 +287,7 @@ else:
 
 ### *case* - Escolha fechada (discartando alternativa de acão)
 
-```python
+```php
 let h = 'y'
 case h
 of 'x':
@@ -301,7 +301,7 @@ else: discard
 
 ### *multiple Case*
 
-```python
+```php
 let i = 7
 case i
 of 0:
@@ -318,7 +318,7 @@ else:
 
 ### *for*
 
-```python
+```php
 for n in 5 .. 9: # [5, 9]
   echo n # Em cada linha: 5, 6, 7, 8, 9
 echo "---"
@@ -352,7 +352,7 @@ for i, letra in palavra:
 
 ### *while*
 
-```python
+```php
 var a = 1
 while a*a < 10:
   echo "a é: ", a # a é: 1
@@ -367,7 +367,7 @@ echo "valor final de a: ", a # valor final de a: 4
 
 ### *break*
 
-```python
+```php
 var i = 1
 while i < 1000:
   if i == 3:
@@ -379,7 +379,7 @@ while i < 1000:
 
 ### *continue*
 
-```nim
+```php
 for i in 1 .. 5:
   if (i == 2) or (i == 4):
     continue
