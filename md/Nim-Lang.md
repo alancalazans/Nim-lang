@@ -47,9 +47,9 @@ var valor3 = 30
 # Obs.: No Nim, a indentação por tabulação
 # não é permitido mas somente por espaço.
 var
-  valor4 = -10
-  valor5 = "Olá"
-  valor6 = '!'
+  valor4 = -10 # Tipo 'int'
+  valor5 = "Olá" # Tipo 'string'
+  valor6 = '!' # Tipo 'character'
 # Variáveis acima são mutáveis mas seu tipo não,
 # logo, a reatribuição: valor5 = 50 causará erro.
 # ---
@@ -62,12 +62,12 @@ echo conta_registros # 5
 # ---
 # Variáveis imutáveis.
 # 'const' e 'let'.
-# No tipo 'const' o valor tem de ser conhecido
-# em tempo de compilação.
+# Na instrução 'const' o valor tem de ser
+# conhecido em tempo de compilação.
 const pi = 3.14
-# No tipo 'let' o valor não precisa ser conhecido
+# Na instrução 'let' o valor não precisa ser conhecido
 # em tempo de compilação, mas, uma vez atribuído
-# não muda.
+# um valor este não muda (nem o seu tipo).
 var cem = 100
 let porcento = 1 / cem
 echo 4 * porcento # 0.04
@@ -211,7 +211,7 @@ echo "not false: ", not false # true
 
 ## Controle de fluxo
 
-### Declaração if
+### *if*
 
 ```python
 let
@@ -231,4 +231,88 @@ if a+b == c: # true
   if a+b <= b+c: # true
     echo "a+b é menor igual a b+c" # a+b é menor igual a b+c
 ```
+
+### *else*
+
+```python
+let
+  a = 15
+  b = 5
+if a < 10: # false
+  echo "a é menor que 10"
+else:
+  echo "a é maior que 10" # a é maior que 10
+if b < 10: # true
+  echo "b é menor que 10" # b é maior que 10
+else:
+  echo "b é maior que 10"
+```
+
+### *elif*
+
+```python
+let
+  a = 3000
+  b = 7
+if a < 10: # false
+  echo "a é menor que 10"
+elif a < 100: # false
+  echo "a esta entre 10 e 100"
+elif a < 1000: # false
+  echo "a esta entre 100 e 1000"
+else:
+  echo "a é maior que 1000" # a é maior que 1000
+if b < 1000: # true (entra neste bloco 'if' e ignora o resto)
+  echo "b é menor que 1000" # b é menor que 1000
+elif b < 100:
+  echo "b é menor que 100"
+elif b < 10: 
+  echo "b é menor que 10"
+```
+
+### *case*
+
+```python
+let x = 7
+case x
+of 5:
+  echo "Cinco!"
+of 7:
+  echo "Sete!" # Sete!
+of 10:
+  echo "Dez!"
+else:
+  echo "Número desconhecido"
+```
+
+### *case* - Escolha fechada (discartando alternativa de acão)
+
+```python
+let h = 'y'
+case h
+of 'x':
+  echo "Você escolheu x"
+of 'y':
+  echo "Você escolheu y" # Você escolheu y
+of 'z':
+  echo "Você escolheu z"
+else: discard
+```
+
+### *multiple Case*
+
+```python
+let i = 7
+case i
+of 0:
+  echo "i é zero"
+of 1, 3, 5, 7, 9:
+  echo "i é ímpar" # i é ímpar
+of 2, 4, 6, 8:
+  echo "i é par"
+else:
+  echo "i é muito grande"
+```
+
+## Loops
 
