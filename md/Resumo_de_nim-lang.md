@@ -6,7 +6,7 @@
 
 *ola.nim*
 
-```php
+```nim
 echo "Olá Mundo!"
 ```
 
@@ -28,7 +28,7 @@ Olá Mundo!
 
 ## Variáveis e Constantes
 
-```php
+```nim
 # ---
 # Variáveis mutáveis.
 # Tipagem estática:
@@ -77,7 +77,7 @@ echo 4 * porcento # 0.04
 
 **Inteiros:**
 
-```php
+```nim
 # Underline (_) pode ser usado para separar milhares
 var dezMilhoes = 10_000_000
 echo dezMilhoes # 10000000
@@ -94,7 +94,7 @@ echo "a mod b = ", a mod b # a mod b = 3
 
 **Flutuantes:**
 
-```php
+```nim
 # 2e3 = 2*10³
 echo 2e3 # 2000.0
 # Operadores 'div' e 'mod' não
@@ -114,7 +114,7 @@ echo 24 - 8 / 4 # 22.0
 
 ## Convertendo floats e inteiros
 
-```php
+```nim
 let
   e = 5
   f = 2.6
@@ -128,7 +128,7 @@ echo "float(e) + f = ", float(e) + f # float(e) + f = 7.6
 
 ## Characters
 
-```php
+```nim
 # Caracteres são escritos entre aspas simples
 let
   h = 'z'
@@ -142,7 +142,7 @@ let
 
 ## Strings
 
-```php
+```nim
 let
   m = "palavra"
   n = "Esta é uma frase."
@@ -153,7 +153,7 @@ let
 
 ## Concatenação de string
 
-```php
+```nim
 var
   frase = "Ser ou não ser "
   continuacao = "eis a questão?"
@@ -170,7 +170,7 @@ echo "Concat: ", frase2 & continuacao2 # Concat: Vida longa ao rei!
 
 ## Operadores relacionais
 
-```php
+```nim
 let
   n1 = 10
   n2 = 20
@@ -192,7 +192,7 @@ echo "s1 < s2: ", s1 < s2 # false
 
 ## Operadores lógicos
 
-```php
+```nim
 echo "true and true: ", true and true # true
 echo "true and false: ", true and false # false
 echo "false and false: ", false and false # false
@@ -213,7 +213,7 @@ echo "not false: ", not false # true
 
 ### *if*
 
-```php
+```nim
 let
   a = 10
   b = 20
@@ -234,7 +234,7 @@ if a+b == c: # true
 
 ### *else*
 
-```php
+```nim
 let
   a = 15
   b = 5
@@ -250,7 +250,7 @@ else:
 
 ### *elif*
 
-```php
+```nim
 let
   a = 3000
   b = 7
@@ -272,7 +272,7 @@ elif b < 10:
 
 ### *case*
 
-```php
+```nim
 let x = 7
 case x
 of 5:
@@ -287,7 +287,7 @@ else:
 
 ### *case* - Escolha fechada (discartando alternativa de acão)
 
-```php
+```nim
 let h = 'y'
 case h
 of 'x':
@@ -301,7 +301,7 @@ else: discard
 
 ### *multiple Case*
 
-```php
+```nim
 let i = 7
 case i
 of 0:
@@ -318,7 +318,7 @@ else:
 
 ### *for*
 
-```php
+```nim
 for n in 5 .. 9: # [5, 9]
   echo n # Em cada linha: 5, 6, 7, 8, 9
 echo "---"
@@ -352,7 +352,7 @@ for i, letra in palavra:
 
 ### *while*
 
-```php
+```nim
 var a = 1
 while a*a < 10:
   echo "a é: ", a # a é: 1
@@ -367,7 +367,7 @@ echo "valor final de a: ", a # valor final de a: 4
 
 ### *break*
 
-```php
+```nim
 var i = 1
 while i < 1000:
   if i == 3:
@@ -379,7 +379,7 @@ while i < 1000:
 
 ### *continue*
 
-```php
+```nim
 for i in 1 .. 5:
   if (i == 2) or (i == 4):
     continue
@@ -392,7 +392,7 @@ for i in 1 .. 5:
 
 ### *container*
 
-```php
+```nim
 let frutas = ["goiaba", "banana", "maça", "pêra", "laranja", "morango", "jambo"]
 for i, fruta in frutas:
   echo "Fruta ", i+1, " é: ", fruta # Fruta 1 é: goiaba
@@ -406,7 +406,7 @@ for i, fruta in frutas:
 
 ### *Array*
 
-```php
+```nim
 var
   a: array[3, int] = [5, 7, 9] # Embora correto não é
                                # necessário declarar
@@ -428,7 +428,7 @@ var f: array[n, char] # error (pois 'n' é uma variável
 
 ### *Sequence*
 
-```php
+```nim
 # Sequências são arrays dinâmicos sendo necessário apenas
 # declarar o tipo dos elementos homogênios
 var
@@ -440,7 +440,7 @@ var
 
 ### Adicionando elementos a uma sequência
 
-```php
+```nim
 # Lembrar que elementos de sequência
 # devem ser do mesmo tipo.
 var
@@ -457,7 +457,7 @@ echo "Seq. h tem ", h.len, " elementos." # Seq. h tem 6 elementos.
 
 ### Indexar e fatiar
 
-```php
+```nim
 let j = ['a', 'b', 'c', 'd', 'e']
 echo j[0] # a (Primeiro elemento da esquerda para direita)
 echo j[^1] # e (Último elemento, primeiro da dir. p/ esq.)
@@ -468,7 +468,7 @@ echo j[0 ..< 3] # @[a, b, c]
 
 ### Atribuir e modificar valores em containers:
 
-```php
+```nim
 var
   k: array[5, int]
   l = @['p', 'w', 'r']
@@ -489,7 +489,7 @@ echo m # Tom and Barry
 
 ### *Tuplas*
 
-```php
+```nim
 # Container de dados heterogêneos e tamanho fixo
 # Obs.: Os dados são envolvidos por parênteses '()'
 let n = ("banana", 2, 'c')
@@ -498,7 +498,7 @@ echo n # ("banana", 2, 'c')
 
 ### *Tuplas - Rotulando  e modificando dados*
 
-```php
+```nim
 var produto = (nome: "banana", precoPorKilo: 5.50, classificacao: 'fruta')
 produto.nome = "abobora" # Modificando pelo rótulo
 produto[1] = 4.30 # Modificando pelo indice
@@ -510,7 +510,7 @@ echo produto # (nome: "abobora", precoPorKilo: 4.3, classificacao: "legume")
 
 ### *Ex1:*
 
-```php
+```nim
 proc retornaMaior(x: int, y: int): int =
   if x > y:
     return x
@@ -525,14 +525,14 @@ echo "Maior: ", retornaMaior(10, 2) # Maior: 10
 
 ### *Ex2:*
 
-```php
+```nim
 proc imprimeMelhorLinguagem(language: string) =
   case language
   of "Nim", "nim", "NIM":
     echo language, " é a melhor linguagem!"
   else:
     echo language, " pode ser uma segunda melhor linguagem."
-        
+
 echo "---"
 imprimeMelhorLinguagem("nim") # nim é a melhor linguagem!
 echo "---"
@@ -541,7 +541,7 @@ imprimeMelhorLinguagem("C#") # C# pode ser uma segunda melhor linguagem.
 
 ### *Para mudar valor de argumento:*
 
-```php
+```nim
 # Informando a instrução 'var' antes do tipo.
 proc acrescentaCinco(argumento: var int) = 
   argumento += 5
@@ -564,7 +564,7 @@ echo valor # 25
 
 ### *Variação do exemplo acima:*
 
-```php
+```nim
 proc acrescentaValor(arg: var int, valorDeAcrescimo: int) =
   arg += valorDeAcrescimo
 
@@ -583,7 +583,7 @@ echo valor # 20
 
 ### *Também é possivel usar variáveis e/ou constantes declarados fora do procedimento:*
 
-```php
+```nim
 var x = 100
 const unidade = 1
 
@@ -600,7 +600,7 @@ echoX() # 100
 
 ### *Ex1:*
 
-```php
+```nim
 proc encontrarMaior(a: seq[int]): int =
   for number in a:
     if number > result: # 'result' é incializado por
@@ -613,21 +613,21 @@ echo encontrarMaior(d) # 33
 
 ### *Ex2:*
 
-```php
+```nim
 proc encontrarImpares(a: seq[int]): seq[int] =
   # result é inicializado por padrão
   # com um sequência vazia '@[]'.
   for number in a:
     if number mod 2 == 1:
       result.add(number)
-          
+
 let f = @[1, 6, 4, 43, 57, 34, 98]
 echo encontrarImpares(f) # @[1, 43, 57]
 ```
 
 ### *Chamando procedimento dentro de procedimento*
 
-```php
+```nim
 proc ehDivisivelPor3(x: int): bool =
   x mod 3 == 0 # O mesmo que: return x mod 3 == 0
 
@@ -649,7 +649,7 @@ echo filtraMultiplosDe3 i # @[45390, 3219]
 
 ### *Assinatura de 'procedure' e a utilização destas 'procedures' antes da sua implementação:*
 
-```php
+```nim
 # Assinatura da 'procedure'.
 proc plus(x, y: int): int
 
@@ -674,7 +674,7 @@ proc plus(x, y: int): int =
 
 ### *Ex1:*
 
-```php
+```nim
 import strutils
 let
   a = "Minha string com espaço em branco."
@@ -686,7 +686,7 @@ echo b.repeat(5) # !!!!!
 
 ### *Ex2:*
 
-```php
+```nim
 import math
 let
   c = 30.0 # graus
@@ -704,13 +704,13 @@ echo 2^5 # 32
 
 ***primeiroArquivo.nim***
 
-```php
+```nim
 proc plus*(a, b: int): int = # O asterisco (*) torna o
                              # procedimento disponível
                              # na importação por outro
                              # arquivo.
   return a + b
-    
+
 proc minus(a, b: int): int = # Este procedimento não esta
                              # disponível na importação
                              # por outro arquivo por não
@@ -721,7 +721,7 @@ proc minus(a, b: int): int = # Este procedimento não esta
 
 ***segundoArquivo.nim***
 
-```php
+```nim
 import primeiroArquivo
 echo plus(5, 10) # 15
 # echo minus(10, 5) # error
@@ -744,7 +744,7 @@ echo plus(5, 10) # 15
 
 ***segundoArquivo.nim***
 
-```php
+```nim
 import primeiroArquivo
 import Subdir/terceiroArquivo
 import outroSubdir/[quartoArquivo, quintoArquivo]
@@ -764,7 +764,7 @@ Beltrano
 
 ***lendoDoArquivo.nim:***
 
-```php
+```nim
 import strutils
 let contents = readFile("pessoas.txt")
 echo contents # Fulano
@@ -781,7 +781,7 @@ echo people # @["Fulano", "Cicrano", "Beltrano", ""]
 
 ***lendoDoArquivo.nim:***
 
-```php
+```nim
 import strutils
 # Acrescentando a instrução 'strip()' eliminamos
 # de cada linha: espaço, novas linhas, espaços,
@@ -796,7 +796,7 @@ echo people # @["Fulano", "Cicrano", "Beltrano"]
 
 ### *Lendo a entrada do usuário*
 
-```php
+```nim
 echo "Qual seu nome?" # Qual seu nome?
 let name = readLine(stdin) # Fulano
 echo "Olá ", name, "!" # Olá Fulano!
@@ -804,7 +804,7 @@ echo "Olá ", name, "!" # Olá Fulano!
 
 ### *Lidando com números*
 
-```php
+```nim
 # Faz-se necessário a importação
 # do módulo 'strutils' para o uso
 # das 'procedures': 'parseInt()',
@@ -832,19 +832,20 @@ echo "Você tem ", idade, " anos." # Você tem 50 anos.
 
 ***obterSomaMedia.nim***
 
-```php
+```nim
 import strutils, sequtils, math
-    
+
 let
   strNums = readFile("numbers.txt").strip().splitLines()
   nums = strNums.map(parseFloat)
 let
   somaNums = sum(nums)
   media = somaNums / float(nums.len)
-    
+
 echo "A soma da seq.: ", nums, " é:" # A soma da seq.: @[27.3, 98.23999999999999, 11.93, 33.67, 55.01] é:
 echo somaNums # 226.15
 echo "E a média é:"
 echo media # 45.23
 ```
+
 
