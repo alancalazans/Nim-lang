@@ -285,7 +285,7 @@ else:
   echo "Número desconhecido"
 ```
 
-### *case* - Escolha fechada (discartando alternativa de acão)
+### *case* - Escolha fechada (descartando alternativa de ação)
 
 ```nim
 let h = 'y'
@@ -847,5 +847,3 @@ echo somaNums # 226.15
 echo "E a média é:"
 echo media # 45.23
 ```
-
-
