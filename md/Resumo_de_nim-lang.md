@@ -230,6 +230,8 @@ if a+b == c: # true
   echo "Sim! a+b é igual a c" # Sim! a+b é igual a c
   if a+b <= b+c: # true
     echo "a+b é menor igual a b+c" # a+b é menor igual a b+c
+# Nenhum recuo é necessário para instrução de atribuição única:
+if x: x = false
 ```
 
 ### *else*
@@ -314,6 +316,21 @@ else:
   echo "i é muito grande"
 ```
 
+### *when*
+
+A instrução ***when*** é útil para escrever código específico da plataforma, semelhante à construção ***#ifdef*** na linguagem de programação ***C***.
+
+```nim
+when system.hostOS == "windows":
+  echo "running on Windows!"
+elif system.hostOS == "linux":
+  echo "running on Linux!"
+elif system.hostOS == "macosx":
+  echo "running on Mac OS X!"
+else:
+  echo "unknown operating system"
+```
+
 ## Loops
 
 ### *for*
@@ -348,6 +365,13 @@ for i, letra in palavra:
                                   # letra 5 é: e
                                   # letra 6 é: t
                                   # letra 7 é: o
+```
+
+### *for* - Esta construção é possivel:
+
+```nim
+# calcula fac(4) em tempo de compilação:
+const fac4 = (var x = 1; for i in 1..4: x *= i; x)
 ```
 
 ### *while*
@@ -539,6 +563,31 @@ echo "---"
 imprimeMelhorLinguagem("C#") # C# pode ser uma segunda melhor linguagem.
 ```
 
+### *Ex3:*
+
+```nim
+proc yes(question: string): bool =
+  echo question, " (s/n)"
+  while true:
+    case readLine(stdin)
+    of "s", "S", "sim", "Sim": return true
+    of "n", "N", "não", "Não": return false
+    else: echo "Por favor, seja claro: sim ou não"
+
+if yes("Devo excluir todos os seus arquivos importantes?"):
+  echo "Sinto muito, temo que não posso fazer isso."
+else:
+  echo "Acho que você sabe qual é o problema tão bem quanto eu."
+```
+
+> ***Saída:***
+> 
+> ```shell
+> Devo excluir todos os seus arquivos importantes? (s/n)
+> s
+> Sinto muito, temo que não posso fazer isso.
+> ```
+
 ### *Para mudar valor de argumento:*
 
 ```nim
@@ -581,6 +630,31 @@ echo "---"
 echo valor # 20
 ```
 
+### Parâmetros com valores padrão
+
+```nim
+proc endereco(rua, num, bairro: string; cidade = "Belo Horizonte", estado = "MG"): string =
+  result.add("Rua: ")
+  result.add(rua)
+  result.add(", ")
+  result.add(num)
+  result.add(" - ")
+  result.add(bairro)
+  result.add(" - ")
+  result.add(cidade)
+  result.add("(")
+  result.add(estado)
+  result.add(")")
+
+echo endereco("Capivara", "101", "Pampulha")
+```
+
+> ***Saída:***
+> 
+> ```shell
+> Rua: Capivara, 101 - Pampulha - Belo Horizonte(MG)
+> ```
+
 ### *Também é possivel usar variáveis e/ou constantes declarados fora do procedimento:*
 
 ```nim
@@ -596,9 +670,16 @@ echoX() # 100
         # 101
 ```
 
-### *O resultado de retorno de um procedimento sem necessidade da instrução 'return' e a inicialização padrão da variável a ser retornada*
+### Retorno sem *'return'*:
 
 ### *Ex1:*
+
+```nim
+proc olaMundo(): string =
+  "Olá, Mundo!"
+```
+
+### *Ex2:*
 
 ```nim
 proc encontrarMaior(a: seq[int]): int =
@@ -611,7 +692,7 @@ let d = @[3, -5, 11, 33, 7, -15]
 echo encontrarMaior(d) # 33
 ```
 
-### *Ex2:*
+### *Ex3:*
 
 ```nim
 proc encontrarImpares(a: seq[int]): seq[int] =
@@ -623,6 +704,20 @@ proc encontrarImpares(a: seq[int]): seq[int] =
 
 let f = @[1, 6, 4, 43, 57, 34, 98]
 echo encontrarImpares(f) # @[1, 43, 57]
+```
+
+### *return* - sem parâmetro:
+
+```nim
+proc somaAteAcharNegativo(x: varargs[int]): int =
+  for i in x:
+    if i < 0:
+      return
+    result = result + i
+
+echo somaAteAcharNegativo() # ecôa 0
+echo somaAteAcharNegativo(3, 4, 5) # ecôa 12
+echo somaAteAcharNegativo(3, 4 , -1 , 6) # ecôa 7
 ```
 
 ### *Chamando procedimento dentro de procedimento*
@@ -649,6 +744,8 @@ echo filtraMultiplosDe3 i # @[45390, 3219]
 
 ### *Assinatura de 'procedure' e a utilização destas 'procedures' antes da sua implementação:*
 
+### *Ex1:*
+
 ```nim
 # Assinatura da 'procedure'.
 proc plus(x, y: int): int
@@ -659,6 +756,57 @@ echo 5.plus(10) # 15
 # Implementando a 'procedure'.
 proc plus(x, y: int): int =
   x + y
+```
+
+### *Ex2:*
+
+```nim
+# 'impar()' depende de 'par()' e vice-versa
+# por isso iniciamos com a assinatura de 'par()'
+# para que não ocorra problema em 'impar()'.
+proc par(n: int): bool
+
+proc impar(n: int): bool =
+  assert(n >= 0) # garante que não encontremos recursão negativa
+  if n == 0: false
+  else:
+    n == 1 or par(n-1)
+
+proc par(n: int): bool =
+  assert(n >= 0) # garante que não encontremos recursão negativa
+  if n == 1: true
+  else:
+    n == 0 or impar(n-1)
+
+echo "4 é par: ", par(4) # ecôa: 4 é par: true
+echo "7 é ímpar: ", impar(7) # ecôa: 7 é ímpar: true
+```
+
+### Procedimentos sobrecarregados
+
+```nim
+proc toString(x: int): string =
+  result =
+    if x < 0: "negativo"
+    elif x > 0: "positivo"
+    else: "zero"
+
+proc toString(x: bool): string =
+  result =
+    if x: "sim"
+    else: "não"
+
+# chama o proc toString(x: int)
+echo toString(13) # ecôa positivo
+# chama o proc toString(x: bool)
+echo toString(true) # ecôa sim
+```
+
+### Operadores são 'procedures':
+
+```nim
+# if 3 + 4 == 7: echo "true" # ecôa true
+if `==`( `+`(3, 4), 7): echo "true" # ecôa true
 ```
 
 ## Módulos
