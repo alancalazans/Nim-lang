@@ -19,11 +19,36 @@ nim c ola.nim
 nim c -r ola.nim # Olá Mundo!
 ```
 
-*saída:*
+> *saída:*
+> 
+> ```sh
+> $ ./ola 
+> Olá Mundo!
+> ```
 
-```sh
-$ ./ola 
-Olá Mundo!
+### Comentários
+
+Os comentários começam em qualquer lugar fora de uma string ou literal de caractere com o caractere hash #. Os comentários da documentação começam com ##:
+
+```nim
+# Um comentário.
+
+var myVariable: int ## um comentário de documentação
+```
+
+Os comentários da documentação são tokens; eles são permitidos apenas em determinados locais no arquivo de entrada, pois pertencem à árvore sintática! Esse recurso permite geradores de documentação mais simples.
+
+Os comentários de várias linhas são iniciados com #[ e terminados com ]#. Os comentários multilinha também podem ser aninhados.
+
+```nim
+#[
+você pode ter qualquer texto de código Nim comentado
+fora dentro deste sem restrições de indentação.
+    yes('Posso fazer uma pergunta sem sentido?')
+  #[
+     Nota: estes podem ser aninhados!!
+  ]#
+]#
 ```
 
 ## Variáveis e Constantes
@@ -92,6 +117,18 @@ echo "a div b = ", a div b # a div b = 2
 echo "a mod b = ", a mod b # a mod b = 3
 ```
 
+Nim tem estes tipos inteiros integrados: *int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64*.  
+
+O tipo inteiro padrão é int. Literais inteiros podem ter um sufixo de tipo para especificar um tipo inteiro não padrão:
+
+```nim
+let
+  x = 0     # x é do tipo `int`
+  y = 0'i8  # y is é do tipo `int8`
+  z = 0'i32 # z é do tipo `int32`
+  u = 0'u   # u é do tipo `uint`
+```
+
 **Flutuantes:**
 
 ```nim
@@ -112,6 +149,19 @@ echo 2 + 3 * 4 # 14
 echo 24 - 8 / 4 # 22.0
 ```
 
+Nim tem estes tipos de ponto flutuante embutidos: *float, float32, float64*.  
+
+O tipo float padrão é float. Na implementação atual, float é sempre de 64 bits.  
+
+Literais flutuantes podem ter um sufixo de tipo para especificar um tipo flutuante não padrão:
+
+```nim
+var
+  x = 0.0      # x é do tipo `float`
+  y = 0.0'f32  # y é do tipo `float32`
+  z = 0.0'f64  # z é do tipo `float64`
+```
+
 ## Convertendo floats e inteiros
 
 ```nim
@@ -124,6 +174,28 @@ echo "int(f) = ", int(f) # 2 (não faz arredondamento)
 echo "---"
 echo "e + int(f) = ", e + int(f) # e + int(f) = 7
 echo "float(e) + f = ", float(e) + f # float(e) + f = 7.6
+```
+
+### Conversão de tipo
+
+A conversão entre tipos numéricos é realizada usando o tipo como uma função:
+
+```nim
+var
+  x: int32 = 1.int32   # o mesmo que chamar int32(1)
+  y: int8  = int8('a') # 'a' == 97'i8
+  z: float = 2.5       # int(2.5) arredonda para 2
+  sum: int = int(x) + int(y) + int(z) # sum == 100
+```
+
+### Tipos avançados
+
+Em Nim novos tipos podem ser definidos dentro de uma declaração de tipo:
+
+```nim
+type
+  biggestInt = int64      # maior tipo inteiro disponível
+  biggestFloat = float64  # maior tipo float disponível
 ```
 
 ## Characters
@@ -301,7 +373,7 @@ of 'z':
 else: discard
 ```
 
-### *multiple Case*
+### *case* - multiplo
 
 ```nim
 let i = 7
@@ -532,7 +604,7 @@ echo produto # (nome: "abobora", precoPorKilo: 4.3, classificacao: "legume")
 
 ## Procedures
 
-### *Ex1:*
+### Ex1:
 
 ```nim
 proc retornaMaior(x: int, y: int): int =
@@ -547,7 +619,7 @@ echo "---"
 echo "Maior: ", retornaMaior(10, 2) # Maior: 10
 ```
 
-### *Ex2:*
+### Ex2:
 
 ```nim
 proc imprimeMelhorLinguagem(language: string) =
@@ -563,7 +635,7 @@ echo "---"
 imprimeMelhorLinguagem("C#") # C# pode ser uma segunda melhor linguagem.
 ```
 
-### *Ex3:*
+### Ex3:
 
 ```nim
 proc yes(question: string): bool =
@@ -588,7 +660,7 @@ else:
 > Sinto muito, temo que não posso fazer isso.
 > ```
 
-### *Para mudar valor de argumento:*
+### Para mudar valor de argumento:
 
 ```nim
 # Informando a instrução 'var' antes do tipo.
@@ -611,7 +683,7 @@ valor.acrescentaCinco
 echo valor # 25
 ```
 
-### *Variação do exemplo acima:*
+### Variação do exemplo acima:
 
 ```nim
 proc acrescentaValor(arg: var int, valorDeAcrescimo: int) =
@@ -655,7 +727,7 @@ echo endereco("Capivara", "101", "Pampulha")
 > Rua: Capivara, 101 - Pampulha - Belo Horizonte(MG)
 > ```
 
-### *Também é possivel usar variáveis e/ou constantes declarados fora do procedimento:*
+### Também é possivel usar variáveis e/ou constantes declarados fora do procedimento:
 
 ```nim
 var x = 100
@@ -672,14 +744,14 @@ echoX() # 100
 
 ### Retorno sem *'return'*:
 
-### *Ex1:*
+### Ex1:
 
 ```nim
 proc olaMundo(): string =
   "Olá, Mundo!"
 ```
 
-### *Ex2:*
+### Ex2:
 
 ```nim
 proc encontrarMaior(a: seq[int]): int =
@@ -692,7 +764,7 @@ let d = @[3, -5, 11, 33, 7, -15]
 echo encontrarMaior(d) # 33
 ```
 
-### *Ex3:*
+### Ex3:
 
 ```nim
 proc encontrarImpares(a: seq[int]): seq[int] =
@@ -720,7 +792,7 @@ echo somaAteAcharNegativo(3, 4, 5) # ecôa 12
 echo somaAteAcharNegativo(3, 4 , -1 , 6) # ecôa 7
 ```
 
-### *Chamando procedimento dentro de procedimento*
+### Chamando procedimento dentro de procedimento
 
 ```nim
 proc ehDivisivelPor3(x: int): bool =
@@ -742,9 +814,9 @@ echo h.filtraMultiplosDe3 # @[3]
 echo filtraMultiplosDe3 i # @[45390, 3219]
 ```
 
-### *Assinatura de 'procedure' e a utilização destas 'procedures' antes da sua implementação:*
+### Assinatura de 'procedure' e a utilização destas 'procedures' antes da sua implementação
 
-### *Ex1:*
+### Ex1:
 
 ```nim
 # Assinatura da 'procedure'.
@@ -758,7 +830,7 @@ proc plus(x, y: int): int =
   x + y
 ```
 
-### *Ex2:*
+### Ex2:
 
 ```nim
 # 'impar()' depende de 'par()' e vice-versa
@@ -809,18 +881,68 @@ echo toString(true) # ecôa sim
 if `==`( `+`(3, 4), 7): echo "true" # ecôa true
 ```
 
+## Interadores (*Iterators*) - Uma palavra
+
+### Exemplo de um contador:
+
+```nim
+echo "Contando até dez:"
+for i in countup(1, 10):
+  echo i
+```
+
+Se quisermos fazer nosso próprio ***countup()*** com uma ***'procedure'*** para usar no código acima, temos esta primeira abordagem:
+
+```nim
+proc colecao(a, b: int): int =
+  var res = a
+  while res <= b:
+    return res
+    inc(res)
+
+echo "Contando até dez:"
+for i in colecao(1, 10):
+  echo i
+```
+
+Para o objetivo pretendido a ***'procedure'*** acima não funcionaria, deve ser feito desta forma:
+
+```nim
+iterator colecao(a, b: int): int =
+  var res = a
+  while res <= b:
+    yield res
+    inc(res)
+
+echo "Contando até dez:"
+for i in colecao(1, 10):
+  echo i
+```
+
+> ***Obs.:*** Os iteradores são muito semelhantes aos procedimentos, mas existem várias diferenças importantes:  
+> 
+> - Iteradores só podem ser chamados de ***loops for***.  
+> 
+> - Iteradores não podem conter uma instrução ***return*** (e ***procs*** não podem conter uma instrução ***yield***).  
+> 
+> - Os iteradores não têm variável de resultado implícita.  
+> 
+> - Iteradores não suportam recursão.  
+> 
+> - Iteradores não podem ser declarados para frente, porque o compilador deve ser capaz de interar inline. (Esta restrição desaparecerá em uma versão futura do compilador.)
+
 ## Módulos
 
-### *Módulos Nim mais usados:*
+### Módulos Nim mais usados
 
 - ***strutils*** - funcionalidade adicional ao lidar com strings
 - ***sequtils*** - funcionalidade adicional para sequências
 - ***math*** - funções matemáticas (logaritmos, raíz quadrada, ...), trigonometria (sen, cos, ...)
 - ***times*** - medir e lidar com o tempo
 
-### *Importando um módulo:*
+### Importando um módulo
 
-### *Ex1:*
+### Ex1:
 
 ```nim
 import strutils
@@ -832,7 +954,7 @@ echo a.toUpperAscii() # MINHA STRING COM ESPAçO EM BRANCO.
 echo b.repeat(5) # !!!!!
 ```
 
-### *Ex2:*
+### Ex2:
 
 ```nim
 import math
@@ -848,7 +970,7 @@ echo sin(cRadians).round(2) # 0.5
 echo 2^5 # 32
 ```
 
-### *Criando nosso próprio módulo:*
+### Criando nosso próprio módulo
 
 ***primeiroArquivo.nim***
 
@@ -875,7 +997,7 @@ echo plus(5, 10) # 15
 # echo minus(10, 5) # error
 ```
 
-### *Importação de vários arquivos inclusive em subdiretórios*
+### Importação de vários arquivos inclusive em subdiretórios
 
 ```
 .
@@ -888,7 +1010,7 @@ echo plus(5, 10) # 15
 └── segundoArquivo.nim
 ```
 
-### *Agora importando os arquivos acima:*
+### Agora importando os arquivos acima
 
 ***segundoArquivo.nim***
 
@@ -900,7 +1022,7 @@ import outroSubdir/[quartoArquivo, quintoArquivo]
 
 ## Interagindo com a entrada do usuário
 
-### *Lendo de um arquivo*
+### Lendo de um arquivo
 
 ***pessoas.txt:***
 
@@ -942,7 +1064,7 @@ let people = contents.splitLines()
 echo people # @["Fulano", "Cicrano", "Beltrano"]
 ```
 
-### *Lendo a entrada do usuário*
+### Lendo a entrada do usuário
 
 ```nim
 echo "Qual seu nome?" # Qual seu nome?
@@ -950,7 +1072,7 @@ let name = readLine(stdin) # Fulano
 echo "Olá ", name, "!" # Olá Fulano!
 ```
 
-### *Lidando com números*
+### Lidando com números
 
 ```nim
 # Faz-se necessário a importação
@@ -964,9 +1086,9 @@ let idade = 2022 - anoDeNasc
 echo "Você tem ", idade, " anos." # Você tem 50 anos.
 ```
 
-### *Lendo números de um arquivo*
+### Lendo números de um arquivo
 
-***Obter a soma e média desses números***
+**Obter a soma e média desses números**
 
 ***numbers.txt***
 
