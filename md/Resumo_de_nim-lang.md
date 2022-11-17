@@ -484,6 +484,41 @@ for i in 1 .. 5:
          # 5
 ```
 
+### *block*
+
+```nim
+import std/strformat
+
+block tabuadaDeDois:
+  var
+    x: int = 1
+    y: int # Por padrão inicializa com 0
+  while true:
+    x += 1
+    if x == 3: break tabuadaDeDois # Saída do bloco
+    while true:
+      y += 1
+      if y == 11:
+        y  =  0
+        break # Saída do loop while mais interno
+      echo(fmt"{x} x {y} = {x*y}")
+```
+
+> **Saída:**
+> 
+> ```powershell
+> 2 x 1 = 2
+> 2 x 2 = 4
+> 2 x 3 = 6
+> 2 x 4 = 8
+> 2 x 5 = 10
+> 2 x 6 = 12
+> 2 x 7 = 14
+> 2 x 8 = 16
+> 2 x 9 = 18
+> 2 x 10 = 20
+> ```
+
 ## Containers
 
 ### *container*
@@ -1116,4 +1151,26 @@ echo "A soma da seq.: ", nums, " é:" # A soma da seq.: @[27.3, 98.2399999999999
 echo somaNums # 226.15
 echo "E a média é:"
 echo media # 45.23
+```
+
+## Nim - Programação Orientada a Objetos
+
+## Herança
+
+```nim
+type
+  # Para habilitar a herança o objeto precisa herdar de RootObj.
+  Pessoa = ref object of RootObj
+    nome*: string  # o * significa que `nome` é acessível a partir de outros módulos
+    idade: int     # sem * significa que o campo está oculto de outros módulos
+
+  Estudante = ref object of Pessoa # Estudante herda de Pessoa
+    id: int                        # com um campo id
+
+var
+  estudante: Estudante
+
+# construção do objeto:
+estudante = Estudante(nome: "Antônio", idade: 5, id: 2)
+echo estudante[] # ecôa (id: 2, nome: "Antônio", idade: 5)
 ```
