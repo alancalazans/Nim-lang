@@ -317,7 +317,7 @@ if a < 10: # false
 else:
   echo "a é maior que 10" # a é maior que 10
 if b < 10: # true
-  echo "b é menor que 10" # b é maior que 10
+  echo "b é menor que 10" # b é menor que 10
 else:
   echo "b é maior que 10"
 ```
