@@ -2,24 +2,22 @@
 
 ## Introdução
 
-Este documento é uma coletânea de conteúdos provenientes de diversas fontes sobre a linguagem Nim (como o guia oficial da linguagem, tutoriais de terceiros, o ebook de Stefan Salewski, IA e etc...), além de experimentos próprios. Embora seja uma verdadeira colcha de retalhos, está organizado de forma lógica, buscando cobrir a linguagem desde o nível introdutório até o avançado, tanto quanto possível. Este trabalho tem como objetivo ser continuamente atualizado, com o intuito de aprimorá-lo e trazer novos conteúdos sobre essa linguagem, que é, no mínimo, fascinante.
+Este documento é uma coletânea de conteúdos provenientes de diversas fontes sobre a linguagem Nim (como o [guia oficial da linguagem](https://nim-lang.org/documentation.html), tutoriais de terceiros, o [ebook de Stefan Salewski](https://nimprogrammingbook.com/), IA e etc...), além de experimentos próprios. Embora seja uma verdadeira colcha de retalhos, está organizado de forma lógica, buscando cobrir a linguagem desde o nível introdutório até o avançado, tanto quanto possível. Este trabalho tem como objetivo ser continuamente atualizado, com o intuito de aprimorá-lo e trazer novos conteúdos sobre essa linguagem, que é, no mínimo, fascinante.
 
 ## Instalação do Nim no sistema
 
 ### choosenim
 
-[página do projeto](https://github.com/dom96/choosenim)
-
-choosenim instala a [linguagem de programação Nim](https://nim-lang.org/) a partir de downloads oficiais e fontes, permitindo que você alterne facilmente entre estável e compiladores de desenvolvimento.
+Choosenim instala a linguagem de programação Nim a partir de downloads e fontes oficiais, permitindo alternar facilmente entre compiladores estáveis e de desenvolvimento.
 
 O objetivo desta ferramenta é duplo:
 
-- Forneça uma maneira fácil de instalar o compilador e as ferramentas Nim.
-- Gerencie várias instalações Nim e permita que elas sejam selecionadas sob demanda.
+- Fornece uma maneira fácil de instalar o compilador e as ferramentas do Nim.
+- Gerencie diversas instalações do Nim e permita que elas sejam selecionadas sob demanda.
 
 ### Uso típico
 
-Para selecionar a versão atual do Nim:`stable`
+Para selecionar a versão estável atual do Nim:
 
 ```bash
 $ choosenim stable
@@ -34,13 +32,13 @@ $ nim -v
 Nim Compiler Version 1.0.0 [Linux: amd64]
 ```
 
-Para atualizar para a versão mais recente do Nim:`stable`
+Para atualizar para a versão estável mais recente do Nim:
 
 ```bash
 $ choosenim update stable
 ```
 
-Para exibir quais versões estão instaladas no momento:
+Para exibir quais versões estão instaladas atualmente:
 
 ```bash
 $ choosenim show
@@ -55,7 +53,17 @@ $ choosenim show
             #v1.0.0
 ```
 
-As versões podem ser selecionadas via ou por nome de ramificação/tag via (observe que a seleção de ramificações provavelmente exigirá que o Nim seja inicializado, o que pode ser lento).`choosenim 1.6.6``choosenim #devel`
+As versões podem ser selecionadas via Choosenim 1.6.6 ou pelo nome da ramificação/tag via Choosenim #devel (observe que a seleção de ramificações provavelmente exigirá que o Nim seja inicializado, o que pode ser lento).
+
+## Installation
+
+### Windows
+
+Baixe a versão mais recente do Windows na página de [releases](https://github.com/dom96/choosenim/releases) (o arquivo .zip, por exemplo, aqui é [`v0.7.4`](https://github.com/dom96/choosenim/releases/download/v0.7.4/choosenim-0.7.4_windows_amd64.zip)).
+
+Extraia o arquivo zip e execute o script runme.bat. Siga todas as instruções na tela e aproveite sua nova instalação do Nim e do Choosenim.
+
+> <img src="icons/sticky-notes01.png" width=48/> **Obs.:** Mais informações sobre o choosenim na [página do projeto](https://github.com/dom96/choosenim)
 
 ## Nosso primeiro programa Nim
 
