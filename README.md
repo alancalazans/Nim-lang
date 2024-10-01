@@ -1,4 +1,4 @@
-# Nim - notas
+# NimLang
 
 ## Introdução
 
