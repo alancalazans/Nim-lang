@@ -1,1858 +1,1581 @@
-# Nim básico
+# Nim - notas
 
-[Original em inglês](https://nim-lang.org/documentation.html)
+## Introdução
 
-Para verificar se a instalação foi bem-sucedida, escreveremos um programa que é tradicionalmente usado como exemplo introdutório: ***Hello World***.
+Este documento é uma coletânea de conteúdos provenientes de diversas fontes sobre a linguagem Nim (como o guia oficial da linguagem, tutoriais de terceiros, o ebook de Stefan Salewski e IA), além de experimentos próprios. Embora seja uma verdadeira colcha de retalhos, está organizado de forma lógica, buscando cobrir a linguagem desde o nível introdutório até o avançado, tanto quanto possível. Este trabalho tem como objetivo ser continuamente atualizado, com o intuito de aprimorá-lo e trazer novos conteúdos sobre essa linguagem, que é, no mínimo, fascinante.
 
-Em um novo arquivo de texto chamado por exemplo `helloworld.nim` precisamos escrever apenas uma linha de código:
+## 1º - Números
 
-```nim
-echo "Hello World!"
-```
-
-> A frase que você deseja imprimir deve seguir o comando ***echo*** e deve estar entre aspas duplas ( ***"*** ).
-
-Primeiro, precisamos compilar nosso programa e, em seguida, executá-lo para ver se funciona conforme o esperado.
-
-Abra seu terminal no mesmo diretório onde seu arquivo está (no Linux você pode obter 'Abrir Terminal aqui' se clicar com o botão direito do mouse no diretório em seu gerenciador de arquivos, no Windows você deve usar Shift + clique com o botão direito para obter a opção de menu para Abrir a linha de comando).
-
-Compilamos nosso programa digitando no terminal:
-
-```shell
-nim c helloworld.nim
-```
-
-Após uma compilação bem-sucedida, podemos executar nosso programa. No Linux, podemos executar nosso programa digitando ***./helloworld*** no terminal, e no Windows, digitando ***helloworld.exe***.
-
-Também existe a possibilidade de compilar e executar o programa com apenas um comando. Precisamos digitar:
-
-```shell
-nim c -r helloworld.nim
-```
-
-> ***c*** está dizendo ao Nim para compilar o arquivo e ***-r*** está dizendo para executá-lo imediatamente.
-> Para ver todas as opções do compilador, digite ***nim --help*** em seu terminal.
-
-Se você estiver usando o ***VSCode*** com a extensão ***Code Runner*** mencionada antes, você apenas terá que pressionar ***Ctrl + Alt + N*** e seu arquivo será compilado e executado.
-
-Qualquer que seja a forma que você escolheu para executar seu programa, após um breve momento na janela de saída (ou em seu terminal), você verá:
-
-```shell
-Hello World!
-```
-
-Parabéns, você executou com sucesso seu primeiro programa Nim!
-
-Agora você sabe como imprimir algumas coisas na tela (usando o comando echo), compilar seu programa (digitando nim c nomedoprograma.nim em seu terminal) e executá-lo (várias possibilidades).
-
-Agora podemos começar a explorar os elementos básicos que nos ajudarão a escrever programas Nim simples.
-
-## Naming values (Valores de nomenclatura)
-
-Muitas vezes é útil dar nomes aos valores em nossos programas para nos ajudar a controlar as coisas. Se pedirmos o nome de um usuário, queremos armazená-lo para uso posterior, sem solicitá-lo repetidamente toda vez que precisarmos fazer algum cálculo com ele.
-
-No exemplo ***pi = 3.14***, o nome pi está conectado ao valor ***3.14***. Com base em nossa experiência, podemos dizer que o tipo de variável **`pi`** é um número (decimal).
-
-Outro exemplo seria ***firstName = Alice***, onde ***firstName*** é o nome de uma variável com o valor ***Alice***. Diríamos que o tipo desta variável é uma palavra.
-
-Em linguagens de programação, isso funciona de forma semelhante. Essas atribuições de nome têm seu nome, o valor e um tipo.
-
-## Declaração de variável
-
-Nim é uma linguagem de programação com tipagem estática, o que significa que o tipo de uma atribuição precisa ser declarado antes de usar o valor.
-
-Em Nim, também distinguimos valores que podem mudar, ou sofrer mutação, daqueles que não podem, mas mais sobre isso mais tarde. Podemos declarar uma variável (uma atribuição mutável) usando a palavra-chave var, apenas declarando seu nome e tipo (o valor pode ser adicionado posteriormente) usando esta sintaxe:
-
-```nim
-var <name>: <type>
-```
-
-Se já sabemos seu valor, podemos declarar uma variável e dar a ela um valor imediatamente:
-
-```nim
-var <name>: <type> = <value>
-```
-
-> Os colchetes angulares (***<>***) são usados para mostrar algo que você pode alterar.
-> Portanto, ***<name>*** não é literalmente a palavra ***name*** entre colchetes angulares, mas qualquer nome.
-
-Nim também possui capacidade de inferência de tipo: o compilador pode detectar automaticamente o tipo de atribuição de um nome a partir de seu valor, sem declarar explicitamente o tipo. Veremos mais sobre os vários tipos no próximo capítulo.
-
-Portanto, podemos atribuir uma variável sem um tipo explícito como este:
-
-```nim
-var <name> = <value>
-```
-
-Um exemplo disso em Nim é assim:
-
-```nim
-var a: int  # (1)  
-var b = 7   # (2)
-```
-
-1. A variável ***a*** é do tipo ***int*** (inteiro) sem nenhum valor definido explicitamente. 
-2. A variável ***b*** tem o valor ***7***. Seu tipo é detectado automaticamente como um inteiro.
-
-Ao atribuir nomes, é importante escolher nomes que signifiquem algo para o seu programa. Simplesmente nomeá-los como a, b, c, e assim por diante, rapidamente se tornará confuso. Não é possível usar espaços em um nome, pois isso iria dividi-lo em dois. Portanto, se o nome que você escolher consistir em mais de uma palavra, a maneira usual é escrevê-lo no estilo camelCase (observe que a primeira letra de um nome deve ser minúscula).
-
-Observe, entretanto, que Nim não faz distinção entre maiúsculas e minúsculas e sublinhados, o que significa que ***helloWorld*** e ***hello_world*** teriam o mesmo nome. A exceção a isso é o primeiro caractere, que diferencia maiúsculas de minúsculas. Os nomes também podem incluir números e outros caracteres ***UTF-8***, até mesmo emojis, caso deseje, mas lembre-se de que você e possivelmente outras pessoas terão de digitá-los.
-
-Em vez de digitar ***var*** para cada variável, várias variáveis (não necessariamente do mesmo tipo) podem ser declaradas no mesmo bloco ***var***. No Nim, os blocos são partes do código com o mesmo recuo (mesmo número de espaços antes do primeiro caractere) e o nível de recuo padrão é de dois espaços. Você verá esses blocos em todos os lugares em um programa Nim, não apenas para atribuir nomes.
+### A) Tipos numéricos
 
 ```nim
 var
-  c = -11
-  d = "Hello"
-  e = '!'
+  # Com sinal - int ~ int8 ~ int16 ~ int32 ~ int64
+  num1: int      = 0
+  num2: int8     = -128
+  num3: int16    = 12314
+  num4: int32    = -124
+  num5: int64    = 1235
+  # Sem sinal - uint ~ uint8 ~ uint16 ~ uint32 ~ uint64
+  num6:  uint    = 0
+  num7:  uint8   = 128
+  num8:  uint16  = 12314
+  num9:  uint32  = 124
+  num10: uint64  = 1235
+  # Floats - float ~ float32 ~ float64 (Possui somente estes tipos)
+  fnum1: float   = 2.71
+  fnum2: float32 = 3.1415
+  fnum3: float64 = 14.352
 ```
 
-> No Nim, as guias de indentação não são permitidas como recuo (tabulação).
-> Você pode configurar seu editor de código para converter o pressionamento de Tab em qualquer número de espaços.
-> No VS Code, a configuração padrão é converter Tab em quatro espaços. Isso é facilmente substituído nas configurações (Ctrl +,) definindo 'editor.tabSize': 2.
+### B) Int com Int
 
-Como as variáveis mencionadas anteriormente são mutáveis, ou seja, seu valor pode mudar (várias vezes), mas seu tipo deve permanecer o mesmo que o declarado.
+A relação entre as variações de maior potencia é direta:
+
+`int` ↔ `int8` ↔ `int16` ↔ `int32` ↔ `int64`
+
+> <img src="icons/sticky-notes01.png" width=48/> **Obs.:** Se <u>não</u> estiver lidando com embarcados opte por `int64` para evitar problemas com `overflow`.
+
+### C) Int com Float
+
+Operações entre `int` e `float` <u>não</u> são permitidas.
+
+### D) Cast entre tipos
 
 ```nim
-var f = 7 # (1)           
-
-f = -3    # (2)              
-f = 19    # (3)
-f = "Hello" # error (4)  
+var
+    # Float To Int
+    floatToInt   = int(3.14)
+    floatToInt8  = int8(1.41)
+    floatToInt16 = int16(2.71)
+    floatToInt32 = int32(2.23)
+    floatToInt64 = int64(0.33)
+    # Int To UInt
+    intToUInt    = uint(364)
+    intToUInt8   = uint8(132)
+    intToUInt16  = uint16(877)
+    intToUInt32  = uint32(32)
+    intToUInt64  = uint64(64)
+    # Int To Float
+    intToFloat   = float(53)
+    intToFloat32 = float32(42)
+    intToFloat64 = float64(75)
 ```
 
-1. A variável ***f*** tem um valor inicial de ***7*** e seu tipo é inferido como ***int***.
+### 2º - Strings
 
-2. O valor de ***f*** é alterado primeiro para ***-3*** e depois para ***19***. Ambos são inteiros, iguais ao valor original.
+Lida da mesma forma como em outras linguagens (exceto em `C` - onde <u>não</u> há `string`).
 
-3. Tentar alterar o valor de ***f*** para ***'Hello'*** produz um erro porque ***Hello*** não é um número e isso mudaria o tipo de ***f*** de um inteiro para uma ***string***.
+> <img src="icons/sticky-notes01.png" width=48/> **Obs.:**
+>
+> - `$` converte outros tipos para `string`;
+> - `&` concatena `strings`.
+>
+> **Exemplos:**
+>
+> ```nim
+> var
+>     letra: char = 'a'
+>     palavra: string = "Olá"
+>     intToStr: string = $132
+>     robos = "R2D2" & " e " & "C3PO"
+> ```
 
-4. ***# erro*** é um comentário. Os comentários no código Nim são escritos após um caractere ***#***. Tudo o que vier depois na mesma linha será ignorado.
+### 3º `var`, `let` e `const`
 
-## Atribuição imutável
+- `var`: São variáveis que podem ser criadas em <u>*runtime*</u> (tempo de execução) - quando valores são solicitados durante a execução do programa ou em <u>*compiletime*</u> (tempo de compilação) - valores são conhecidos durante a compilação e em ambos os casos estas variáveis podem ser atualizadas seu valor durante a execução do programa.
 
-Ao contrário das variáveis declaradas com a palavra-chave ***var***, mais dois tipos de atribuição existem em Nim, cujo valor não pode ser alterado, um declarado com a palavra-chave ***const*** e o outro declarado com a palavra-chave ***let***.
+- `let` e `const`: São constantes, o simbolo definido como `const` seu valor deve ser conhecido em <u>*compiletime*</u> enquanto `let` seu valor é atribuído uma única vez tanto em <u>*runtime*</u> quanto em <u>*compiletime*</u>.
 
-### Const
+> **Exemplos:**
+>
+> ```nim
+> var variavel: int = 0
+> variavel = 5 # Certo!
+> 
+> let constanteLet: int = 2
+> # constanteLet = 10 # Errado!
+> let outroLet = variavel + constanteLet # Ok!
+> 
+> # const constante: int = variavel + 2 # Errado!
+> const constante: int = 7 # Certo!
+> ```
 
-O valor de uma atribuição imutável declarada com a palavra-chave ***const*** deve ser conhecido em tempo de compilação (antes que o programa seja executado).
+## Saída e entrada de dados
 
-Por exemplo, podemos declarar a aceleração da gravidade como ***const g = 9.81*** ou ***pi*** como ***const pi = 3.14***, pois sabemos seus valores de antemão e esses valores não mudarão durante a execução de nosso programa.
+### 1º - Imprimindo no terminal
 
 ```nim
-const g = 35
-g = -27         # error (1)
-
-var h = -5
-const i = h + 7 # error (2)
+# Com retorno de linha embutido (\n)
+echo "Olá Mundo!"
+# Para incluir um salto de linha inclua (\n)
+stdout.write("Olá Mundo!\n")
+# ou
+write(stdout, "Olá Mundo!\n")
 ```
 
-1. O valor de uma constante não pode ser alterado.
-
-2. A variável ***h*** não é avaliada em tempo de compilação (é uma variável e seu valor pode mudar durante a execução de um programa), conseqüentemente o valor da constante ***i*** não pode ser conhecido em tempo de compilação, e isso gerará um erro.
-
-Em algumas linguagens de programação, é uma prática comum ter os nomes das constantes escritos em ***ALL_CAPS*** (caixa alta). As constantes em Nim são escritas como qualquer outra variável.
-
-### Let
-
-Atribuições imutáveis declaradas com let não precisam ser conhecidas em tempo de compilação, seu valor pode ser definido a qualquer momento durante a execução de um programa, mas uma vez definido, seu valor não pode ser alterado.
+### 2º - Recebendo texto pelo terminal
 
 ```nim
-let j = 35
-j = -27 # error (1)
+stdout.write "Qual o seu nome: "
+var
+  nome = stdin.readline()
+  sobrenome: string
 
-var k = -5
-let l = k + 7 # (2)
+write(stdout, "E o sobrenome: ")
+sobrenome = readline(stdin)
+
+echo "Bem vindo ao Nim ", nome & " " & sobrenome & "!"
+
+# --> saída:
+# Qual o seu nome: Fulano
+# E o sobrenome: de Tal
+# Bem vindo ao Nim Fulano de Tal!
 ```
 
-1. O valor de um imutável não pode ser alterado.
-2. Em contraste com o exemplo const acima, isso funciona.
-
-Na prática, você verá ou usará ***let*** com mais freqüência do que ***const***.
-
-Embora você possa usar ***var*** para tudo, sua escolha padrão deve ser ***let***. Use ***var*** apenas para as variáveis que serão modificadas.
-
-## Tipos de dados básicos
-
-### Inteiros (integers)
-
-Como visto no capítulo anterior, inteiros são números que são escritos sem um componente fracionário e sem um ponto decimal.
-
-Por exemplo: ***32, -174, 0, 10_000_000*** são todos inteiros. Observe que podemos usar **_** como um separador de milhares, para tornar os números maiores mais legíveis (é mais fácil ver que estamos falando de ***10 milhões*** quando é escrito como ***10_000_000*** em vez de ***10000000***).
-
-Os operadores matemáticos usuais - ***adição ( + ), subtração ( - ), multiplicação ( \* ) e divisão ( / )*** - funcionam como esperado. As três primeiras operações sempre produzem inteiros, enquanto a divisão de dois inteiros sempre dá um número de ponto flutuante (um número com um ponto decimal) como resultado, mesmo se dois números puderem ser divididos sem resto.
-
-A divisão inteira (divisão em que a parte fracionária é descartada) pode ser obtida com o operador ***div***. Um operador ***mod*** é usado se alguém estiver interessado no resto (módulo) de uma divisão inteira. O resultado dessas duas operações é sempre um número inteiro.
-
-***integers.nim***
+### 3º - Receber números
 
 ```nim
-let
-  a = 11
-  b = 4
+# `strutils` para lidar com strings
+# `math` para acessar funções matemáticas
+import strutils, math
 
-echo "a + b = ", a + b 
-echo "a - b = ", a - b
-echo "a * b = ", a * b
-echo "a / b = ", a / b
-echo "a div b = ", a div b
-echo "a mod b = ", a mod b
+# Para operação de exponenciação
+# os elementos devem ser float's
+var
+  base: float
+  expoente: float
+
+stdout.write("Entre com número: ")
+base = stdin.readline().parseFloat()
+
+stdout.write("Entre com expoente: ")
+expoente = stdin.readline().parseFloat()
+
+echo pow(base, expoente)
+
+# --> saída:
+# Entre com número: 2
+# Entre com expoente: 5
+# 32.0
 ```
 
-O comando ***echo*** imprimirá na tela tudo o que o segue separado por vírgulas. Nesse caso do primeiro ***echo***, primeiro imprime a ***string*** ***a + b =*** e, a seguir, na mesma linha, imprime o resultado da expressão ***a + b***.
-
-Podemos compilar e executar o código acima, e a saída deve ser:
-
-```
-a + b = 15
-a - b = 7
-a * b = 44
-a / b = 2.75
-a div b = 2
-a mod b = 3
-```
-
-### Números em ponto fluante (Floats)
-
-Os números de vírgula flutuante, ou simplesmente flutuantes, são uma representação aproximada de números reais.
-
-Por exemplo: ***2.73, -3.14, 5.0, 4e7*** são flutuantes. Observe que podemos usar notação científica para grandes flutuadores, onde o número após o e é o expoente. Neste exemplo, ***4e7*** é uma notação que representa ***4 \* 10 ^ 7***.
-
-Também podemos usar as quatro operações matemáticas básicas entre dois flutuadores. Operadores ***div*** e ***mod*** não são definidos para flutuadores.
-
-***floats.nim***
+### 4º Validando se entrada é um número
 
 ```nim
-let
-  c = 6.75
-  d = 2.25
-
-echo "c + d = ", c + d
-echo "c - d = ", c - d
-echo "c * d = ", c * d
-echo "c / d = ", c / d
-```
-
-```
-c + d = 9.0  
-c - d = 4.5
-c * d = 15.1875
-c / d = 3.0
-```
-
-Observe que nos exemplos de ***adição*** e ***divisão***, embora obtenhamos um número sem uma parte decimal, o resultado ainda é do tipo flutuante.
-
-A precedência das operações matemáticas é como seria de esperar: ***multiplicação*** e ***divisão*** têm prioridade mais alta do que ***adição*** e ***subtração***.
-
-```nim
-echo 2 + 3 * 4
-echo 24 - 8 / 4
-```
-
-```
-14
-22.0
-```
-
-### Convertendo floats e inteiros
-
-Operações matemáticas entre variáveis de diferentes tipos numéricos não são possíveis no Nim e irão produzir um erro:
-
-```nim
-let
-  e = 5
-  f = 23.456
-
-echo e + f   # error
-```
-
-Os valores das variáveis precisam ser convertidos para o mesmo tipo. A conversão é direta: para converter para um inteiro, usamos a função ***int***, e para converter para um ***float***, a função ***float*** é usada.
-
-```nim
-let
-  e = 5
-  f = 23.987
-
-echo float(e) # (1)      
-echo int(f)   # (2)        
-
-echo float(e) + f # (3)  
-echo e + int(f)   # (4)    
-```
-
-1. Imprimir uma versão flutuante de um inteiro e. (e permanece do tipo inteiro)
-2. Imprimindo uma versão inteira de um float f.
-3. Ambos os operandos são flutuantes e podem ser adicionados.
-4. Ambos os operandos são inteiros e podem ser adicionados.
-
-```
-5.0
-23
-28.987
-28
-```
-
-> Ao usar a função ***int*** para converter um ***float*** em um ***inteiro***, nenhum arredondamento será executado. O número simplesmente elimina quaisquer casas decimais.
-> Para realizar o arredondamento devemos chamar outra função, mas para isso devemos saber um pouco mais sobre como usar o Nim.
-
-### Characters
-
-O tipo ***char*** é usado para representar um único caractere ***ASCII***.
-
-Os caracteres são escritos entre duas aspas simples ( ***'*** ). Os caracteres podem ser letras, símbolos ou dígitos únicos. Vários dígitos ou várias letras produzem um erro.
-
-```nim
-let
-  h = 'z'
-  i = '+'
-  j = '2'
-  k = '35' # error
-  l = 'xy' # error
-```
-
-### Strings
-
-***Strings*** podem ser descritos como uma série de caracteres. Seu conteúdo é escrito entre duas aspas duplas ( ***"*** ).
-
-Podemos pensar em ***strings*** como palavras, mas elas podem conter mais de uma palavra, alguns símbolos ou dígitos.
-
-```nim
-let
-  m = "word"
-  n = "A sentence with interpunction."
-  o = ""    # (1)    
-  p = "32"  # (2)  
-  q = "!"   # (3)   
-```
-
-1. Uma ***string*** vazia.
-2. Este não é um número (***int***). Ele está entre aspas duplas, o que o torna uma ***string***.
-3. Embora seja apenas um caractere, não é um caractere porque está entre aspas duplas.
-
-### Caracteres especiais
-
-Se tentarmos imprimir a seguinte string:
-
-```nim
-echo "some\nim\tips"
-```
-
-O resultado pode nos surpreender:
-
-```
-some
-im	ips
-```
-
-Isso ocorre porque existem vários caracteres que têm um significado especial. Eles são usados colocando o caractere de escape **\\** antes deles.
-
-- **\\ n** é um caractere de nova linha
-- **\\ t** é um caractere de tabulação
-- **\\\\** é uma barra invertida (uma vez que **\\** é usado como o caractere de escape)
-
-Se quisermos imprimir o exemplo acima como foi escrito, temos duas possibilidades:
-
-- Use **\\\\** em vez de **\\** para imprimir barras invertidas ou
-- Use ***strings*** brutas com sintaxe ***r '...'*** (colocando uma letra ***r*** imediatamente antes da primeira aspa), nas quais não haja caracteres de escape e nenhum significado especial: tudo é impresso como está.
-
-```nim
-echo "some\\nim\\tips"
-echo r"some\nim\tips"
-```
-
-```
-some\nim\tips
-some\nim\tips
-```
-
-Existem mais caracteres especiais do que os listados acima, e todos eles são encontrados no [manual do Nim](https://nim-lang.org/docs/manual.html#lexical-analysis-string-literals).
-
-### Concatenação de string
-
-***Strings*** em ***Nim*** são mutáveis, o que significa que seu conteúdo pode mudar. Com a função ***add***, podemos adicionar (anexar) outra ***string*** ou um caractere a uma ***string*** existente. Se não quisermos alterar a ***string*** original, também podemos ***concatenar*** (juntar) ***strings*** com o operador ***&***, isso retorna uma nova ***string***.
-
-***stringConcat.nim***
-
-```nim
-var # (1)                     
-  p = "abc"
-  q = "xy"
-  r = 'z'
-
-p.add("def") # (2)            
-echo "p is now: ", p
-
-q.add(r) # (3)                
-echo "q is now: ", q
-
-echo "concat: ", p & q  # (4)  
-
-echo "p is still: ", p
-echo "q is still: ", q
-```
-
-1. Se planejamos modificar ***strings***, eles devem ser declarados como ***var***.
-2. Adicionar outra ***string*** modifica a ***string*** existente ***p*** no local, alterando seu valor.
-3. Também podemos adicionar um ***char*** a uma ***string***.
-4. Concatenar duas ***strings*** produz uma nova ***string***, sem modificar as ***strings*** originais.
-
-```
-p is now: abcdef
-q is now: xyz
-concat: abcdefxyz
-p is still: abcdef
-q is still: xyz
-```
-
-### Boleano
-
-Um tipo de dado ***boolean*** (ou apenas ***bool***) pode ter apenas dois valores: ***true*** ou ***false***. Os booleanos são geralmente usados para controlar o fluxo (consulte o próximo capítulo) e geralmente são o resultado de operadores relacionais.
-
-A convenção de nomenclatura usual para variáveis booleanas é escrevê-las como perguntas simples sim/não (verdadeiro/falso), por exemplo, ***IsEmpty***, ***isFinished***, ***isMoving***, etc.
-
-### Operadores relacionais
-
-Os operadores relacionais testam a relação entre duas entidades, que devem ser comparáveis.
-
-Para comparar se dois valores são iguais, **==** (dois sinais de igual) é usado. Não confunda com **=**, que é usado para atribuição como vimos anteriormente.
-
-Aqui estão todos os operadores relacionais definidos para inteiros:
-
-***relationalOperators.nim***
-
-```nim
-let
-  g = 31
-  h = 99
-
-echo "g is greater than h: ", g > h
-echo "g is smaller than h: ", g < h
-echo "g is equal to h: ", g == h
-echo "g is not equal to h: ", g != h
-echo "g is greater or equal to h: ", g >= h
-echo "g is smaller or equal to h: ", g <= h
-```
-
-```
-g is greater than h: false
-g is smaller than h: true
-g is equal to h: false
-g is not equal to h: true
-g is greater or equal to h: false
-g is smaller or equal to h: true
-```
-
-Também podemos comparar ***caracteres*** e ***strings***:
-
-***relationalOperators.nim***
-
-```nim
-let
-  i = 'a'
-  j = 'd'
-  k = 'Z'
-
-echo i < j
-echo i < k # (1)  
+import times, strutils
 
 let
-  m = "axyb"
-  n = "axyz"
-  o = "ba"
-  p = "ba "
+  time = getTime()
+  ano = time.format("yyyy").parseInt()
 
-echo m < n # (2)  
-echo n < o # (3)
-echo o < p # (4)
+# Apenas para conhecimento:
+#echo time.format("dd-MM-yyyy")  # --> 25-05-2024
+#echo time.format("dd-MMM-yyyy") # --> 25-May-2024
+
+# Validando se a entrada é um número
+try:
+  stdout.write("Qual sua idade?: ")
+  let idade = stdin.readline().parseInt()
+  echo "Seu ano de nascimento: ", ano - idade
+except ValueError as e:
+  echo "Erro: " & e.msg
+
+# --> saída:
+# Qual sua idade?: 55
+# Seu ano de nascimento: 1969
+
+# --> saída c/ exceção:
+# Qual sua idade?: A
+# Erro: invalid integer: A
 ```
 
-1. Todas as letras maiúsculas vêm antes das letras minúsculas.
-2. A comparação de strings funciona caractere por caractere. Os três primeiros caracteres são iguais e o caractere ***b*** é menor que o caractere ***z***.
-3. O comprimento da ***string*** não importa para comparação se seus caracteres não forem idênticos.
-4. A ***string*** mais curta é menor do que a mais longa.
-
-```
-true
-false
-true
-true
-true
-```
-
-### Operadores lógicos
-
-Operadores lógicos são usados para testar a veracidade de uma expressão que consiste em um ou mais valores booleanos.
-
-- Lógico ***and*** retorna verdadeiro apenas se ambos os membros forem verdadeiros
-- Lógico ***or*** retorna verdadeiro se houver pelo menos um membro verdadeiro
-- O ***xor*** lógico retorna verdadeiro se um membro for verdadeiro, mas o outro não
-- O lógico ***not*** nega a veracidade de seu membro: mudando verdadeiro para falso e vice-versa (é o único operador lógico que leva apenas um operando)
-
-***logicalOperators.nim***
+> Refatorando usando regex e lançando nossa própria exceção:
+>
+> ```nim
+> import times, strutils, re
+> 
+> let
+>  time = getTime()
+>  ano = time.format("yyyy").parseInt()
+>  pattern = re"^\d+$" # Regex que verifica se a string contém apenas dígitos
+> 
+> # Função para verificar se a string contém apenas números
+> proc isNumber(s: string): bool =
+>  return s.len > 0 and s.match(pattern)
+> 
+> try:
+>  stdout.write("Qual sua idade?: ")
+>  let input = stdin.readLine()
+> 
+>  if isNumber(input):
+>     let idade = input.parseInt()  # Agora é seguro converter para número
+>     echo "Seu ano de nascimento: ", ano - idade
+>  else:
+>     raise newException(ValueError, "Você entrou com um valor inválido que não é um número: " & input)
+> 
+> except ValueError as e:
+>  echo "Erro: " & e.msg
+> 
+> # --> saída:
+> # Qual sua idade?: 55
+> # Seu ano de nascimento: 1969
+> 
+> # --> saída c/ exceção personalizada:
+> # Qual sua idade?: A
+> # Erro: Você entrou com um valor inválido que não é um número: A
+> ```
+>
+> <img src="icons/location01.png" width=48/> Mais sobre regex no Anexo I.
 
 ```nim
-echo "T and T: ", true and true
-echo "T and F: ", true and false
-echo "F and F: ", false and false
-echo "---"
-echo "T or T: ", true or true
-echo "T or F: ", true or false
-echo "F or F: ", false or false
-echo "---"
-echo "T xor T: ", true xor true
-echo "T xor F: ", true xor false
-echo "F xor F: ", false xor false
-echo "---"
-echo "not T: ", not true
-echo "not F: ", not false
-```
-
-Operadores relacionais e lógicos podem ser combinados para formar expressões mais complexas.
-
-Por exemplo: ***(5 < 7) and (11 + 9 == 32 - 2 \* 6)*** se tornará verdadeiro e ***(20 == 20)***, que se tornará verdadeiro e verdadeiro, e no final dará o resultado final verdadeiro.
-
-### Recapitular
-
-Este foi o capítulo mais longo deste tutorial e cobrimos muito terreno. Reserve um tempo para examinar cada tipo de dados e experimente o que você pode fazer com cada um deles.
-
-Os tipos podem parecer uma restrição no início, mas permitem que o compilador Nim torne seu código mais rápido e certifique-se de que você não esteja fazendo algo errado por acidente - isso é especialmente benéfico em grandes bases de código.
-
-Agora você conhece os tipos de dados básicos e várias operações sobre eles, o que deve ser suficiente para fazer alguns cálculos simples no Nim. Teste seus conhecimentos fazendo os seguintes exercícios.
-
-### Exercícios
-
-1. Crie uma variável imutável contendo sua idade (em anos). Imprima sua idade em dias. (1 ano = 365 dias)
-2. Verifique se sua idade é divisível por 3. (Dica: use o ***mod***)
-3. Crie uma variável imutável contendo sua altura em centímetros. Imprima sua altura em polegadas. (1 pol = 2,54 cm)
-4. Um tubo tem 3/8 de polegada de diâmetro. Expresse o diâmetro em centímetros.
-5. Crie uma variável imutável contendo seu primeiro nome e outra contendo seu sobrenome. Faça uma variável fullName concatenando as duas variáveis anteriores. Não se esqueça de colocar um espaço em branco no meio. Imprima seu nome completo.
-6. Alice ganha R$400 a cada 15 dias. Bob ganha R$3,14 por hora e trabalha 8 horas por dia, 7 dias por semana. Depois de 30 dias, Alice ganhou mais do que Bob? (Dica: use operadores relacionais)
-
-## Controle de fluxo
-
-Até agora, em nossos programas, cada linha de código foi executada em algum ponto. As declarações de fluxo de controle nos permitem ter partes de código que serão executadas apenas se alguma condição booleana for satisfeita.
-
-Se pensarmos em nosso programa como uma estrada, podemos pensar no fluxo de controle como vários ramos, e escolhemos nosso caminho dependendo de alguma condição. Por exemplo, compraremos ovos apenas se seu preço for inferior a algum valor. Ou, se estiver chovendo, levaremos um guarda-chuva, caso contrário (***else***) levaremos óculos escuros.
-
-Escritos em pseudocódigo, esses dois exemplos seriam assim:
-
-```nim
-if precoOvos < precoEsperado:
-  compreOvos
-
-if estaChovendo:
-  traga quarda-chuva
-else:
-  traga óculos escuros
-```
-
-A sintaxe do Nim é muito semelhante, como você verá a seguir.
-
-### Declaração If
-
-Uma instrução ***if***, conforme mostrado acima, é a maneira mais simples de ramificar nosso programa.
-
-A sintaxe Nim para escrever a instrução ***if*** é:
-
-```nim
-if <condition>: # (1)
-  <indented block> # (2)
-```
-
-1. A condição deve ser do tipo booleano: uma variável booleana ou uma expressão relacional ***and*** / ***or*** lógico.
-2. Todas as linhas após a linha ***if*** que são indentadas com dois espaços formam o mesmo bloco e serão executadas apenas se a condição for verdadeira.
-
-As instruções ***if*** podem ser aninhadas, ou seja, dentro de um bloco ***if***, pode haver outra instrução ***if***.
-
-***if.nim***
-
-```nim
-let
-  a = 11
-  b = 22
-  c = 999
-
-if a < b:
-  echo "a is smaller than b"
-  if 10*a < b: # (1)  
-    echo "not only that, a is *much* smaller than b"
-
-if b < c:
-  echo "b is smaller than c"
-  if 10*b < c: # (2)  
-    echo "not only that, b is *much* smaller than c"
-
-if a+b > c: # (3)     
-  echo "a and b are larger than c"
-  if 1 < 100 and 321 > 123: # (4)  
-    echo "did you know that 1 is smaller than 100?"
-    echo "and 321 is larger than 123! wow!"
-```
-
-1. A primeira condição é verdadeira, a segunda é falsa - o ***echo*** interno não é executado.
-2. Ambas as condições são verdadeiras e ambas as linhas são impressas.
-3. A primeira condição é falsa - todas as linhas dentro de seu bloco serão ignoradas, nada é impresso.
-4. Usando a lógica ***and*** dentro da instrução ***if***.
-
-```
-a is smaller than b
-b is smaller than c
-not only that, b is *much* smaller than c
-```
-
-### Else
-
-***Else*** segue após um bloco ***if*** e nos permite ter uma ramificação do código que será executada quando a condição na instrução ***if*** não for verdadeira.
-
-***else.nim***
-
-```nim
-let
-  d = 63
-  e = 2.718
-
-if d < 10:
-  echo "d is a small number"
-else:
-  echo "d is a large number"
-
-if e < 10:
-  echo "e is a small number"
-else:
-  echo "e is a large number"
-```
-
-```
-d is a large number
-e is a small number
-```
-
-> Se você deseja executar um bloco apenas se a declaração for falsa, você pode simplesmente negar a condição com o operador ***not***.
-
-### Elif
-
-***Elif*** é a abreviatura de ***'else if'*** e nos permite encadear várias instruções ***if***.
-
-O programa testa cada afirmação até encontrar uma que seja verdadeira. Depois disso, todas as outras instruções são ignoradas.
-
-***elif.nim***
-
-```nim
-let
-  f = 3456
-  g = 7
-
-if f < 10:
-  echo "f is smaller than 10"
-elif f < 100:
-  echo "f is between 10 and 100"
-elif f < 1000:
-  echo "f is between 100 and 1000"
-else:
-  echo "f is larger than 1000"
-
-if g < 1000:
-  echo "g is smaller than 1000"
-elif g < 100:
-  echo "g is smaller than 100"
-elif g < 10:
-  echo "g is smaller than 10"
-```
-
-```
-f is larger than 1000
-g is smaller than 1000
-```
-
-> No caso de ***g***, embora ***g*** satisfaça todas as três condições, apenas o primeiro ramo é executado, pulando automaticamente todos os outros ramos.
-
-## Case
-
-Uma instrução ***case*** é outra maneira de escolher apenas um dos vários caminhos possíveis, semelhante à instrução ***if*** com vários ***elifs***. Uma declaração de caso, no entanto, não leva várias condições booleanas, mas sim qualquer valor com estados distintos e um caminho para cada valor possível.
-
-Código escrito em bloco ***if-elif*** parecido com este:
-
-```nim
-if x == 5:
-  echo "Five!"
-elif x == 7:
-  echo "Seven!"
-elif x == 10:
-  echo "Ten!"
-else:
-  echo "unknown number"
-```
-
-Pode ser escrito com uma instrução ***case*** como esta:
-
-```nim
-case x
-of 5:
-  echo "Five!"
-of 7:
-  echo "Seven!"
-of 10:
-  echo "Ten!"
-else:
-  echo "unknown number"
-```
-
-Ao contrário da instrução ***if***, a instrução case deve cobrir todos os casos possíveis. Se alguém não estiver interessado em algum desses casos, então: descarte pode ser usado.
-
-***case.nim***
-
-```nim
-let h = 'y'
-
-case h
-of 'x':
-  echo "You've chosen x"
-of 'y':
-  echo "You've chosen y"
-of 'z':
-  echo "You've chosen z"
-else: discard # (1)  
-```
-
-1. Mesmo que estejamos interessados em apenas três valores de ***h***, devemos incluir esta linha para cobrir todos os outros casos possíveis (todos os outros caracteres). Sem ele, o código não seria compilado.
-
-```
-You've chosen y
-```
-
-Também podemos usar vários valores para cada ramificação se a mesma ação ocorrer para mais de um valor.
-
-***multipleCase.nim***
-
-```nim
-let i = 7
-
-case i
-  of 0:
-    echo "i is zero"
-  of 1, 3, 5, 7, 9:
-    echo "i is odd"
-  of 2, 4, 6, 8:
-    echo "i is even"
-  else:
-    echo "i is too large"
-```
-
-```
-i is odd
-```
-
-## Loops
-
-Os ***loops*** são outra construção de fluxo de controle que nos permite executar algumas partes do código várias vezes.
-
-Neste capítulo, conheceremos dois tipos de ***loops***:
-
-- ***loop for***: executa um número conhecido de vezes
-- ***loop while***: execute enquanto alguma condição for satisfeita
-
-### Loop for
-
-### A sintaxe de um loop for é:
-
-```nim
-for <loopVariable> in <iterable>:
-  <loop body>
-```
-
-Tradicionalmente, ***i*** é freqüentemente usado como um nome de uma variável de loop, mas qualquer outro nome pode ser usado. Essa variável estará disponível apenas dentro do loop. Assim que o loop terminar, o valor da variável é descartado.
-
-O iterável é qualquer objeto por meio do qual possamos iterar. Dos tipos já mencionados, as ***strings*** são objetos iteráveis. (Mais tipos iteráveis serão introduzidos no próximo capítulo.)
-
-Todas as linhas no corpo do ***loop*** são executadas em cada ***loop***, o que nos permite escrever com eficiência partes repetitivas do código.
-
-
-
-Se quisermos iterar por meio de um intervalo de números (inteiros) em Nim, a sintaxe do iterável é ***início .. término***, onde início e término são números. Isso irá iterar por todos os números entre o início e o fim, incluindo o início e o fim. Para o intervalo padrão iterável, o início precisa ser menor do que o final.
-
-Se quisermos iterar até um número (sem incluí-lo), podemos usar **`..<`**:
-
-***for1.nim***
-
-```nim
-for n in 5 .. 9: # (1)  
-  echo n
-
-echo ""
-
-for n in 5 ..< 9: # (2) 
-  echo n
-```
-
-1. Iterando através de um intervalo de números usando **`..`** - ambas as extremidades estão incluídas no intervalo.
-2. Iterando pelo mesmo intervalo usando **`..<`** - itera até a extremidade superior, sem incluí-lo.
-
-```
-5
-6
-7
-8
-9
-
-5
-6
-7
-8
-```
-
-Se quisermos iterar por meio de um intervalo de números com um tamanho de passo diferente de um, a contagem é usada. Com a contagem, definimos o valor inicial, o valor de parada (incluído no intervalo) e o tamanho do passo.
-
-***for2.nim***
-
-```nim
-for n in countup(0, 16, 4): # (1)  
-  echo n
-```
-
-1. Contando de zero a 16, com um tamanho de etapa de 4. O final (16) está incluído na faixa.
-
-```
-0
-4
-8
-12
-16
-```
-
-Para iterar por um intervalo de números onde o início é maior do que o final, uma função semelhante chamada contagem regressiva é usada. Mesmo que estejamos em contagem regressiva, o tamanho do passo deve ser positivo.
-
-***for2.nim***
-
-```nim
-for n in countdown(4, 0): # (1)       
-  echo n
-
-echo ""
-
-for n in countdown(-3, -9, 2): # (2)  
-  echo n
-```
-
-1. Para iterar de um número superior para um número inferior, devemos usar a contagem regressiva (o operador .. só pode ser usado quando o valor inicial é menor que o valor final).
-2. Mesmo durante a contagem regressiva, o tamanho do passo deve ser um número positivo.
-
-```
-4
-3
-2
-1
-0
-
--3
--5
--7
--9
-```
-
-Como a ***string*** é iterável, podemos usar um loop for para iterar por meio de cada caractere da string (esse tipo de iteração às vezes é chamado de loop ***for-each***).
-
-***for3.nim***
-
-```nim
-let word = "alphabet"
-
-for letter in word:
-  echo letter
-```
-
-```
-a
-l
-p
-h
-a
-b
-e
-t
-```
-
-Se também precisarmos ter um contador de iteração (começando do zero), podemos conseguir isso usando a syntax  **`for <counterVariable>, <loopVariable> in <iterator>:`**. Isso é muito prático se você deseja iterar por meio de um iterável e, simultaneamente, acessar outro iterável no mesmo deslocamento.
-
-***for3.nim***
-
-```nim
-for i, letter in word:
-  echo "letter ", i, " is: ", letter
-```
-
-```
-letter 0 is: a
-letter 1 is: l
-letter 2 is: p
-letter 3 is: h
-letter 4 is: a
-letter 5 is: b
-letter 6 is: e
-letter 7 is: t
-```
-
-## Loop while
-
- Os loops ***while*** são semelhantes às instruções ***if***, mas eles continuam executando seu bloco de código enquanto a condição permanecer verdadeira. Eles são usados quando não sabemos com antecedência quantas vezes o loop será executado.
-
-Devemos ter certeza de que o loop terminará em algum ponto e não se tornará um loop infinito.
-
-***while.nim***
-
-```nim
-var a = 1
-
-while a*a < 10: # (1) 
-  echo "a is: ", a
-  inc a # (2)
-
-echo "final value of a: ", a
-```
-
-1. Esta condição será verificada todas as vezes antes de entrar no novo loop e executar o código dentro dele.
-2. ***Inc*** é usado para incrementar a por um. É o mesmo que escrever ***a = a + 1*** ou ***a += 1***.
-
-```
-a is: 1
-a is: 2
-a is: 3
-final value of a: 4
-```
-
-## Break e continue
-
-A instrução break é usada para sair prematuramente de um loop, geralmente se alguma condição for atendida.
-
-No próximo exemplo, se não houvesse uma instrução ***if*** com ***break***, o loop continuaria a ser executado e impresso até que ***i*** se tornasse 1000. Com a instrução ***break***, quando ***i*** chegar a 3, saímos imediatamente do loop (antes de imprimir o valor de ***i***).
-
-***break.nim***
-
-```nim
-var i = 1
-
-while i < 1000:
-  if i == 3:
+import strutils
+
+# Procedimento de entrada de dados
+# do terminal
+proc input(label: string): string =
+  stdout.write(label)
+  stdin.readline()
+
+# Loop infinito
+while true:
+  try:
+    let qtde = input("Quantidade desejada em Kilos: ").parseInt()
+    if qtde < 0:
+      echo "Valores negativos não são aceitos!"
+    else:
+      echo "Pedido recebido, e sendo enviado"
+  except ValueError:
+    echo "Não foi possível converter string em inteiro"
+  # De qualquer forma finaliza o loop
+  finally:
     break
-  echo i
-  inc i
 ```
 
-```
-1
-2
-```
+## Controle de fluxo e loops
 
-A instrução continue inicia a próxima iteração de um loop imediatamente, sem executar as linhas restantes da iteração atual. Observe como 3 e 6 estão faltando na saída do seguinte código:
-
-***continue.nim***
+### 1º - `if`, `elif` e `else`
 
 ```nim
-for i in 1 .. 8:
-  if (i == 3) or (i == 6):
-    continue
-  echo i
+import strutils
+
+proc print(texto: string) =
+  stdout.write(texto)
+
+proc input(texto: string): string =
+  stdout.write(texto)
+  stdin.readline()
+
+var flag: bool = true
+
+while flag:
+  try:
+    let num = input("\tEntre com um número de 1 à 100: ").parseInt()
+
+    if num < 0:
+      flag = false
+    elif (num >= 0) and (num <= 50):
+      print "É um número >= 0 e <= 50.\n"
+    elif (num >= 50) and (num <= 100):
+      print "É um número >= 50 e <= 100.\n"
+    else:
+      echo "Você entrou com um número maior que 100.\n"
+  except ValueError:
+    print "Não foi possível converter string em inteiro\n"
+print("Tchau!!!\n")
+
+# --> saída:
+# 	Entre com um número de 1 à 100: a
+# Não foi possível converter string em inteiro
+# 	Entre com um número de 1 à 100: 25
+# É um número >= 0 e <= 50.
+# 	Entre com um número de 1 à 100: 63
+# É um número >= 50 e <= 100.
+# 	Entre com um número de 1 à 100: -1
+# Tchau!!!
 ```
 
-```
-1
-2
-4
-5
-7
-8
-```
+### 2º - `switch case`
 
-## Exercícios
+```nim
+stdout.write("Qual sua fruta preferida? ")
+let res = stdin.readLine()
 
-1. A conjectura de Collatz é um problema matemático popular com regras simples. Primeiro escolha um número. Se for ímpar, multiplique por três e some um; Se for par, divida por dois. Repita este procedimento até chegar a um. Por exemplo. 5 → ímpar → 3 * 5 + 1 = 16 → par → 16/2 = 8 → par → 4 → 2 → 1 → fim!
-   Escolha um inteiro (como uma variável mutável) e crie um loop que imprimirá todas as etapas da conjectura de Collatz. (Dica: use ***div*** para divisão)
-2. Crie uma variável imutável contendo seu nome completo. Escreva um laço for que irá iterar através daquela string e imprimir apenas as vogais (a, e, i, o, u). (Dica: use a instrução ***case*** com vários valores por ramo)
-3. Fizz buzz é um jogo infantil às vezes usado para testar conhecimentos básicos de programação. Contamos os números de um para cima. Se um número for divisível por 3, substitua-o por fizz, se for divisível por 5 substitua-o por buzz e se um número for divisível por 15 (ambos 3 e 5) substitua-o por fizzbuzz. As primeiras rodadas ficariam assim: 1, 2, fizz, 4, buzz, fizz, 7, ...
-   Crie um programa que irá imprimir as primeiras 30 rodadas de Fizz Buzz. (Dica: cuidado com a ordem dos testes de divisibilidade)
-4. Nos exercícios anteriores, você converteu polegadas em centímetros e vice-versa. Crie uma tabela de conversão com vários valores. Por exemplo, a tabela pode ser assim:
+case res:
+  of "kaki", "pêra", "uva":
+    echo "Você tem um gosto refinado"
+  of "banana", "maçã", "goiaba":
+    echo "Você é mais tradicional"
+  of "abacate", "abacaxi", "laranja":
+    echo "Esta é para os fortes"
+  else: echo "Esta é menos comum"
 
-```
-in	| cm
-----------------
-1	| 2.54
-4	| 10.16
-7	| 17.78
-10	| 25.4
-13	| 33.02
-16	| 40.64
-19	| 48.26
+# --> saída:
+# Qual sua fruta preferida? pêra
+# Você tem um gosto refinado
 ```
 
-## Containers
+### 3º - `for` loop
 
-Os contêineres são tipos de dados que contêm uma coleção de itens e nos permitem acessar esses elementos. Normalmente, um contêiner também é iterável, o que significa que podemos usá-los da mesma forma que usamos strings no capítulo de loops.
+```nim
+for i in 0..100:
+  stdout.write i, " "
 
-Por exemplo, uma lista de compras é um contêiner de itens que queremos comprar, e uma lista de números primos é um contêiner de números. Escrito em pseudocódigo:
+echo '\n'
 
+var sequencia = @[1, 2, 3]
+for i, v in sequencia:
+  echo("Indice: ", i, " Valor: ", v)
+
+echo '\n'
+
+for v in sequencia:
+  stdout.write(v, " ")
+
+echo '\n'
+
+# --> saídas:
+# 0 1 2 3 ... 98 99 100
+#
+# Indice: 0 Valor: 1
+# Indice: 1 Valor: 2
+# Indice: 2 Valor: 3
+#
+# 1 2 3
 ```
-listaCompras = [presunto, ovos, pão, maçãs]
-primos = [1, 2, 3, 5, 7]
+
+## Coleções
+
+### 1º - array
+
+```nim
+# De tamanho fixo de elementos homogêneos.
+# Deve ser definido todos
+# os elementos ou nenhum.
+var
+  lista: array[4, int] = [1, 2, 3, 4]
+  # lista2: array[12, int] = [1, 2, 3] # Erro
+  lista2: array[12, int]
+  # Cria um array de 12 posições contendo zeros:
+  # [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ```
 
-### Arrays
+### 2º - sequências
 
-Uma matriz é o tipo de contêiner mais simples. As matrizes são homogêneas, ou seja, todos os elementos em uma matriz devem ter o mesmo tipo. Os arrays também têm um tamanho constante, o que significa que a quantidade de elementos (ou melhor: a quantidade de elementos possíveis) deve ser conhecida em tempo de compilação. Isso significa que chamamos arrays de 'contêiner homogêneo de comprimento constante'.
+```nim
+# De tamanho dinâmico de elementos homogêneos.
+# Formas de criar:
+var
+  sequencia: seq[int]
+  fabricantes: seq[string] = @["Wolksvagen", "Ford", "Fiat"]
+  strings: newSeq[string](6) # Resulta em: @['', '', '', '', '', '']
+  strings2: newSeqOfCap[string](10) # Resulta em: @[]
+```
 
-O tipo de array é declarado usando array [comprimento, tipo], onde comprimento é a capacidade total do array (número de elementos que pode caber) e tipo é um tipo de todos os seus elementos. A declaração pode ser omitida se o comprimento e o tipo puderem ser inferidos dos elementos passados.
+> <img src="icons/sticky-notes01.png" width=48/> **Obs.:** A diferença entre `newSeq` e `newSeqOfCap` é que, em `newSeq`, os espaços são alocados previamente, tornando a adição de novos elementos mais rápida, pois não é necessário alocar mais memória. Outro detalhe é que, em `newSeq`, os elementos são adicionados ao final, enquanto, em `newSeqOfCap`, eles são adicionados no início.
+>
+> **Exemplo:**
+>
+> ```nim
+> var
+> sequencia = newSeq[int](6)
+> sequencia2 = newSeqOfCap[int](6)
+> 
+> sequencia.add(3)
+> sequencia.add(4)
+> 
+> echo "Adicionando novos elementos em um `newSeq`:"
+> echo sequencia
+> 
+> sequencia2.add(3)
+> sequencia2.add(4)
+> 
+> echo "Adicionando novos elementos em um `newSeqOfCap`:"
+> echo sequencia2
+> 
+> # --> saída:
+> # Adicionando novos elementos em um `newSeq`:
+> # @[0, 0, 0, 0, 0, 0, 3, 4]
+> # Adicionando novos elementos em um `newSeqOfCap`:
+> # @[3, 4]
+> ```
 
-Os elementos de uma matriz são colocados entre colchetes.
+### Biblioteca para sequências
+
+```nim
+import std/sequtils
+
+var frutas = newSeqOfCap[string](10)
+
+frutas = concat(frutas, @["kaki", "pêra", "maça"])
+
+echo frutas # --> @["kaki", "pêra", "maça"]
+```
+
+### Array para Seq e vice-versa
 
 ```nim
 var
-  a: array[3, int] = [5, 7, 9]
-  b = [5, 7, 9] # (1)        
-  c = []  # error (2)      
-  d: array[7, string] # (3) 
+  lista: array[5, int] = [1, 2, 3, 4, 5]
+  sequencia: seq[int] = @lista
+  lista2: array[5, int]
+
+for i, el in sequencia:
+  lista2[i] = el
+
+echo lista # [1, 2, 3, 4, 5]
+
+echo sequencia # @[1, 2, 3, 4, 5]
+
+echo lista2 # [1, 2, 3, 4, 5]
 ```
 
-1. Se fornecermos os valores, o comprimento e o tipo do array b são conhecidos em tempo de compilação. Embora correto, não há necessidade de declará-lo especificamente como o array a.
-2. Nem o comprimento nem o tipo dos elementos podem ser inferidos desse tipo de declaração - isso produz um erro.
-3. A maneira correta de declarar um array vazio (que será preenchido posteriormente) é fornecer seu comprimento e tipo, sem fornecer os valores de seus elementos - o array d pode conter sete strings.
-
-Uma vez que o comprimento de uma matriz deve ser conhecido em tempo de compilação, isso não funcionará:
-
-```nim
-const m = 3
-let n = 5
-
-var a: array[m, char]
-var b: array[n, char] # error (1) 
-```
-
-1. Isso produz um erro porque n é declarado usando let - seu valor não é conhecido em tempo de compilação. Só podemos usar valores declarados com const como um parâmetro de comprimento para uma inicialização de array.
-
-### Sequences
-
-Sequências são contêineres semelhantes a arrays, mas seu comprimento não precisa ser conhecido no tempo de compilação e pode mudar durante o tempo de execução: declaramos apenas o tipo dos elementos contidos com seq [type]. As sequências também são homogêneas, ou seja, cada elemento em uma sequência deve ser do mesmo tipo.
-
-Os elementos de uma sequência são colocados entre **@ [** e **]**.
+### Acessando, tanto em arrays como em sequências, por índice ou slices
 
 ```nim
 var
-  e1: seq[int] = @[] # (1)   
-  f = @["abc", "def"] # (2)  
+  lista: array[5, int] = [1, 2, 3, 4, 5]
+  sequencia: seq[int] = @lista
+
+echo lista[1]
+echo sequencia[1]
+
+echo lista[2..3]
+echo sequencia[2..3]
+
+# --> saída:
+# 2
+# 2
+# @[3, 4]
+# @[3, 4]
 ```
 
-1. O tipo de uma sequência vazia deve ser declarado.
-2. O tipo de sequência não vazia pode ser inferido. Nesse caso, é uma sequência contendo strings.
-
-Outra maneira de inicializar uma sequência vazia é chamar o procedimento newSeq. Veremos mais chamadas de procedimento no próximo capítulo, mas por enquanto apenas saiba que esta também é uma possibilidade:
+### Adicionar e Remover elementos
 
 ```nim
+var metaisBasicos = newSeqOfCap[string](12)
+metaisBasicos.add("Alumínio") # @["Alumínio"]
+metaisBasicos.add(@["Índio", "Lata"]) # @["Alumínio", "Índio", "Lata"]
+metaisBasicos.insert("Gálio", 1) # @["Alumínio", "Gálio", "Índio", "Lata"]
+```
+
+### Remover
+
+```nim
+var metaisBasicos = @["Alumínio", "Gálio", "Índio", "Lata"]
+# Para remover um elemento primeiro encontra-se
+# o índice para só depois remover, caso o índice
+# não exista ele retorna -1.
+let indice = metaisBasicos.find("Índio") # 2
+metaisBasicos.del(indice) # @["Alumínio", "Gálio", "Lata"]
+```
+
+ou
+
+```nim
+var metaisBasicos = @["Alumínio", "Gálio", "Índio", "Lata"]
+
+metaisBasicos.del(metaisBasicos.find("Índio")) # @["Alumínio", "Gálio", "Lata"]
+```
+
+Melhor forma de deletar:
+
+```nim
+# Sobrescrevendo o procedimento del.
+# Como a sequência `s` que aqui vem como parâmetro foi
+# declarada com `var` possibilita a alteração de seu
+# conteúdo dentro do procedimento.
+proc del(s: var seq[string], item: string) =
+  let indice = s.find(item)
+  if indice != -1:
+    s.del(indice)
+
+var metaisBasicos = @["Alumínio", "Gálio", "Índio", "Lata"]
+metaisBasicos.del("Lata") # @["Alumínio", "Gálio", "Índio"]
+```
+
+## Mapeando listas
+
+### Map
+
+```nim
+import sequtils, sugar
+
 var
-  e = newSeq[int]() # (1) 
+  lista = @[1, 2, 3, 4, 5, 6]
+  quadrados1: seq[int]
+  quadrados2: seq[int]
+  quadrados3: seq[int]
+
+proc quadrado(x: int): int = x * x
+
+quadrados1 = lista.map(quadrado) # @[1, 4, 9, 16, 25, 36]
+# Ou sem declarar o procedimento `quadrado`:
+quadrados2 = lista.map(proc (x: int): int = x * x)
+# Ou de forma mais limpa:
+quadrados3 = lista.map((x: int) => int x * x) # Usa o módulo `sugar`
+
+echo quadrados1
+echo quadrados2
+echo quadrados3
+# --> saída:
+# @[1, 4, 9, 16, 25, 36]
+# @[1, 4, 9, 16, 25, 36]
+# @[1, 4, 9, 16, 25, 36]
 ```
 
-1. Fornecer o parâmetro de tipo entre colchetes permite que o procedimento saiba que deve retornar uma sequência de um determinado tipo.
-   Um erro frequente é a omissão do final (), que deve ser incluído.
+> <img src="icons/sticky-notes01.png" width=48/> **Obs.:** O módulo `sugar` facilita a escrita de funções a serem passadas como parâmetro que são mais simples e são usadas apenas 1 vês, então ter uma forma simples de declarar uma função é útil nesses casos.
 
-Podemos adicionar novos elementos a uma sequência com a função add, semelhante ao que fizemos com strings. Para que isso funcione, a sequência deve ser mutável (definida com var) e o elemento que estamos adicionando deve ser do mesmo tipo que os elementos da sequência.
-
-***seq.nim***
+###  Apply
 
 ```nim
+# Quando não queremos retornar uma nova
+# sequência, e sim alterar a sequência
+# original (apply não tem retorno):
+import sequtils, sugar
+
+var lista = @[1, 2, 3, 4, 5, 6]
+proc quadrado(x: int): int = x * x
+
+lista.apply(quadrado) # @[1, 4, 9, 16, 25, 36]
+# Ou sem declarar o procedimento `quadrado`:
+lista.apply(proc (x: int): int = x * x)
+# Ou de forma mais limpa:
+lista.apply((x: int) => int x * x)
+```
+
+### Filter
+
+```nim
+import sequtils
+proc par(num: int): bool = num mod 2 == 0
+
 var
-  g = @['x', 'y']
-  h = @['1', '2', '3']
+  numeros = @[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  pares = numeros.filter(par)
 
-g.add('z') # (1)  
-echo g
-
-h.add(g) # (2)    
-echo h
+echo pares # --> @[2, 4, 6, 8, 10, 12]
 ```
 
-1. Adicionando um novo elemento do mesmo tipo (char).
-2. Adicionando outra sequência contendo o mesmo tipo.
-
-```
-@['x', 'y', 'z']
-@['1', '2', '3', 'x', 'y', 'z']
-```
-
-Tentar passar tipos diferentes para as sequências existentes produzirá um erro:
+ou
 
 ```nim
-var i = @[9, 8, 7]
+import sequtils, sugar
 
-i.add(9.81) # error (1) 
-g.add(i)    # error (2) 
-```
-
-1. Tentando adicionar um ***float*** a uma sequência de ***int***.
-2. Tentando adicionar uma sequência de ***int*** a uma sequência de ***char***.
-
-Como as sequências podem variar em comprimento, precisamos encontrar uma maneira de obter seu comprimento, para isso podemos usar a função ***len***.
-
-```nim
-var i = @[9, 8, 7]
-echo i.len
-
-i.add(6)
-echo i.len
-```
-
-```
-3
-4
-```
-
-## Indexar e fatiar (Indexing and slicing)
-
-A indexação nos permite obter um elemento específico de um contêiner por meio de seu índice. Pense no índice como uma posição dentro do contêiner.
-
-Nim, como muitas outras linguagens de programação, tem indexação baseada em zero, o que significa que o primeiro elemento em um contêiner tem o índice zero, o segundo elemento tem o índice um, etc.
-
-Se quisermos indexar "para trás", isso é feito usando o prefixo **`^`**. O último elemento (primeiro na parte de trás) tem o índice **`^ 1`**.
-
-A sintaxe para indexação é **`<container>[<index>]`**.
-
-***indexing.nim***
-
-```nim
-let j = ['a', 'b', 'c', 'd', 'e']
-
-echo j[1] # (1)   
-echo j[^1] # (2)  
-```
-
-1. Indexação baseada em zero: o elemento no índice 1 é b.
-2. Obtendo o último elemento.
-
-```
-b
-e
-```
-
-O fatiamento nos permite obter uma série de elementos com uma chamada. Ele usa a mesma sintaxe dos intervalos (introduzidos na seção de ***loop for***).
-
-Se usarmos a sintaxe ***start .. stop***, ambas as extremidades serão incluídas na fatia. Usando a sintaxe ***start ..< stop***, o índice de parada não é incluído na fatia.
-
-A sintaxe para fatiar é **`<container>[<start> .. <stop>]`**.
-
-***indexing.nim***
-
-```nim
-echo j[0 .. 3]
-echo j[0 ..< 3]
-```
-
-```
-@[a, b, c, d]
-@[a, b, c]
-```
-
-Tanto a indexação quanto o fracionamento podem ser usados para atribuir novos valores aos contêineres e strings mutáveis existentes.
-
-***assign.nim***
-
-```nim
 var
-  k: array[5, int]
-  l = @['p', 'w', 'r']
-  m = "Tom and Jerry"
+  numeros = @[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  pares = numeros.filter((num: int) => bool num mod 2 == 0) # Usa o módulo `sugar`
 
-for i in 0 .. 4: # (1)  
-  k[i] = 7 * i
-echo k
-
-l[1] = 'q' # (2)        
-echo l
-
-m[8 .. 9] = "Ba" # (3)  
-echo m
+echo pares # --> @[2, 4, 6, 8, 10, 12]
 ```
 
-1. A matriz de comprimento 5 possui índices de zero a quatro. Iremos atribuir um valor a cada elemento do array.
-2. Atribuir (alterar) o segundo elemento (índice 1) de uma sequência.
-3. Alterar caracteres de uma string nos índices 8 e 9.
+### KeepIf
 
+```nim
+# Quando não queremos retornar
+# uma nova sequência.
+import sequtils
+proc par(num: int): bool = num mod 2 == 0
+
+var numeros = @[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+
+numeros.keepIf(par)
+
+echo numeros # --> @[2, 4, 6, 8, 10, 12]
 ```
-[0, 7, 14, 21, 28]
-@['p', 'q', 'r']
-Tom and Barry
+
+ou
+
+```nim
+import sequtils, sugar
+
+var numeros = @[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+
+numeros.keepIf((num: int) => bool num mod 2 == 0) # Usa o módulo `sugar`
+
+echo numeros # --> @[2, 4, 6, 8, 10, 12]
+```
+
+### Foldl (similar ao Reduce de outras linguagens)
+
+```nim
+import sequtils
+
+var
+  numeros = @[1, 2, 3, 4, 5, 6, 7, 8]
+  soma = numeros.foldl(a + b, 0) # 36
+  maior = numeros.foldl(if a > b: a else: b, 0) # 8
 ```
 
 ## Tuplas
 
-Ambos os contêineres que vimos até agora são homogêneos. Por outro lado, as tuplas contêm dados heterogêneos, ou seja, os elementos de uma tupla podem ser de tipos diferentes. Da mesma forma que as matrizes, as tuplas têm tamanho fixo.
+```nim
+# De tamanho fixo de elementos
+# tanto homogêneos como heterogêneos.
+# elementos podem ser nomeados
+# ou não e nesse caso são
+# acessados por indice.
+var
+  pessoa = (nome: "Fulano", idade: 25)
+  pessoa2 = ("Sicrano", 30)
 
-Os elementos de uma tupla são colocados entre parênteses.
+echo("Nome: ", pessoa.nome, " - Idade: ", pessoa.idade)
 
-***tuples.nim***
+echo("Nome: ", pessoa2[0], " - Idade: ", pessoa2[1])
+
+# --> saída:
+# Nome: Fulano - Idade: 25
+# Nome: Sicrano - Idade: 30
+```
+
+### Combinando tuplas com sequências
 
 ```nim
-let n = ("Banana", 2, 'c') # (1)  
-echo n
+var
+  pessoas = @[
+    (nome: "Fulano", idade: 25),
+    (nome: "Sicrano", idade: 30),
+    (nome: "Beltrano", idade: 20)
+  ]
+
+for i, pessoa in pessoas:
+  echo(i, ": Nome: ", pessoa.nome, " - Idade: ", pessoa.idade)
+
+echo("\nTotal de registros: ", pessoas.len)
+
+# --> saída:
+# 0: Nome: Fulano - Idade: 25
+# 1: Nome: Sicrano - Idade: 30
+# 2: Nome: Beltrano - Idade: 20
+# Total de registros: 3
 ```
 
-1. As tuplas podem conter campos de diferentes tipos. Neste caso: ***string***, ***int*** e ***char***.
+### Extras
 
-```
-(Field0: "Banana", Field1: 2, Field2: 'c')
-```
+### Zip
 
-Também podemos nomear cada campo em uma tupla para distingui-los. Isso pode ser usado para acessar os elementos da tupla, em vez de indexar.
-
-***tuples.nim***
+Pega duas sequências e retorna uma sequência de tuplas:
 
 ```nim
-var o = (name: "Banana", weight: 2, rating: 'c')
+import sequtils
 
-o[1] = 7 # (1)          
-o.name = "Apple" # (2)  
-echo o
+var
+  simbolos = @["Cu", "Al", "Ag", "Au", "Fe", "Ni"]
+  metais = @["Cobre", "Alumínio", "Prata", "Ouro", "Ferro", "Níquel"]
+  seqTuplas = simbolos.zip(metais)
+
+echo seqTuplas
+# --> saída:
+# @[("Cu", "Cobre"), ("Al", "Alumínio"), ("Ag", "Prata"), ("Au", "Ouro"), ("Fe", "Ferro"), ("Ni", "Níquel")]
 ```
 
-1. Alterar o valor de um campo usando o índice do campo.
-2. Alterar o valor de um campo usando o nome do campo.
+### Unzip
 
-```
-(name: "Apple", weight: 7, rating: 'c')
-```
-
-Exercícios
-
-1. Crie uma matriz vazia que pode conter dez inteiros.
-   - Preencha essa matriz com números 10, 20, ..., 100. (Dica: use loops)
-   - Imprima apenas os elementos dessa matriz que estão em índices ímpares (valores 20, 40,…).
-   - Multiplique os elementos em índices pares por 5. Imprima a matriz modificada.
-
-2. Refaça o exercício de conjectura de Collatz, mas desta vez, em vez de imprimir cada passo, adicione-o a uma sequência.
-
-   - Escolha um número inicial. As escolhas interessantes, entre outras, são 9, 19, 25 e 27.
-
-   - Crie uma sequência cujo único membro seja aquele número inicial
-
-   - Usando a mesma lógica de antes, continue adicionando elementos à sequência até chegar a 1
-
-   - Imprima o comprimento da sequência e a própria sequência
-
-3. Encontre o número em um intervalo de 2 a 100 que produzirá a sequência de Collatz mais longa.
-
-   - Para cada número no intervalo determinado, calcule sua sequência de Collatz
-   - Se o comprimento da sequência atual for maior do que o registro anterior, salve o comprimento atual e o número inicial como um novo registro (você pode usar a tupla (longestLength, StartingNumber) ou duas variáveis separadas)
-   - Imprime o número inicial que fornece a sequência mais longa e seu comprimento
-
-## Procedures
-
-Os procedimentos, ou funções como são chamados em algumas outras linguagens de programação, são partes do código que executam uma tarefa específica, empacotados como uma unidade. A vantagem de agrupar o código assim é que podemos chamar esses procedimentos em vez de escrever todo o código novamente quando quisermos usar o código do procedimento.
-
-Em alguns dos capítulos anteriores, vimos a conjectura de Collatz em vários cenários diferentes. Envolvendo a lógica da conjectura de Collatz em um procedimento, poderíamos ter chamado o mesmo código para todos os exercícios.
-
-Até agora, usamos muitos procedimentos integrados, como ***echo*** para impressão, ***add*** para adicionar elementos a uma sequência, ***inc*** para aumentar o valor de um inteiro, ***len*** para obter o comprimento de um contêiner, etc. Agora veremos Como criar e usar nossos próprios procedimentos.
-
-Algumas das vantagens de usar procedimentos são:
-
-- Reduzindo a duplicação de código
-- Mais fácil de ler o código, pois podemos nomear as peças pelo que fazem
-- Decompor uma tarefa complexa em etapas mais simples
-
-Conforme mencionado no início desta seção, os procedimentos são freqüentemente chamados de funções em outras linguagens. Na verdade, esse é um nome um tanto impróprio se considerarmos a definição matemática de uma função. As funções matemáticas recebem um conjunto de argumentos (como f (x, y), onde f é uma função e x e y são seus argumentos) e sempre retornam a mesma resposta para a mesma entrada.
-
-Os procedimentos programáticos, por outro lado, nem sempre retornam a mesma saída para uma determinada entrada. Às vezes, eles não devolvem nada. Isso ocorre porque nossos programas de computador podem armazenar estados nas variáveis mencionadas anteriormente, que os procedimentos podem ler e alterar. No Nim, a palavra ***func*** é atualmente reservada para ser usada como o tipo de função mais matematicamente correto, sem forçar efeitos colaterais.
-
-### Declarando um procedure
-
-Antes de podermos usar (chamar) nosso procedimento, precisamos criá-lo e definir o que ele faz.
-
-Um procedimento é declarado usando a palavra-chave ***proc*** e o nome do procedimento, seguido pelos parâmetros de entrada e seu tipo entre parênteses, e a última parte são dois pontos e o tipo do valor retornado de um procedimento, como este:
-
-```
-proc <name>(<p1>: <type1>, <p2>: <type2>, ...): <returnType>
-```
-
-O corpo de um procedimento é escrito no bloco recuado seguindo a declaração anexada com um sinal **=**.
-
-***callProcs.nim***
+Faz o inverso, pega uma sequência de tuplas e divide em duas sequências:
 
 ```nim
-proc findMax(x: int, y: int): int = # (1)  
-  if x > y:
-    return x # (2)  
-  else:
-    return y
-  # this is inside of the procedure
-# this is outside of the procedure
+import sequtils
+
+var
+  seqTuplas = @[
+    ("Cu", "Cobre"), ("Al", "Alumínio"), ("Ag", "Prata"),
+    ("Au", "Ouro"), ("Fe", "Ferro"), ("Ni", "Níquel")
+  ]
+  (simbolos, metais) = seqTuplas.unzip()
+
+echo simbolos # --> @["Cu", "Al", "Ag", "Au", "Fe", "Ni"]
+echo metais # --> @["Cobre", "Alumínio", "Prata", "Ouro", "Ferro", "Níquel"]
 ```
 
-1. Procedimento de declaração denominado findMax, que possui dois parâmetros, x e y, e retorna um tipo int.
-2. Para retornar um valor de um procedimento, usamos a palavra-chave return.
+### Count
 
 ```nim
-proc echoLanguageRating(language: string) = # (1) 
-  case language
-  of "Nim", "nim", "NIM":
-    echo language, " is the best language!"
-  else:
-    echo language, " might be a second-best language."
+# Conta quantas vezes um elemento
+# aparece em uma sequência.
+import sequtils
+var
+  numeros = @[1, 1, 3, 1, 5, 7, 4, 4]
+  repeticoesDoUm = numeros.count(1)
+
+echo repeticoesDoUm # --> 3
 ```
 
-1. O procedimento ***echoLanguageRating*** apenas ecoa o nome fornecido, não retorna nada, então o tipo de retorno não é declarado.
-
-Normalmente não temos permissão para alterar nenhum dos parâmetros que recebemos. Fazer algo assim gerará um erro:
+### MaxIndex e MinIndex
 
 ```nim
-proc changeArgument(argument: int) =
-  argument += 5
+# Retornam o índice do
+# maior e menor valor
+# de uma sequência.
+import sequtils
+var
+  numeros = @[1, 2, 3, 9, 4, 5, 6, 0]
+  indiceDoMaior = numeros.maxIndex()
+  indiceDoMenor = numeros.minIndex()
 
-var ourVariable = 10
-changeArgument(ourVariable)
+echo "numeros[", indiceDoMaior, "] = ", numeros[indiceDoMaior]
+echo "numeros[", indiceDoMenor, "] = ", numeros[indiceDoMenor]
+
+# --> saída:
+# numeros[3] = 9
+# numeros[7] = 0
 ```
 
-Para que isso funcione, precisamos permitir que Nim e o programador usando nosso procedimento alterem o argumento declarando-o como uma variável:
+## Funções impuras (proc) e funções puras (func)
+
+### 1º - Funções impuras (proc)
+
+- As funções impuras, também conhecidas como procedimentos (proc), são aquelas que podem causar efeitos colaterais, como modificar variáveis globais, alterar valores passados, imprimir algo na tela, receber input, interagir com o sistema de arquivos, realizar I/O, etc.
+- Elas não possuem um valor de retorno definido, pois seu objetivo é realizar alguma ação, não necessariamente retornar um valor.
+- As funções impuras podem ser úteis quando você precisa realizar tarefas que envolvem modificações no estado do programa, como atualizar uma variável ou escrever em um arquivo.
+
+Exemplo de uma função impura (proc):
 
 ```nim
-proc changeArgument(argument: var int) = # (1) 
-  argument += 5
+var contadorGlobal = 0
 
-var ourVariable = 10
-changeArgument(ourVariable)
-echo ourVariable
-changeArgument(ourVariable)
-echo ourVariable
+proc incrementaContador() =
+  contadorGlobal += 1 # Efeito colateral modifica variável global
+
+incrementaContador()
+echo contadorGlobal # --> 1
 ```
-
-1. Observe como o argumento agora é declarado como ***var int*** e não apenas como ***int***.
-
-Isso, é claro, significa que o nome que passamos deve ser declarado também como uma variável, passando algo atribuído com const ou let gerará um erro.
-
-Embora seja uma boa prática passar as coisas como argumentos, também é possível usar nomes declarados fora do procedimento, tanto variáveis quanto constantes:
 
 ```nim
-var x = 100
+# Parâmetro imutável.
+proc soma(a, b: int) =
+  echo a, " + ", b, " = ", a + b # Efeito colateral Imprime algo na tela
 
-proc echoX() =
-  echo x # (1)  
-  x += 1 # (2)  
-
-echoX()
-echoX()
+soma(10, 20) # --> 10 + 20 = 30
 ```
-
-1. Aqui, acessamos a variável externa ***x***.
-2. Também podemos atualizar seu valor, uma vez que é declarado como uma variável.
-
-```
-100
-101
-```
-
-### Chamando os procedimentos
-
-Depois de declarar um procedimento, podemos chamá-lo. A maneira usual de chamar procedimentos / funções em muitas linguagens de programação é declarar seu nome e fornecer os argumentos entre parênteses, como este:
-
-```
-<procName>(<arg1>, <arg2>, ...)
-```
-
-O resultado da chamada de um procedimento pode ser armazenado em uma variável.
-
-Se quisermos chamar nosso procedimento findMax do exemplo acima e salvar o valor de retorno em uma variável, podemos fazer isso com:
-
-***callProcs.nim***
 
 ```nim
-let
-  a = findMax(987, 789)
-  b = findMax(123, 321)
-  c = findMax(a, b) # (1)  
+var flag: bool = true
 
-echo a
-echo b
-echo c
+# Parâmetro mutável
+proc mudaEstado(f: var bool) =
+  f = if f: false else: true # Efeito colateral alterou valor de
+                             # variável passado como parâmetro.
+
+mudaEstado(flag)
+
+echo flag # --> false
 ```
 
-1. O resultado da função ***findMax*** é aqui denominado ***c***, e é chamado com os resultados de nossas duas primeiras chamadas (***findMax (987, 321)***).
+### 2º - Funções puras (func)
 
-```
-987
-321
-987
-```
+- As funções puras são aquelas que não causam efeitos colaterais e sempre retornam o mesmo valor para os mesmos argumentos de entrada.
+- Elas não modificam variáveis globais, não realizam I/O e não dependem de nenhum estado externo ao escopo da função.
+- As funções puras são determinísticas, ou seja, sempre produzem o mesmo resultado para os mesmos argumentos de entrada.
+- Elas são úteis quando você precisa realizar cálculos ou transformações de dados de uma maneira segura e previsível.
 
-O Nim, ao contrário de muitas outras linguagens, também oferece suporte à Sintaxe de Chamada de Função Uniforme, que permite muitas maneiras diferentes de chamar procedimentos.
-
-Esta é uma chamada em que o primeiro argumento é escrito antes do nome da função e o resto dos parâmetros são declarados entre parênteses:
-
-```
-<arg1>.<procName>(<arg2>, ...)
-```
-
-Usamos essa sintaxe quando adicionamos elementos a uma sequência existente (**`<seq>.add(<element>)`**), pois isso a torna mais legível e expressa nossa intenção de maneira mais clara do que escrever **`add(<seq>, <element>)`**. Também podemos omitir os parênteses em torno dos argumentos:
-
-```
-<procName> <arg1>, <arg2>, ...
-```
-
-Vimos esse estilo sendo usado quando chamamos o procedimento ***echo*** e ao chamar o procedimento ***len*** sem nenhum argumento. Esses dois também podem ser combinados dessa forma, mas essa sintaxe, entretanto, não é vista com muita frequência:
-
-```
-<arg1>.<procName> <arg2>, <arg3>, ...
-```
-
-A sintaxe de chamada uniforme permite um encadeamento mais legível de vários procedimentos:
-
-***ufcs.nim***
+Exemplo de uma função pura (func):
 
 ```nim
-proc plus(x, y: int): int = # (1)  
-  return x + y
-
-proc multi(x, y: int): int =
-  return x * y
-
-let
-  a = 2
-  b = 3
-  c = 4
-
-echo a.plus(b) == plus(a, b)
-echo c.multi(a) == multi(c, a)
-
-
-echo a.plus(b).multi(c) # (2)  
-echo c.multi(b).plus(a) # (3)  
-```
-
-1. Se vários parâmetros forem do mesmo tipo, podemos declarar seu tipo desta forma compacta.
-2. Primeiro adicionamos ***a*** e ***b***, então o resultado dessa operação (***2 + 3 = 5***) é passado como o primeiro parâmetro para o procedimento ***multi***, onde é multiplicado por c (***5 \* 4 = 20***).
-3. Primeiro, multiplicamos ***c*** e ***b***, então o resultado dessa operação (***4 \* 3 = 12***) é passado como o primeiro parâmetro para o procedimento ***plus***, onde é adicionado com ***a*** (***12 + 2 = 14***).
-
-```
-true
-true
-20
-14
-```
-
-### Variável de resultado
-
-No Nim, todo procedimento que retorna um valor tem uma variável de resultado declarada implicitamente e inicializada (com um valor padrão). O procedimento retornará o valor desta variável de resultado quando atingir o final de seu bloco indentado, mesmo sem declaração de retorno.
-
-***result.nim***
-
-```nim
-proc findBiggest(a: seq[int]): int = # (1)  
-  for number in a:
-    if number > result:
-      result = number
-  # the end of proc (2)                   
-
-let d = @[3, -5, 11, 33, 7, -15]
-echo findBiggest(d)
-```
-
-1. O tipo de retorno é ***int***. A variável ***result*** é inicializada com o valor padrão para ***int: 0***.
-2. Quando o final do procedimento é alcançado, o valor do ***result*** é retornado.
-
-```
-33
-```
-
-Observe que este procedimento serve para demonstrar a variável ***result***, e não está 100% correto: se você passasse uma sequência contendo apenas números negativos, este procedimento retornaria ***0*** (que não está contido na sequência).
-
-> ***Cuidado!*** Em versões mais antigas do Nim (antes do ***Nim 0.19.0***), o valor padrão de ***strings*** e ***sequências*** era nulo, e quando íamos usá-los como tipos de retorno, a variável ***result*** precisaria ser inicializada como uma ***string*** vazia (***""***) ou como uma sequência vazia (***@ []***).
-
-***result.nim***
-
-```nim
-proc keepOdds(a: seq[int]): seq[int] =
-  # result = @[] (1)          
-  for number in a:
-    if number mod 2 == 1:
-      result.add(number)
-
-
-let f = @[1, 6, 4, 43, 57, 34, 98]
-echo keepOdds(f)
-```
-
-1. Na versão ***Nim 0.19.0*** e mais recente, esta linha não é necessária - as sequências são inicializadas automaticamente como sequências vazias.
-   Em versões mais antigas do Nim, as sequências devem ser inicializadas e, sem essa linha, o compilador geraria um erro. (Observe que ***var*** não deve ser usado, pois o resultado já está declarado implicitamente.)
-
-```
-@[1, 43, 57]
-```
-
-Dentro de um procedimento, também podemos chamar outros procedimentos.
-
-***filterOdds.nim***
-
-```nim
-proc isDivisibleBy3(x: int): bool =
-  return x mod 3 == 0
-
-proc filterMultiplesOf3(a: seq[int]): seq[int] =
-  # result = @[] (1)            
-  for i in a:
-    if i.isDivisibleBy3(): # (2)  
-      result.add(i)
-
-
-let
-  g = @[2, 6, 5, 7, 9, 0, 5, 3]
-  h = @[5, 4, 3, 2, 1]
-  i = @[626, 45390, 3219, 4210, 4126]
-
-echo filterMultiplesOf3(g)
-echo h.filterMultiplesOf3()
-echo filterMultiplesOf3 i # (3)
-```
-
-1. Mais uma vez, esta linha não é necessária nas versões mais recentes do Nim.
-2. Chamando o procedimento declarado anteriormente. Seu tipo de retorno é ***bool*** e pode ser usado na instrução ***if***.
-3. A terceira forma de chamar um procedimento, como vimos acima.
-
-```
-@[6, 9, 0, 3]
-@[3]
-@[45390, 3219]
-```
-
-### Declaração de encaminhamento
-
-Conforme mencionado no início desta seção, podemos declarar um procedimento sem um bloco de código. A razão para isso é que temos que declarar os procedimentos antes de podermos chamá-los, fazer isso não funcionará:
-
-```nim
-echo 5.plus(10) # error (1)      
-
-proc plus(x, y: int): int = # (2)  
-  return x + y
-```
-
-1. Isso gerará um erro, pois o procedimento ***plus*** ainda não foi definido.
-2. Aqui nós definimos ***plus***, mas como é depois de usá-lo, Nim ainda não sabe sobre isso.
-
-A maneira de contornar isso é chamada de declaração de encaminhamento:
-
-```nim
-proc plus(x, y: int): int # (1)    
-
-echo 5.plus(10) # (2)              
-
-proc plus(x, y: int): int = # (3)  
-  return x + y
-```
-
-1. Aqui, dizemos a Nim que ele deve considerar que o procedimento plus existe com essa definição.
-2. Agora estamos livres para usá-lo em nosso código, isso vai funcionar.
-3. Isso é onde o plus é realmente implementado, isso deve corresponder à nossa definição anterior.
-
-### Exercícios
-
-1. Crie um procedimento que cumprimente uma pessoa (**`imprima "Olá, <nome>"`**) com base no nome fornecido. Crie uma sequência de nomes. Cumprimente cada pessoa usando o procedimento criado.
-
-2. Crie um procedimento findMax3 que retornará o maior dos três valores.
-3. Os pontos no plano 2D podem ser representados como tupla [x, y: float]. Escreva um procedimento que receberá dois pontos e retornará um novo ponto que é a soma desses dois pontos (adicione x e y separadamente).
-4. Crie dois procedimentos tick e tock que ecoam as palavras 'tick' e 'tock'. Tenha uma variável global para controlar quantas vezes eles foram executados, e execute um do outro até que o contador alcance 20. A saída esperada é obter linhas com 'tick' e 'tock' alternando 20 vezes. (Dica: use declarações de encaminhamento.)
-
-> Você pode pressionar Ctrl + C para interromper a execução de um programa se entrar em um loop infinito.
-
-Teste todos os procedimentos chamando-os com parâmetros diferentes.
-
-## Módulos
-
-Até agora, usamos a funcionalidade que está disponível por padrão sempre que iniciamos um novo arquivo Nim. Isso pode ser estendido com módulos, que fornecem mais funcionalidade para algum tópico específico.
-
-Alguns dos módulos Nim mais usados são:
-
-- ***strutils***: funcionalidade adicional ao lidar com strings
-- ***sequtils***: funcionalidade adicional para sequências
-- ***math***: funções matemáticas (logaritmos, raízes quadradas, ...), trigonometria (sen, cos, ...)
-- ***times***: medir e lidar com o tempo
-
-Mas há muitos mais, tanto na chamada biblioteca padrão quanto no gerenciador de pacotes ágil.
-
-### Importando um módulo
-
-Se quisermos importar um módulo e todas as suas funcionalidades, basta colocar **import \<moduleName\>** em nosso arquivo. Isso geralmente é feito na parte superior do arquivo para que possamos ver facilmente o que nosso código usa.
-
-***stringutils.nim***
-
-```nim
-import strutils # (1)       
-
-let
-  a = "My string with whitespace."
-  b = '!'
-
-echo a.split() # (2)        
-echo a.toUpperAscii() # (3) 
-echo b.repeat(5) # (4)      
-```
-
-1. Importando ***strutils***.
-2. Usando o módulo ***split*** de ***strutils***. Ele divide a ***string*** em uma sequência de palavras.
-3. ***toUpperAscii*** converte todas as letras ***ASCII*** em maiúsculas.
-4. ***repeat*** também é do módulo ***strutils*** e repete um caractere ou uma ***string*** inteira a quantidade de vezes solicitada.
-
-```
-@["My", "string", "with", "whitespace."]
-MY STRING WITH WHITESPACE.
-!!!!!
-```
-
-> Para os usuários vindos de outras linguagens de programação (especialmente Python), a maneira como as importações funcionam no Nim pode parecer 'errada'. Se for esse o caso, [esta](https://narimiran.github.io/2019/07/01/nim-import.html) é a leitura recomendada.
-
-***maths.nim***
-
-```nim
-import math # (1)                 
-
-let
-  c = 30.0 # degrees
-  cRadians = c.degToRad() # (2)   
-
-echo cRadians
-echo sin(cRadians).round(2) # (3) 
-
-echo 2^5 # (4)                    
-```
-
-1. Importando ***math***.
-2. Convertendo graus em radianos com ***degToRad***.
-3. O seno recebe radianos. Arredondamos (também a partir do módulo de ***math***) o resultado para no máximo 2 casas decimais. (Caso contrário, o resultado seria: ***0.4999999999999999***)
-4. O módulo ***math*** também possui o operador **^** para calcular as potências de um número.
-
-```
-0.5235987755982988
-0.5
-32
-```
-
-### Criando o nosso próprio
-
-Freqüentemente, temos tanto código em um projeto que faz sentido dividi-lo em partes para que cada um faça uma determinada coisa. Se você criar dois arquivos lado a lado em uma pasta, vamos chamá-los de firstFile.nim e secondFile.nim, você pode importar um do outro como um módulo:
-
-***firstFile.nim***
-
-```nim
-proc plus*(a, b: int): int = # (1) 
+func add(a, b: int): int =
   return a + b
 
-proc minus(a, b: int): int = # (2) 
-  return a - b
+let result = add(2, 3)
+echo result # --> 5
 ```
-
-1. Observe como o procedimento de adição agora tem um asterisco (*) após seu nome, isso informa ao Nim que outro arquivo importando este poderá usar este procedimento.
-2. Por outro lado, isso não estará visível ao importar este arquivo.
-
-***secondFile.nim***
 
 ```nim
-import firstFile # (1)          
+from math import sqrt, pow
 
-echo plus(5, 10) # (2)          
-echo minus(10, 5) # error (3) 
+func calculaRaizes(a, b, c: float): (float, float) =
+  let delta = sqrt(pow(b, 2) - (4*a*c))
+  return (((-b + delta) / (2*a)), ((-b - delta) / (2*a)))
+
+let (r1, r2) = calculaRaizes(1, -3, -10)
+
+echo "r1: ", r1
+echo "r2: ", r2
+
+# --> saída:
+# r1: 5.0
+# r2: -2.0
 ```
 
-1. Aqui, importamos ***firstFile.nim***. Não precisamos colocar a extensão ***.nim*** aqui.
-2. Isso funcionará bem e produzirá ***15***, conforme declarado no ***firstFile*** e visível para nós.
-3. No entanto, isso gerará um erro, pois o procedimento ***minus*** não é visível, pois não tem um asterisco seguido ao seu nome em ***firstFile.nim***.
+Funções puras são definitivamente mais fáceis de serem escritas, testadas e alteradas, pois elas estão sempre contidas nelas mesmas, e quando precisamos realizar efeitos colaterais utilizamos funções impuras.
 
-Caso você tenha mais do que esses dois arquivos, convém organizá-los em um subdiretório (ou mais de um subdiretório). Com a seguinte estrutura de diretório:
+### 3º - Funcões de primeira classe
 
-```
-.
-├── myOtherSubdir
-│   ├── fifthFile.nim
-│   └── fourthFile.nim
-├── mySubdir
-│   └── thirdFile.nim
-├── firstFile.nim
-└── secondFile.nim
-```
+São funções que criam funções ou retornam funções. E é aqui onde **funcs** não são aceitas, apenas **procs** podem ser passadas como parâmetros, assim temos que usar o `{.noSideEffect.}`.
 
-Se você quiser importar todos os outros arquivos em seu ***secondFile.nim***, faça o seguinte:
-
-***secondFile.nim***
+> <img src="icons/sticky-notes01.png" width=48/> **Obs.:**
+>
+> `{.noSideEffect}` => Não causar efeito colateral.
+>
+> `{.closure.}` => Fechado, encapsulado.
 
 ```nim
-import firstFile
-import mySubdir/thirdFile
-import myOtherSubdir / [fourthFile, fifthFile]
+proc dobrar(n: int): int {.noSideEffect.} = n * 2
+
+proc opera(lista: var seq[int], f: proc(n: int): int {.closure.}) =
+  for i, v in lista:
+    lista[i] = f(v)
+
+var lista = @[1, 2, 3, 4, 5]
+opera(lista, dobrar)
+
+echo lista # --> @[2, 4, 6, 8, 10]
 ```
 
-## Interagindo com a entrada do usuário
-
-Usar as coisas que apresentamos até agora (tipos de dados básicos e contêineres, fluxo de controle, loops) nos permite fazer alguns programas simples.
-
-Neste capítulo, aprenderemos como tornar nossos programas mais interativos. Para isso, precisamos de uma opção para ler os dados de um arquivo ou solicitar uma entrada do usuário.
-
-### Lendo de um arquivo
-
-Digamos que temos um arquivo de texto chamado people.txt no mesmo diretório que nosso código Nim. O conteúdo desse arquivo é parecido com este:
-
-***people.txt***
-
-```
-Alice A.
-Bob B.
-Carol C.
-```
-
-***readFromFile.nim***
+Refatorando o exemplo anterior:
 
 ```nim
-import strutils
+import sugar
 
-let contents = readFile("people.txt") # (1) 
-echo contents
+proc opera(lista: var seq[int], f: (int) -> int) =
+  for i, v in lista:
+    lista[i] = f(v)
 
-let people = contents.splitLines() # (2)
-echo people
+var lista = @[1, 2, 3, 4, 5]
+opera(lista, (x) => x * 2) # lista.apply((x) => x * 2)
+
+echo lista # --> @[2, 4, 6, 8, 10]
 ```
 
-1. Para ler o conteúdo de um arquivo, usamos o procedimento ***readFile*** e fornecemos um caminho para o arquivo a ser lido (se o arquivo estiver no mesmo diretório de nosso programa Nim, basta fornecer um nome de arquivo). O resultado é uma ***string*** multilinha.
-2. Para dividir uma ***string*** multilinha em uma sequência de ***strings*** (cada string contém todo o conteúdo de uma única linha), usamos ***splitLines*** do módulo ***strutils***.
+### 4º - Generics
+
+Generics em Nim são uma maneira de escrever código que pode funcionar com diferentes tipos de dados, sem precisar repetir o mesmo código para cada tipo. Isso torna o código mais genérico, flexível e reutilizável.
+
+Aqui está um exemplo simples de uma função genérica em Nim que encontra o valor máximo entre dois valores:
 
 ```nim
-Alice A.
-Bob B.
-Carol C.
-            # (1)
-@["Alice A.", "Bob B.", "Carol C.", ""] # (2)
+proc max[T](a, b: T): T =
+  if a > b:
+    return a
+  else:
+    return b
+
+echo max[int](10, 20) # --> 20
+# ou echo max(10, 20)
+echo max[float](3.14, 2.71) # --> 3.14
+# ou echo max(3.14, 2.71)
+echo max[string]("apple", "banana") # --> "banana"
+# ou echo max("apple", "banana")
 ```
 
-1. Havia uma nova linha final (última linha vazia) no arquivo original, que também está presente aqui.
-2. Por causa da nova linha final, nossa sequência é mais longa do que esperávamos.
-
-Para resolver o problema de uma nova linha final, podemos usar o procedimento de tira de strutils depois de ler um arquivo. Tudo o que isso faz é remover os chamados espaços em branco do início e do final de nossa string. O espaço em branco é simplesmente qualquer caractere que crie algum espaço, novas linhas, espaços, tabulações, etc.
-
-***readFromFile2.nim***
+Neste exemplo, `T` é um parâmetro de tipo genérico. Quando você chama a função `max`, você pode passar qualquer tipo de dado que seja comparável (como `int`, `float`, `string`, etc.) e a função irá retornar o valor máximo desses dois valores.
 
 ```nim
-import strutils
+func soma[T](x, y: T): T = x + y
 
-let contents = readFile("people.txt").strip() # (1) 
-echo contents
+echo soma(10, 10) # --> 20
+echo soma(3.14, 2.5) # --> 5.640000000000001
 
-let people = contents.splitLines()
-echo people
-```
-
-1. O uso de ***strip*** fornece os resultados esperados.
-
-```
-Alice A.
-Bob B.
-Carol C.
-@["Alice A.", "Bob B.", "Carol C."]
-```
-
-### Lendo a entrada do usuário
-
-Se quisermos interagir com um usuário, devemos ser capazes de pedir-lhe uma entrada e, em seguida, processá-la e usá-la. Precisamos ler a entrada padrão (***stdin***) passando ***stdin*** para o procedimento ***readLine***.
-
-***interaction1.nim***
-
-```nim
-echo "Please enter your name:"
-let name = readLine(stdin) # (1)  
-
-echo "Hello ", name, ", nice to meet you!"
-```
-
-1. O tipo de ***name*** é considerado uma ***string***.
-
-```
-Please enter your name:
-        (1)
-```
-
-1. Aguardando entrada do usuário. Depois de escrever nosso nome e pressionar ***Enter***, o programa continuará.
-
-```
-Please enter your name:
-Alice
-Hello Alice, nice to meet you!
-```
-
-### Lidando com números
-
-A leitura de um arquivo ou de uma entrada do usuário sempre fornece uma ***string*** como resultado. Se quisermos usar números, precisamos converter ***strings*** em números: novamente usamos o módulo ***strutils*** e ***parseInt*** para converter para inteiros ou ***parseFloat*** para converter em um ***float***.
-
-***interaction2.nim***
-
-```nim
-import strutils
-
-echo "Please enter your year of birth:"
-let yearOfBirth = readLine(stdin).parseInt() # (1) 
-
-let age = 2018 - yearOfBirth
-
-echo "You are ", age, " years old."
-```
-
-1. Converta uma ***string*** em um inteiro. Quando escrito assim, confiamos em nosso usuário para fornecer um número inteiro válido. O que aconteceria se um usuário inserisse ***'79 ou noventa e três?*** Tente você mesmo.
-
-```
-Please enter your year of birth:
-1934
-You are 84 years old.
-```
-
-Se tivermos o arquivo ***numbers.txt*** no mesmo diretório que nosso código Nim, com o seguinte conteúdo:
-
-***numbers.txt***
-
-```
-27.3
-98.24
-11.93
-33.67
-55.01
-```
-
-E queremos ler esse arquivo e encontrar a soma e a média dos números fornecidos, podemos fazer algo assim:
-
-***interaction3.nim***
-
-```nim
-import strutils, sequtils, math # (1)        
+func somaSequencias[T](seq1, seq2: seq[T]): seq[T] =
+  result = newSeq[T](len(seq1))
+  for i, v in seq1:
+    result[i] = v + seq2[i]
 
 let
-  strNums = readFile("numbers.txt").strip().splitLines() # (2)  
-  nums = strNums.map(parseFloat) # (3)       
+  seqInt = somaSequencias(@[1, 2, 3], @[3, 2, 1])
+  seqFloat = somaSequencias(@[1.0, 2.0, 3.0], @[3.0, 2.0, 1.0])
+
+echo seqInt # --> @[4, 4, 4]
+echo seqFloat # --> @[4.0, 4.0, 4.0]
+```
+
+Você também pode usar generics em tipos de dados personalizados, como estruturas e objetos. Aqui está um exemplo de uma lista genérica em Nim:
+
+```nim
+type
+  LinkedList[T] = ref object
+    value: T
+    next: LinkedList[T]
+
+proc newNode[T](value: T): LinkedList[T] =
+  LinkedList[T](
+    value: value,
+    next: nil
+  )
+
+proc append[T](list: var LinkedList[T], value: T) =
+  if list == nil:
+    list = newNode[T](value)
+  else:
+    var current = list
+    while current.next != nil:
+      current = current.next
+    current.next = newNode[T](value)
+
+var l: LinkedList[char] = nil
+
+append(l, 'A')
+append(l, 'B')
+
+# Usando um loop while para percorrer a lista
+var current = l
+while current != nil:
+  echo current.value # --> Em linhas diferentes: A B
+  current = current.next
+# Se você quiser usar um loop for, você precisará implementar um iterador personalizado. Aqui está um exemplo de como fazer isso:
+
+iterator items[T](list: LinkedList[T]): T =
+  var current = list
+  while current != nil:
+    yield current.value
+    current = current.next
+
+# Agora você pode usar um loop for
+for v in items(l):
+  echo v # --> Em linhas diferentes: A B
+```
+
+Neste exemplo, `LinkedList[T]` é um tipo de dado genérico que representa uma lista ligada. A função `newNode` cria um novo nó da lista, e a função `append` adiciona um novo nó ao final da lista.
+
+Generics em Nim são muito úteis para criar código reutilizável e flexível, que pode funcionar com diferentes tipos de dados sem precisar escrever o mesmo código várias vezes.
+
+## Versatilidade da sintaxe
+
+O que a sintaxe possibilita fazer:
+
+```nim
+proc adicionar(alvo: var (int, int), aSomar: (int, int)) =
+    alvo[0] += aSomar[0]
+    alvo[1] += aSomar[1]
+
+var coordenadas = (x: 0, y: -100)
+
+coordenadas.adicionar((x: 20, y: 10))
+
+echo coordenadas.x # --> 20
+echo coordenadas.y # --> -90
+```
+
+## Mais coleções
+
+Duas coleções diretamente ligadas a funções (`openArray` e `varargs`) e sobre `hashMap`.
+
+### 1 - OpenArray's
+
+Como a capacidade de um `array` precisa ser conhecido em tempo de compilação temos como solução o `openArray` para passar um `array` como parâmetro para uma função:
+
+```nim
+func somaArrays(lista: openArray[int]): int =
+  for item in lista:
+    result += item
+
+echo somaArrays([1, 2, 3, 4]) # --> 10
+echo somaArrays([1, 2, 3, 4, 6]) # --> 16
+```
+
+> <img src="icons/sticky-notes01.png" width=48/> **Obs.:** Usar `seq` ou `openArray` resulta no mesmo, porém, a vantagem de utilizar `openArray` é que `array` sempre oferece melhor *memory safety* e *performance* em comparação a `seq`. Além disso, `openArray` é compatível com `seq`.
+
+### 2 - Varargs
+
+Usada quando a função recebe uma quantidade arbitrária de parâmetros.
+
+```nim
+func concatena(palavras: varargs[string]): string =
+  for palavra in palavras:
+    result &= palavra & " "
+
+echo concatena("Nim", "uma", "linguagem", "de", "uso", "geral")
+echo concatena("A", "melhor", "linguagem")
+
+# --> saída:
+# Nim uma linguagem de uso geral
+# A melhor linguagem
+```
+
+A diferença dos `varargs` com os `openArray's` é que pode ser aplicado uma função aos valores:
+
+```nim
+func quadrado(x: int): int = x * x
+
+func somaQuadrados(numeros: varargs[int, quadrado]): int =
+  for num in numeros: result += num
+
+echo somaQuadrados(1, 2, 3, 4) # --> 30
+echo somaQuadrados(@[1, 2, 3]) # --> 6
+```
+
+### 3 - HashMap que em Nim é chamado de `table`
+
+Estrutura de dados do tipo par {chave, valor}. Podem ser criadas de duas formas:
+
+```nim
+import tables
+
+var
+  # 1ª forma:
+  pessoas = {
+    1: "Fulano", 2: "Sicrano", 3: "Beltrano"
+  }.toTable
+  # 2ª forma, criando sem dar nenhum valor:
+  vogais = initTable[int, string]()
+
+# Inserindo valores:
+vogais[1] = "a"
+vogais[2] = "e"
+vogais[3] = "i"
+vogais[4] = "o"
+vogais[5] = "u"
+
+echo pessoas # --> {3: "Beltrano", 2: "Sicrano", 1: "Fulano"}
+echo vogais  # --> {4: "o", 5: "u", 3: "i", 2: "e", 1: "a"}
+```
+
+Outro exemplo:
+
+```nim
+import tables, sequtils
 
 let
-  sumNums = sum(nums) # (4)                  
-  average = sumNums / float(nums.len) # (5)  
+  posicao = @[1, 2, 3]
+  personagem = @["Chaves", "Seu Madruga", "Chiquinha"]
 
-echo sumNums
-echo average
+var vila = initTable[int, string]()
+for (key, value) in zip(posicao, personagem):
+  vila[key] = value
+    
+echo vila[3] # --> "Chiquinha"
+
+vila[4] = "Kiko"
+
+# Se o valor não existir será adicionado e retorna false.
+echo vila.hasKeyOrPut(5, "Dona Florinda") # --> false
+
+# Se o valor existir apenas retorna true
+echo vila.hasKeyOrPut(4, "Kiko") # --> true
+
+# Tenta retornar um valor,
+# caso não exista retorna
+# 0 para inteiros ou string
+# vazia string's.
+echo vila.getOrDefault(2) # --> "Seu Madruga"
+echo vila.getOrDefault(6) # --> ""
+
+# Remove uma chave, caso não exista não acontece nada
+vila.del(4)
+
+# Os table's são naturalmente desordenados.
+# Listando um table:
+for (key, value) in vila.mpairs:
+  echo "Personagem nº ", key, " - ", value
+  # --> saida:
+  # Personagem nº 5 - Dona Florinda
+  # Personagem nº 3 - Chiquinha
+  # Personagem nº 2 - Seu Madruga
+  # Personagem nº 1 - Chaves
+
+vila.clear()
+echo vila.len() # --> 0
 ```
 
-1. Importamos vários módulos. ***strutils*** fornece ***strip*** e ***splitLines***, ***sequtils*** fornece ***map*** e ***math*** fornece ***sum***.
+Se for necessário que os elementos estejam ordenados crie usando `initOrderedTable`:
 
-2. Retiramos a nova linha final e dividimos as linhas para criar uma sequência de ***strings***.
+```nim
+import tables, sequtils
 
-3. ***map*** funciona aplicando um procedimento (neste caso, ***parseFloat***) a cada membro de um ***contêiner***. Em outras palavras, convertemos cada ***string*** em um ***float***, retornando uma nova sequência de ***floats***.
+let
+  posicao = @[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+  personagem = @["Chaves", "Seu Madruga", "Chiquinha", "Quico", "Dona Florinda", "Professor Girafales", "Senhor Barriga", "Dona Clotilde", "Jaiminho", "Nhonho", "Popis"]
 
-4. Usando ***sum*** do módulo ***math*** para nos dar a soma de todos os elementos em uma sequência.
+var vila = initOrderedTable[int, string]()
+for (key, value) in zip(posicao, personagem):
+  vila[key] = value
 
-5. Precisamos converter o comprimento de uma sequência em ***float***, porque ***sumNums*** é um ***float***.
+# Agora listando de forma ordenada:
+for (key, value) in vila.mpairs:
+  echo "Personagem nº ", key, " - ", value
 
+# --> saída:
+# Personagem nº 1 - Chaves
+# Personagem nº 2 - Seu Madruga
+# Personagem nº 3 - Chiquinha
+# Personagem nº 4 - Quico
+# Personagem nº 5 - Dona Florinda
+# Personagem nº 6 - Professor Girafales
+# Personagem nº 7 - Senhor Barriga
+# Personagem nº 8 - Dona Clotilde
+# Personagem nº 9 - Jaiminho
+# Personagem nº 10 - Nhonho
+# Personagem nº 11 - Popis
 ```
-226.15
-45.23
+
+> <img src="icons/sticky-notes01.png" width=48/> **Obs.:** Além de `table`, existe `countTable`, que basicamente utiliza cada valor de uma lista ou sequência como *key* e conta quantas vezes esse valor se repete.
+
+## Options e Results
+
+### Options
+
+Pegar valor de uma lista referente a um índice checando se o índice existe ou não:
+
+```nim
+import options
+
+func getItem(lista: seq[int], i: int): Option[int] =
+  if (i >= lista.len):
+    return none(int) # none = nenhum
+  return some(lista[i])
+
+if (let valor = @[1, 2, 3, 4, 5].getItem(3); valor.isSome): # isSome = é algum
+  echo "isSome: ", valor.isSome
+  echo "Valor = ", valor.get
+
+echo '\n'
+
+if (let valor2 = @[1, 2, 3, 4, 5].getItem(10); valor2.isNone): # isNone = é nenhum
+  echo "isNone: ", valor2.isNone
+  echo "Índice fora dos limites!"
+
+# --> saída:
+# isSome: true
+# Valor = 4
+#
+#
+# isNone: true
+# Índice fora dos limites!
 ```
 
-### Exercícios
+Instalar a biblioteca results:
 
-1. Pergunte a um usuário sua altura e peso. Calcule seu IMC. Relate-lhes o valor do IMC e a categoria.
-2. Repita o exercício de conjectura de Collatz para que seu programa peça a um usuário um número inicial. Imprima a sequência resultante.
-3. Peça a um usuário uma string que ele deseja que seja invertida. Crie um procedimento que recebe uma string e retorna uma versão reversa. Por exemplo, se o usuário digitar Nim-lang, o procedimento deve retornar gnal-miN. (Dica: use indexação e contagem regressiva)
+```bash
+$ nimble install results
+```
 
-### Conclusão
+Agora refatorando o código anterior:
 
-É hora de concluir este tutorial. Esperançosamente, isso foi útil para você e você conseguiu dar os primeiros passos na programação e/ou na linguagem de programação Nim.
+```nim
+import results
 
-Estes têm sido apenas o básico e nós apenas arranhamos a superfície, mas isso deve ser o suficiente para permitir que você faça programas simples e resolva algumas tarefas ou quebra-cabeças simples. Nim tem muito mais a oferecer e, com sorte, você continuará a explorar suas possibilidades.
+type Resultado = Result[int, string]
+func getItemResults(lista: seq[int], i: int): Resultado =
+  if (i >= lista.len):
+    return Resultado.err "Índice fora dos limites!"
+  return Resultado.ok lista[i]
+
+if (let valor = @[1, 2, 3, 4, 5].getItemResults(3); valor.isOk):
+  echo "isOk: ", valor.isOk
+  echo "Valor = ", valor.value
+
+echo '\n'
+
+if (let valor = @[1, 2, 3, 4, 5].getItemResults(10); valor.isErr):
+  echo "isErr: ", valor.isErr
+  echo valor.error
+
+# --> saída:
+# isOk: true
+# Valor = 4
+#
+#
+# isErr: true
+# Índice fora dos limites!
+```
+
+## Tipos Complexos
+
+> <img src="icons/sticky-notes01.png" width=48/> **Obs.:** Em Nim, não existem objetos propriamente ditos, pois tudo é convertido para estruturas. No entanto, a linguagem possui algumas sintaxes que fazem com que pareça que há objetos.
+
+### Tipo simples
+
+```nim
+type age = int
+
+var idade: age = 17
+
+proc aniversario(idade: var int) =
+  idade += 1
+
+idade.aniversario()
+echo idade # --> 18
+```
+
+### Tuplas
+
+Usando tupla em lugar de objeto (preferível usar objeto):
+
+```nim
+type Pessoa = tuple
+  nome: string
+  sobrenome: string
+  idade: int
+
+func newPessoa(nome, sobrenome: string, idade: int): Pessoa =
+  (nome, sobrenome, idade)
+
+let p = newPessoa("Fulano", "de Tal", 30)
+echo p.nome # --> Fulano
+```
+
+## Objetos
+
+Nim não possui objetos, porem para ser mais palpável para programadores de OO, Nim permite alguns conceitos de OO como herança e polimorfismo.
+
+```nim
+type Pessoa = ref object
+  nome: string
+  sobrenome: string
+  idade: int
+
+func newPessoa(nome, sobrenome: string, idade: int): Pessoa =
+  result = Pessoa(
+    nome: nome,
+    sobrenome: sobrenome,
+    idade: idade
+  )
+
+let p = newPessoa("Fulano", "de Tal", 30)
+echo p.nome # --> Fulano
+```
+
+> <img src="icons/sticky-notes01.png" width=48/> **Obs.:** 
+>
+> 1. O uso de `ref` na declaração de um objeto significa que, sempre que esse objeto for utilizado, ele será passado como uma referência, ou seja, será mutável por padrão.
+>
+> 2. Uma função pura é aquela que:
+>    - Sempre retorna o mesmo resultado para os mesmos argumentos de entrada.
+>    - Não tem efeitos colaterais (*side effects*), ou seja, não modifica o estado global nem realiza operações de I/O.
+> 3. No caso da sua função `newPessoa`, ela simplesmente cria e retorna um novo objeto `Pessoa` com base nos argumentos fornecidos, sem modificar nenhum estado externo ou realizar operações de I/O.
+>
+> 
+>
+> Portanto, use `proc` para modificar o objeto ou `func` para retornar algo.
+
+### Herança
+
+Sobre herança em Nim, é muito simples, a principal diferença é a *key word* `of` a mais na declaração do objeto, isso vai indicar de qual objeto sera herdado os atributos. 
+
+```nim
+type
+  Pessoa = ref object of RootObj # ou Pessoa {.inheritable.} = object
+    nome: string
+    idade: int
+
+  Estudante = ref object of Pessoa
+    curso: string
+    id: int
+
+discard """
+# Pessoa contém apenas os atribuitos `nome` e `idade`
+# e são estes que a função abaixo pode retornar.
+func `$`(p: Pessoa): string =
+  return "Nome: " & p.nome & ", Idade: " & $p.idade
+"""
+
+# Estudante como herda de `Pessoa` pode retornar tanto
+# os atributos de `Pessoa` (`nome` e `idade`) mais os
+# de `Estudante` (`curso` e `id`).
+func `$`(e: Estudante): string =
+  return "Nome: " & e.nome & ", Idade: " & $e.idade & ", Curso: " & e.curso & ", ID: " & $e.id
+
+func newEstudante(nome, curso: string, idade, id: int): Estudante =
+  Estudante(nome: nome, idade: idade, curso: curso, id: id)
+
+var estudante = newEstudante("Sicrano", "Computação", 21, 123)
+
+echo estudante
+# --> saída:
+# Nome: Sicrano, Idade: 21, Curso: Computação, ID: 123
+```
+
+> <img src="icons/sticky-notes01.png" width=48/> **Obs.:** O objeto do qual será herdado precisa herdar de `RootObj`.
+>
+> 
+>
+> Em Nim, todos os tipos de referência (aqueles declarados com `ref`) devem herdar, direta ou indiretamente, de `RootObj`. Isso garante que todos os objetos alocados na pilha compartilhem um cabeçalho comum, permitindo que o coletor de lixo funcione corretamente.
+>
+> 
+>
+> **Por que `RootObj` é importante?**
+>
+> 
+>
+> - **Gerenciamento de memória**: `RootObj` fornece um cabeçalho comum para todos os objetos na pilha, contendo informações que o coletor de lixo utiliza para rastrear e liberar objetos não utilizados.
+> - **Introspecção de tipo**: `RootObj` permite verificar o tipo de um objeto em tempo de execução usando a função `is`.
+>
+> 
+>
+> **Em resumo:**
+>
+> 
+>
+> A herança de `RootObj` é essencial para o funcionamento adequado do coletor de lixo e para a introspecção de tipos em Nim.
+
+O símbolo `$` em Nim é usado para definir a representação em `string` de um objeto, sendo uma convenção da linguagem para implementar o método de conversão para `string`.
+
+
+
+Aqui estão os principais pontos sobre o uso de `$`:
+
+
+
+1. **Sobrecarga do operador de conversão para `string`**:
+   - `func `$`(p: Pessoa): string` define como um objeto `Pessoa` deve ser convertido para uma `string`.
+2. **Uso implícito**:
+   - Quando você usa `echo estudante`, o Nim automaticamente busca uma função `$` definida para o tipo do objeto (neste caso, `Estudante`, que herda de `Pessoa`).
+3. **Personalização da saída**:
+   - Permite que você controle como o objeto é representado como `string`, útil para depuração e exibição.
+4. **Herança**:
+   - Como `Estudante` herda de `Pessoa`, ele também herda a implementação de `$`, a menos que seja sobrescrita.
+5. **Convenção em Nim**:
+   - É uma prática comum em Nim usar `$` para definir a representação em `string` de objetos personalizados.
+6. **Uso em outras funções**:
+   - Muitas funções em Nim que manipulam `strings` (como `echo` ou `&` para concatenação) usam implicitamente `$` para converter objetos em `strings`.
+
+### Objetos externos
+
+#### Módulo principal: main.nim
+
+```nim
+import entidades_class
+
+func `$`*(al: Aluno): string =
+  return "ID: " & $al.id & ", Nome: " & al.nome & ", DataDeNasc.: " & $al.dataDeNasc & ", Idade: " & $al.idade
+
+let novoAluno = newAluno(1, "Beltrano", "06/08/1969")
+
+echo novoAluno
+# --> saída:
+# ID: 1, Nome: Beltrano, DataDeNasc.: 06/08/1969, Idade: 54
+```
+
+#### Refatorando: main.nim
+
+```nim
+import io_class
+clear()
+
+import entidades_class
+
+let al = newAluno(1, "Beltrano", "06/08/1969")
+
+echo "ID: ", al.id, ", Nome: ", al.nome, ", DataDeNasc.: ", al.dataDeNasc, ", Idade: ", al.idade
+# --> saída:
+# ID: 1, Nome: Beltrano, DataDeNasc.: 06/08/1969, Idade: 54
+```
+
+#### Módulo: entidades_class.nim
+
+```nim
+import times, strutils
+
+let
+  time        = getTime()
+  anoCorrente = time.format("yyyy").parseInt()
+  mesCorrente = time.format("MM").parseInt()
+  diaCorrente = time.format("dd").parseInt()
+
+type
+  Pessoa = ref object of RootObj # Objeto privado somente acessível neste módulo.
+    # A presença do asterisco torna os atributos públicos acessíveis
+    # por outros módulos.
+    nome*: string
+    dataDeNasc*: string
+    idade*: int
+
+  # A presença do asterisco torna o objeto público acessível
+  # por outros módulos.
+  Aluno* = ref object of Pessoa # `Aluno` herda de `Pessoa`.
+    # A presença do asterisco torna o atributo público acessível
+    # por outros módulos.
+    id*: int
+
+# Função que retorna uma instância de `Aluno` c/ os dados
+# enviados via parâmetros.
+proc newAluno*(idNovo: int, nomeNovo, dataDeNascNovo: string): Aluno =
+  # Atributos obtidos a partir de `dataDeNascNovo` a
+  # serem utilizados p/ determinar a idade do aluno.
+  let
+    formato   = "dd/MM/yyyy"
+    data      = parse(dataDeNascNovo, formato)
+    anoDeNasc = int(data.year)
+    mesDeNasc = int(data.month)
+    diaDeNasc = int(data.monthday)
+
+  var
+    idade: int
+
+  # Definindo a idade a partir dos atributos definidos
+  # nesta função.
+  if anoDeNasc < anoCorrente:
+    idade = anoCorrente - anoDeNasc
+    if mesCorrente < mesDeNasc:
+      idade -= 1
+    elif mesCorrente == mesDeNasc and diaCorrente < diaDeNasc:
+      idade -= 1
+
+# Duas formas de instânciar `Aluno`
+# retornar esta instância:
+# ---
+# 1ª Forma:
+# ---
+  let aluno = new(Aluno)
+  aluno.id         = idNovo
+  aluno.nome       = nomeNovo
+  aluno.dataDeNasc = dataDeNascNovo
+  aluno.idade      = idade
+
+  return aluno
+# ---
+# 2ª Forma: Não é necessário
+# a instrução `return`:
+# ---
+discard """
+  new(result)
+  result.id         = idNovo
+  result.nome       = nomeNovo
+  result.dataDeNasc = dataDeNascNovo
+  result.idade      = idade
+"""
+```
+
+# Anexos
+
+---
+
+## <img src="icons/annex01.png" width=48/> Anexo I
+
+### Nim - Regex
+
+Aqui está um tutorial completo sobre expressões regulares (regex) na linguagem Nim:
+
+1. **Introdução**
+
+Nim suporta expressões regulares através do módulo `re`. Para usar regex em Nim, você precisa importar este módulo:
+
+```nim
+import re
+```
+
+2. **Criando um Regex**
+
+Você pode criar um objeto regex usando a função `re()`:
+
+```nim
+let pattern = re"[a-z]+"
+```
+
+3. **Funções Básicas**
+
+a) *match*: Verifica se uma string corresponde completamente ao padrão
+
+```nim
+if match("hello", re"[a-z]+"):
+  echo "Matched!"
+```
+
+b) *find*: Procura o padrão na string
+
+```nim
+if re.find("Hello, World!", re"World", 0) != -1:
+  echo "Found!"
+```
+
+c) *contains*: Verifica se a string contém o padrão
+
+```nim
+if "example@email.com".contains(re"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"):
+  echo "Valid email!"
+```
+
+4. **Capturando Grupos**
+
+Você pode usar parênteses para criar grupos de captura:
+
+```nim
+import strutils, re
+
+let pattern = re"(\d{2})/(\d{2})/(\d{4})"
+let dataSeq = re.findAll("24/12/202325/12/2023", pattern, 0)
+
+# Itera sobre cada data encontrada
+for data in dataSeq:
+  let partes = data.split('/')
+  echo "Dia: ", partes[0]
+  echo "Mês: ", partes[1]
+  echo "Ano: ", partes[2]
+  echo "---"
+
+# --> saída:
+# Dia: 24
+# Mês: 12
+# Ano: 2023
+# ---
+# Dia: 25
+# Mês: 12
+# Ano: 2023
+# ---
+```
+
+5. **Substituições**
+
+A função `replace` permite substituir ocorrências do padrão:
+
+```nim
+let text = "Olá, Mundo!"
+let replaced = text.replace(re"Mundo", "Nim")
+echo replaced  # --> Olá, Nim!
+```
+
+6. **Opções de Regex**
+
+Você pode usar opções para modificar o comportamento do regex:
+
+```nim
+let pattern = re("(?i)hello")  # (?i) torna a busca case-insensitive
+if "HELLO".match(pattern):
+  echo "Matched!"
+```
+
+7. **Metacaracteres Comuns**
+
+- `.`: Qualquer caractere exceto nova linha
+- `^`: Início da string
+- `$`: Fim da string
+- `*`: Zero ou mais ocorrências
+- `+`: Uma ou mais ocorrências
+- `?`: Zero ou uma ocorrência
+- `\d`: Dígito
+- `\w`: Caractere de palavra (letras, dígitos, underscore)
+- `\s`: Espaço em branco
+
+8. **Classes de Caracteres**
+
+- `[abc]`: Qualquer caractere a, b ou c
+- `[^abc]`: Qualquer caractere exceto a, b ou c
+- `[a-z]`: Qualquer caractere de a z
+
+9. **Quantificadores**
+
+- `{n}`: Exatamente n ocorrências
+- `{n,}`: n ou mais ocorrências
+- `{n,m}`: Entre n e m ocorrências
+
+10. **Exemplo Prático**
+
+Vamos criar uma função para validar um número de telefone:
+
+```nim
+import re
+
+proc isValidPhoneNumber(phone: string): bool =
+  let pattern = re"^\+?1?\s*\(?[2-9]\d{2}\)?[-.\s]?\d{3}[-.\s]?\d{4}$"
+  result = phone.match(pattern)
+
+# Teste
+let phones = @["+1 (555) 555-5555", "1234567890", "555-5555", "(123) 456-7890"]
+for phone in phones:
+  if isValidPhoneNumber(phone):
+    echo phone, " é válido"
+  else:
+    echo phone, " não é válido"
+
+# --> saída:
+# +1 (555) 555-5555 é válido
+# 1234567890 não é válido
+# 555-5555 não é válido
+# (123) 456-7890 não é válido
+```
+
+11. **Dicas Finais**
+
+- Use `r"raw string"` para strings brutas, úteis para padrões complexos
+- O módulo `re` também oferece funções como `split` e `findAll` para operações mais avançadas
+- Para regex mais complexos, considere usar a biblioteca PCRE (Perl Compatible Regular Expressions) disponível em Nim
+
+Este tutorial cobre os conceitos básicos e intermediários de regex em Nim. Para casos mais avançados ou específicos, consulte a documentação oficial do módulo `re` de Nim.
