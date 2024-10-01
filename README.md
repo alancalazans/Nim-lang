@@ -2,7 +2,109 @@
 
 ## Introdução
 
-Este documento é uma coletânea de conteúdos provenientes de diversas fontes sobre a linguagem Nim (como o guia oficial da linguagem, tutoriais de terceiros, o ebook de Stefan Salewski e IA), além de experimentos próprios. Embora seja uma verdadeira colcha de retalhos, está organizado de forma lógica, buscando cobrir a linguagem desde o nível introdutório até o avançado, tanto quanto possível. Este trabalho tem como objetivo ser continuamente atualizado, com o intuito de aprimorá-lo e trazer novos conteúdos sobre essa linguagem, que é, no mínimo, fascinante.
+Este documento é uma coletânea de conteúdos provenientes de diversas fontes sobre a linguagem Nim (como o guia oficial da linguagem, tutoriais de terceiros, o ebook de Stefan Salewski, IA e etc...), além de experimentos próprios. Embora seja uma verdadeira colcha de retalhos, está organizado de forma lógica, buscando cobrir a linguagem desde o nível introdutório até o avançado, tanto quanto possível. Este trabalho tem como objetivo ser continuamente atualizado, com o intuito de aprimorá-lo e trazer novos conteúdos sobre essa linguagem, que é, no mínimo, fascinante.
+
+## Instalação do Nim no sistema
+
+### choosenim
+
+[página do projeto](https://github.com/dom96/choosenim)
+
+choosenim instala a [linguagem de programação Nim](https://nim-lang.org/) a partir de downloads oficiais e fontes, permitindo que você alterne facilmente entre estável e compiladores de desenvolvimento.
+
+O objetivo desta ferramenta é duplo:
+
+- Forneça uma maneira fácil de instalar o compilador e as ferramentas Nim.
+- Gerencie várias instalações Nim e permita que elas sejam selecionadas sob demanda.
+
+### Uso típico
+
+Para selecionar a versão atual do Nim:`stable`
+
+```bash
+$ choosenim stable
+  Installed component 'nim'
+  Installed component 'nimble'
+  Installed component 'nimgrep'
+  Installed component 'nimpretty'
+  Installed component 'nimsuggest'
+  Installed component 'testament'
+   Switched to Nim 1.0.0
+$ nim -v
+Nim Compiler Version 1.0.0 [Linux: amd64]
+```
+
+Para atualizar para a versão mais recente do Nim:`stable`
+
+```bash
+$ choosenim update stable
+```
+
+Para exibir quais versões estão instaladas no momento:
+
+```bash
+$ choosenim show
+  Selected: 1.6.6
+   Channel: stable
+      Path: /home/dom/.choosenim/toolchains/nim-1.6.6
+
+  Versions:
+            #devel
+          * 1.6.6
+            1.0.0
+            #v1.0.0
+```
+
+As versões podem ser selecionadas via ou por nome de ramificação/tag via (observe que a seleção de ramificações provavelmente exigirá que o Nim seja inicializado, o que pode ser lento).`choosenim 1.6.6``choosenim #devel`
+
+## Nosso primeiro programa Nim
+
+test.nim
+
+```nim
+var
+  soma: int = 0  # Ou:
+  num: int = 0   # `soma, num: int = 0`
+ 
+while num < 4:
+  inc(num, 1) # Ou `inc(num)`
+  echo "Nº: ", num
+  inc(soma, num)
+
+echo "\nA soma destes: ", soma
+
+# --> saída:
+# Nº: 1
+# Nº: 2
+# Nº: 3
+# Nº: 4
+#
+# A soma destes: 10
+```
+
+### Iniciando o compilador e executando o programa
+
+**O comando**
+
+```sh
+$ nim c test.nim
+```
+
+é a invocação mais básica do compilador. A extensão .nim é opcional, o compilador pode inferir essa extensão de arquivo. Este comando compila nosso programa no modo de depuração padrão; ele usa o back-end do compilador C e gera um executável nativo. O modo de depuração significa que o executável gerado inclui muitas verificações, como verificações de índice de array, verificações de intervalo, verificações de desreferência nula, entre outras. O executável gerado pode não ser executado muito rápido e será grande, mas se o seu programa tiver bugs, ele fornecerá uma mensagem de erro significativa na maioria dos casos. Somente depois de testar cuidadosamente seu programa, você poderá considerar compilá-lo sem o modo de depuração. Você pode fazer isso com:
+
+```sh
+$ nim c -d:release test.nim
+
+$ nim c -d:danger test.nim
+```
+
+A opção do compilador `-d:release` remove a maioria das verificações e depuração do código e permite a otimização do backend passando a opção "-O3" para o backend do compilador C, resultando em um arquivo executável muito rápido e pequeno. A opção `-d:danger` inclui `-d:release` e remove todas as verificações. Você deve estar ciente de que compilar com `-d:danger` significa que seu programa pode travar sem nenhuma informação útil ou, pior ainda, pode ser executado, mas conter erros não detectados, como overflows, que podem levar a resultados incorretos. Geralmente, você deve compilar seu programa primeiro com `nim c` simples. Depois de testá-lo bem e se precisar de desempenho adicional, você pode mudar para a opção `-d:release`. Para jogos, benchmarks ou outras tarefas não críticas, você pode tentar a opção `-d:danger`, para obter um executável sem qualquer verificação de desempenho máximo.
+
+Para testar scripts pequenos, compilar e executar um programa sem gerar um arquivo executável permanente:
+
+```sh
+$ nim r test.nim
+```
 
 ## 1º - Números
 
@@ -44,22 +146,22 @@ Operações entre `int` e `float` <u>não</u> são permitidas.
 
 ```nim
 var
-    # Float To Int
-    floatToInt   = int(3.14)
-    floatToInt8  = int8(1.41)
-    floatToInt16 = int16(2.71)
-    floatToInt32 = int32(2.23)
-    floatToInt64 = int64(0.33)
-    # Int To UInt
-    intToUInt    = uint(364)
-    intToUInt8   = uint8(132)
-    intToUInt16  = uint16(877)
-    intToUInt32  = uint32(32)
-    intToUInt64  = uint64(64)
-    # Int To Float
-    intToFloat   = float(53)
-    intToFloat32 = float32(42)
-    intToFloat64 = float64(75)
+  # Float To Int
+  floatToInt   = int(3.14)
+  floatToInt8  = int8(1.41)
+  floatToInt16 = int16(2.71)
+  floatToInt32 = int32(2.23)
+  floatToInt64 = int64(0.33)
+  # Int To UInt
+  intToUInt    = uint(364)
+  intToUInt8   = uint8(132)
+  intToUInt16  = uint16(877)
+  intToUInt32  = uint32(32)
+  intToUInt64  = uint64(64)
+  # Int To Float
+  intToFloat   = float(53)
+  intToFloat32 = float32(42)
+  intToFloat64 = float64(75)
 ```
 
 ### 2º - Strings
@@ -75,10 +177,10 @@ Lida da mesma forma como em outras linguagens (exceto em `C` - onde <u>não</u> 
 >
 > ```nim
 > var
->     letra: char = 'a'
->     palavra: string = "Olá"
->     intToStr: string = $132
->     robos = "R2D2" & " e " & "C3PO"
+>   letra: char = 'a'
+>   palavra: string = "Olá"
+>   intToStr: string = $132
+>   robos = "R2D2" & " e " & "C3PO"
 > ```
 
 ### 3º `var`, `let` e `const`
