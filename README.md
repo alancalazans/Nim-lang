@@ -55,7 +55,7 @@ $ choosenim show
 
 As versões podem ser selecionadas via Choosenim 1.6.6 ou pelo nome da ramificação/tag via Choosenim #devel (observe que a seleção de ramificações provavelmente exigirá que o Nim seja inicializado, o que pode ser lento).
 
-## Installation
+## Instalando o choosenim
 
 ### Windows
 
