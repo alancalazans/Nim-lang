@@ -336,7 +336,7 @@ except ValueError as e:
 > # Erro: Você entrou com um valor inválido que não é um número: A
 > ```
 >
-> <img src="icons/location01.png" width=48/> Mais sobre regex no [Anexo I](#anexo-i).
+> <img src="icons/location01.png" width=48/> Mais sobre regex no [Anexo I](#anexo-i). <a name="ancora-i"><img src="icons/ancora01.png" width=48/></a>
 
 ```nim
 import strutils
@@ -1538,7 +1538,7 @@ discard """
 
 ---
 
-## <img src="icons/annex01.png" width=48/> <a name="anexo-i">Anexo I</a>
+## <img src="icons/annex01.png" width=48/> <a name="anexo-i">Anexo I</a> [<img src="icons/up-arrow01.png" width=48/>](#ancora-i)
 
 ### Nim - Regex
 
