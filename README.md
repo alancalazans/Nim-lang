@@ -71,11 +71,11 @@ test.nim
 
 ```nim
 var
-  soma: int = 0  # Ou:
-  num: int = 0   # `soma, num: int = 0`
+  soma: int = 0 # Ou:
+  num:  int = 0 # var soma, num: int = 0
  
 while num < 4:
-  inc(num, 1) # Ou `inc(num)`
+  inc(num, 1) # Ou: inc(num)
   echo "Nº: ", num
   inc(soma, num)
 
@@ -306,26 +306,29 @@ except ValueError as e:
 > import times, strutils, re
 > 
 > let
->  time = getTime()
->  ano = time.format("yyyy").parseInt()
->  pattern = re"^\d+$" # Regex que verifica se a string contém apenas dígitos
+>   time = getTime()
+>   ano = time.format("yyyy").parseInt()
+>   pattern = re"^\d+$" # Regex que verifica se a string contém apenas dígitos
 > 
 > # Função para verificar se a string contém apenas números
 > proc isNumber(s: string): bool =
->  return s.len > 0 and s.match(pattern)
+>   return s.len > 0 and s.match(pattern)
 > 
 > try:
->  stdout.write("Qual sua idade?: ")
->  let input = stdin.readLine()
+>   stdout.write("Qual sua idade?: ")
+>   let input = stdin.readLine()
 > 
->  if isNumber(input):
+>   if isNumber(input):
 >     let idade = input.parseInt()  # Agora é seguro converter para número
 >     echo "Seu ano de nascimento: ", ano - idade
->  else:
->     raise newException(ValueError, "Você entrou com um valor inválido que não é um número: " & input)
+>   else:
+>     raise newException(
+>       ValueError,
+>       "Você entrou com um valor inválido que não é um número: " & input
+>     )
 > 
 > except ValueError as e:
->  echo "Erro: " & e.msg
+>   echo "Erro: " & e.msg
 > 
 > # --> saída:
 > # Qual sua idade?: 55
@@ -776,7 +779,8 @@ var
 
 echo seqTuplas
 # --> saída:
-# @[("Cu", "Cobre"), ("Al", "Alumínio"), ("Ag", "Prata"), ("Au", "Ouro"), ("Fe", "Ferro"), ("Ni", "Níquel")]
+# @[("Cu", "Cobre"), ("Al", "Alumínio"), ("Ag", "Prata"),
+#   ("Au", "Ouro"), ("Fe", "Ferro"), ("Ni", "Níquel")]
 ```
 
 ### Unzip
@@ -1020,7 +1024,9 @@ var current = l
 while current != nil:
   echo current.value # --> Em linhas diferentes: A B
   current = current.next
-# Se você quiser usar um loop for, você precisará implementar um iterador personalizado. Aqui está um exemplo de como fazer isso:
+# Se você quiser usar um loop for, você precisará
+# implementar um iterador personalizado. Aqui
+# está um exemplo de como fazer isso:
 
 iterator items[T](list: LinkedList[T]): T =
   var current = list
@@ -1182,7 +1188,12 @@ import tables, sequtils
 
 let
   posicao = @[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-  personagem = @["Chaves", "Seu Madruga", "Chiquinha", "Quico", "Dona Florinda", "Professor Girafales", "Senhor Barriga", "Dona Clotilde", "Jaiminho", "Nhonho", "Popis"]
+  personagem = @[
+    "Chaves", "Seu Madruga", "Chiquinha", "Quico",
+    "Dona Florinda", "Professor Girafales",
+    "Senhor Barriga", "Dona Clotilde", "Jaiminho",
+    "Nhonho", "Popis"
+  ]
 
 var vila = initOrderedTable[int, string]()
 for (key, value) in zip(posicao, personagem):
@@ -1371,7 +1382,10 @@ func `$`(p: Pessoa): string =
 # os atributos de `Pessoa` (`nome` e `idade`) mais os
 # de `Estudante` (`curso` e `id`).
 func `$`(e: Estudante): string =
-  return "Nome: " & e.nome & ", Idade: " & $e.idade & ", Curso: " & e.curso & ", ID: " & $e.id
+  return "Nome: " & e.nome &
+    ", Idade: " & $e.idade &
+    ", Curso: " & e.curso &
+    ", ID: " & $e.id
 
 func newEstudante(nome, curso: string, idade, id: int): Estudante =
   Estudante(nome: nome, idade: idade, curso: curso, id: id)
@@ -1435,7 +1449,10 @@ Aqui estão os principais pontos sobre o uso de `$`:
 import entidades_class
 
 func `$`*(al: Aluno): string =
-  return "ID: " & $al.id & ", Nome: " & al.nome & ", DataDeNasc.: " & $al.dataDeNasc & ", Idade: " & $al.idade
+  return "ID: " & $al.id &
+    ", Nome: " & al.nome &
+    ", DataDeNasc.: " & $al.dataDeNasc &
+    ", Idade: " & $al.idade
 
 let novoAluno = newAluno(1, "Beltrano", "06/08/1969")
 
@@ -1447,14 +1464,14 @@ echo novoAluno
 #### Refatorando: main.nim
 
 ```nim
-import io_class
-clear()
-
 import entidades_class
 
 let al = newAluno(1, "Beltrano", "06/08/1969")
 
-echo "ID: ", al.id, ", Nome: ", al.nome, ", DataDeNasc.: ", al.dataDeNasc, ", Idade: ", al.idade
+echo "ID: ", al.id,
+  ", Nome: ", al.nome,
+  ", DataDeNasc.: ", al.dataDeNasc,
+  ", Idade: ", al.idade
 # --> saída:
 # ID: 1, Nome: Beltrano, DataDeNasc.: 06/08/1969, Idade: 54
 ```
