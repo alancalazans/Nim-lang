@@ -1490,7 +1490,7 @@ proc newCachorro(nome, raca: string): Cachorro =
 var d = newCachorro("Rex", "Labrador")
 ```
 
-> <img src="/home/alan/Documentos/Linguagens/Nim/nimlang/icons/sticky-notes01.png" width=48/> **Obs.:** O objeto do qual será herdado precisa herdar de `RootObj`.
+> <img src="icons/sticky-notes01.png" width=48/> **Obs.:** O objeto do qual será herdado precisa herdar de `RootObj`.
 >
 > 
 >
