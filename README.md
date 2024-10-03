@@ -1446,6 +1446,30 @@ p.aniversario()
 echo p.idade  # --> 26
 ```
 
+> Refatorando código anterior
+>
+> ```nim
+> type
+>   # Declarando um objeto com `ref` sempre que esse objeto
+>   # for utilizado, ele será passado como uma referência,
+>   # ou seja, será mutável por padrão.
+>   Pessoa = ref object # Foi acrescentado `ref`
+>     nome: string
+>     idade: int
+> 
+> proc newPessoa(nome: string, idade: int): Pessoa =
+>   result = Pessoa(nome: nome, idade: idade)
+> 
+> proc aniversario(self: Pessoa) = # Foi removido `var` onde
+>   self.idade += 1                # antes havia `var Pessoa`
+> 
+> var p = newPessoa("Bob", 25)
+> p.aniversario()
+> echo p.idade  # --> 26
+> ```
+>
+> 
+
 5. **Encapsulamento**
 
 Nim não tem modificadores de acesso como `private` ou `public`, mas podemos usar convenções de nomenclatura e módulos para controlar o acesso:
