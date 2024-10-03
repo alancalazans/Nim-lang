@@ -1357,47 +1357,140 @@ echo p.nome # --> Fulano
 >
 > Portanto, use `proc` para modificar o objeto ou `func` para retornar algo.
 
-### Herança
+## POO e Classes
 
-Sobre herança em Nim, é muito simples, a principal diferença é a *key word* `of` a mais na declaração do objeto, isso vai indicar de qual objeto sera herdado os atributos. 
+É importante notar que Nim não tem uma sintaxe específica para "classes" como em algumas outras linguagens orientadas a objetos, mas podemos alcançar funcionalidade semelhante usando tipos de objetos e métodos. Vamos explorar isso em detalhes:
+
+1. **Definindo uma "Classe" (Tipo de Objeto)**
+
+Em Nim, uma "classe" é definida usando a palavra-chave `object`:
 
 ```nim
 type
-  Pessoa = ref object of RootObj # ou Pessoa {.inheritable.} = object
+  Pessoa = object
+    nome: string
+    idade: int
+```
+
+Para criar uma instância de um objeto:
+
+```nim
+var p = Pessoa(nome: "Alice", idade: 30)
+```
+
+2. **Construtores**
+
+Nim não tem construtores integrados, mas podemos criar funções que retornam objetos inicializados:
+
+```nim
+proc newPessoa(nome: string, idade: int): Pessoa =
+  result = Pessoa(nome: nome, idade: idade)
+
+var p = newPessoa("Alice", 30)
+```
+
+3. **Métodos**
+
+Métodos são funções associadas a um tipo. Em Nim, usamos a palavra-chave `self` (ou qualquer outro nome) para se referir à instância:
+
+```nim
+proc apresentacao(self: Pessoa) =
+  echo "Olá, meu nome é ", self.nome, " e tenho ", self.idade, " anos."
+
+p.apresentacao()
+```
+
+> Juntando objeto, construtor, instância e método
+>
+> ```nim
+> # Objeto
+> type
+> Pessoa = object
+>  nome: string
+>  idade: int
+> 
+> # Construtor
+> proc newPessoa(nome: string, idade: int): Pessoa =
+> result = Pessoa(nome: nome, idade: idade)
+> 
+> # Instância
+> var p = newPessoa("Alice", 30)
+> 
+> # Método
+> proc apresentacao(self: Pessoa) =
+> echo "Olá, meu nome é ", self.nome,
+>  " e tenho ", self.idade, " anos."
+> 
+> p.apresentacao()
+> # --> Olá, meu nome é Alice e tenho 30 anos.
+> ```
+
+4. **Métodos que Modificam o Objeto**
+
+Para métodos que modificam o objeto, use `var` antes do tipo:
+
+```nim
+type
+  Pessoa = object
     nome: string
     idade: int
 
-  Estudante = ref object of Pessoa
-    curso: string
-    id: int
+proc newPessoa(nome: string, idade: int): Pessoa =
+  result = Pessoa(nome: nome, idade: idade)
 
-discard """
-# Pessoa contém apenas os atribuitos `nome` e `idade`
-# e são estes que a função abaixo pode retornar.
-func `$`(p: Pessoa): string =
-  return "Nome: " & p.nome & ", Idade: " & $p.idade
-"""
+proc aniversario(self: var Pessoa) =
+  self.idade += 1
 
-# Estudante como herda de `Pessoa` pode retornar tanto
-# os atributos de `Pessoa` (`nome` e `idade`) mais os
-# de `Estudante` (`curso` e `id`).
-func `$`(e: Estudante): string =
-  return "Nome: " & e.nome &
-    ", Idade: " & $e.idade &
-    ", Curso: " & e.curso &
-    ", ID: " & $e.id
-
-func newEstudante(nome, curso: string, idade, id: int): Estudante =
-  Estudante(nome: nome, idade: idade, curso: curso, id: id)
-
-var estudante = newEstudante("Sicrano", "Computação", 21, 123)
-
-echo estudante
-# --> saída:
-# Nome: Sicrano, Idade: 21, Curso: Computação, ID: 123
+var p = newPessoa("Bob", 25)
+p.aniversario()
+echo p.idade  # --> 26
 ```
 
-> <img src="icons/sticky-notes01.png" width=48/> **Obs.:** O objeto do qual será herdado precisa herdar de `RootObj`.
+5. **Encapsulamento**
+
+Nim não tem modificadores de acesso como `private` ou `public`, mas podemos usar convenções de nomenclatura e módulos para controlar o acesso:
+
+```nim
+# Arquivo: pessoa.nim
+type
+  Pessoa* = object  # O asterisco torna o tipo público
+    nome*: string   # Campo público
+    idade: int      # Campo "privado" (acessível apenas dentro deste módulo)
+
+proc newPessoa*(nome: string, idade: int): Pessoa =
+  result = Pessoa(nome: nome, idade: idade)
+
+proc getIdade*(self: Pessoa): int =
+  result = self.idade
+
+# Em outro arquivo (por exemplo: main.nim)
+import pessoa
+
+var p = newPessoa("Charlie", 35)
+echo p.nome       # OK
+echo p.getIdade() # OK
+# echo p.idade   # Erro! 'idade' não é acessível fora do módulo pessoa
+```
+
+6. **Herança**
+
+Nim suporta herança simples usando `object of`:
+
+```nim
+type
+  Animal = object of RootObj
+    nome: string
+
+  Cachorro = object of Animal
+    raca: string
+
+proc newCachorro(nome, raca: string): Cachorro =
+  result = Cachorro(nome: nome, raca: raca)
+
+var d = newCachorro("Rex", "Labrador")
+```
+
+> <img src="/home/alan/Documentos/Linguagens/Nim/nimlang/icons/sticky-notes01.png" width=48/> **Obs.:** O objeto do qual será herdado precisa herdar de `RootObj`.
 >
 > 
 >
@@ -1420,136 +1513,161 @@ echo estudante
 >
 > A herança de `RootObj` é essencial para o funcionamento adequado do coletor de lixo e para a introspecção de tipos em Nim.
 
-O símbolo `$` em Nim é usado para definir a representação em `string` de um objeto, sendo uma convenção da linguagem para implementar o método de conversão para `string`.
+7. **Polimorfismo**
 
-
-
-Aqui estão os principais pontos sobre o uso de `$`:
-
-
-
-1. **Sobrecarga do operador de conversão para `string`**:
-   - `func `$`(p: Pessoa): string` define como um objeto `Pessoa` deve ser convertido para uma `string`.
-2. **Uso implícito**:
-   - Quando você usa `echo estudante`, o Nim automaticamente busca uma função `$` definida para o tipo do objeto (neste caso, `Estudante`, que herda de `Pessoa`).
-3. **Personalização da saída**:
-   - Permite que você controle como o objeto é representado como `string`, útil para depuração e exibição.
-4. **Herança**:
-   - Como `Estudante` herda de `Pessoa`, ele também herda a implementação de `$`, a menos que seja sobrescrita.
-5. **Convenção em Nim**:
-   - É uma prática comum em Nim usar `$` para definir a representação em `string` de objetos personalizados.
-6. **Uso em outras funções**:
-   - Muitas funções em Nim que manipulam `strings` (como `echo` ou `&` para concatenação) usam implicitamente `$` para converter objetos em `strings`.
-
-### Objetos externos
-
-#### Módulo principal: main.nim
+Para suportar polimorfismo, use a palavra-chave `method` em vez de `proc`:
 
 ```nim
-import entidades_class
-
-func `$`*(al: Aluno): string =
-  return "ID: " & $al.id &
-    ", Nome: " & al.nome &
-    ", DataDeNasc.: " & $al.dataDeNasc &
-    ", Idade: " & $al.idade
-
-let novoAluno = newAluno(1, "Beltrano", "06/08/1969")
-
-echo novoAluno
-# --> saída:
-# ID: 1, Nome: Beltrano, DataDeNasc.: 06/08/1969, Idade: 54
-```
-
-#### Refatorando: main.nim
-
-```nim
-import entidades_class
-
-let al = newAluno(1, "Beltrano", "06/08/1969")
-
-echo "ID: ", al.id,
-  ", Nome: ", al.nome,
-  ", DataDeNasc.: ", al.dataDeNasc,
-  ", Idade: ", al.idade
-# --> saída:
-# ID: 1, Nome: Beltrano, DataDeNasc.: 06/08/1969, Idade: 54
-```
-
-#### Módulo: entidades_class.nim
-
-```nim
-import times, strutils
-
-let
-  time        = getTime()
-  anoCorrente = time.format("yyyy").parseInt()
-  mesCorrente = time.format("MM").parseInt()
-  diaCorrente = time.format("dd").parseInt()
-
 type
-  Pessoa = ref object of RootObj # Objeto privado somente acessível neste módulo.
-    # A presença do asterisco torna os atributos públicos acessíveis
-    # por outros módulos.
-    nome*: string
-    dataDeNasc*: string
-    idade*: int
+  Animal = object of RootObj
+    nome: string
 
-  # A presença do asterisco torna o objeto público acessível
-  # por outros módulos.
-  Aluno* = ref object of Pessoa # `Aluno` herda de `Pessoa`.
-    # A presença do asterisco torna o atributo público acessível
-    # por outros módulos.
-    id*: int
+  Cachorro = object of Animal
+    raca: string
 
-# Função que retorna uma instância de `Aluno` c/ os dados
-# enviados via parâmetros.
-proc newAluno*(idNovo: int, nomeNovo, dataDeNascNovo: string): Aluno =
-  # Atributos obtidos a partir de `dataDeNascNovo` a
-  # serem utilizados p/ determinar a idade do aluno.
-  let
-    formato   = "dd/MM/yyyy"
-    data      = parse(dataDeNascNovo, formato)
-    anoDeNasc = int(data.year)
-    mesDeNasc = int(data.month)
-    diaDeNasc = int(data.monthday)
+method somQueProduz(self: Animal) {.base.} =
+  echo "Som genérico de animal"
 
-  var
-    idade: int
+method somQueProduz(self: Cachorro) =
+  echo "Au au!"
 
-  # Definindo a idade a partir dos atributos definidos
-  # nesta função.
-  if anoDeNasc < anoCorrente:
-    idade = anoCorrente - anoDeNasc
-    if mesCorrente < mesDeNasc:
-      idade -= 1
-    elif mesCorrente == mesDeNasc and diaCorrente < diaDeNasc:
-      idade -= 1
+var a: Animal = Cachorro(nome: "Rex", raca: "Labrador")
+a.somQueProduz()  # --> "Au au!"
+```
 
-# Duas formas de instânciar `Aluno`
-# retornar esta instância:
-# ---
-# 1ª Forma:
-# ---
-  let aluno = new(Aluno)
-  aluno.id         = idNovo
-  aluno.nome       = nomeNovo
-  aluno.dataDeNasc = dataDeNascNovo
-  aluno.idade      = idade
+8. **Propriedades**
 
-  return aluno
-# ---
-# 2ª Forma: Não é necessário
-# a instrução `return`:
-# ---
+Podemos simular propriedades usando procedimentos:
+
+```nim
+type
+  Retangulo = object
+    base, altura: float
+
+proc area(self: Retangulo): float =
+  result = self.base * self.altura
+
+var r = Retangulo(base: 5, altura: 3)
+
+# `r.area` é usado com uma propriedade
+echo "Base: ", r.base,
+  " X Altura: ", r.altura,
+  " = ", r.area
+
+# --> Base: 5.0 X Altura: 3.0 = 15.0
+```
+
+9. **Métodos Estáticos**
+
+Nim não tem métodos estáticos, mas podemos usar procedimentos regulares para funcionalidade semelhante:
+
+```nim
+type
+  MathUtils = object
+
+# associando o procedimento `quadrado` ao objeto `MatUtils`
+proc quadrado*(self: MathUtils, n: int): int =
+  result = n * n
+
+echo MathUtils().quadrado(5)  # --> 25
+
 discard """
-  new(result)
-  result.id         = idNovo
-  result.nome       = nomeNovo
-  result.dataDeNasc = dataDeNascNovo
-  result.idade      = idade
+# Ou:
+
+let math = MathUtils()
+
+echo math.quadrado(5)  # --> 25
 """
 ```
+
+10. **Interfaces**
+
+Embora Nim não tenha interfaces explícitas, podemos simular comportamento semelhante:
+
+```nim
+type
+  FiguraGeometrica = object of RootObj
+
+method desenhar(self: FiguraGeometrica) {.base.} =
+  raise newException(CatchableError,
+    "Método desenhar não implementado")
+
+type
+  Circulo = object of FiguraGeometrica
+    raio: float
+
+method desenhar(self: Circulo) =
+  echo "Desenhando um círculo de raio ", self.raio
+
+var d = Circulo(raio: 5.0)
+d.desenhar()
+# --> Desenhando um círculo de raio 5.0
+
+discard """
+var d: FiguraGeometrica = Circulo(raio: 5.0)
+d.desenhar()
+# --> Desenhando um círculo de raio 4.940656458412465e-324
+"""
+```
+
+11. **Construtores com Herança**
+
+Ao trabalhar com herança, podemos criar construtores que inicializam tanto os campos da classe base quanto os da classe derivada:
+
+```nim
+type
+  Veiculo = object of RootObj
+    marca: string
+
+  Carro = object of Veiculo
+    modelo: string
+
+proc newCarro(marca, modelo: string): Carro =
+  result = Carro(marca: marca, modelo: modelo)
+
+var meuCarro = newCarro("Toyota", "Corolla")
+
+echo "Marca: ", meuCarro.marca,
+  ", Modelo: ", meuCarro.modelo
+
+# --> Marca: Toyota, Modelo: Corolla
+```
+
+12. **Genéricos**
+
+Nim suporta genéricos, que podem ser usados com objetos:
+
+```nim
+type
+  Caixa[T] = object
+    valor: T
+
+proc getValor[T](self: Caixa[T]): T =
+  result = self.valor
+
+var intCaixa = Caixa[int](valor: 42)
+echo intCaixa.getValor() # --> 42
+```
+
+13. **Operadores Personalizados**
+
+Podemos definir operadores personalizados para nossas "classes":
+
+```nim
+type
+  Vector = object
+    x, y: float
+
+proc `+`(a, b: Vector): Vector =
+  result = Vector(x: a.x + b.x, y: a.y + b.y) # x: 1 + 3, y: 2 + 4
+
+var v1 = Vector(x: 1, y: 2)
+var v2 = Vector(x: 3, y: 4)
+var v3 = v1 + v2
+echo v3.x, ", ", v3.y # --> 4.0, 6.0
+```
+
+Este tópico cobre os principais aspectos de como criar e usar "classes" em Nim. Lembre-se de que, embora Nim não tenha uma sintaxe específica para classes, podemos alcançar funcionalidade semelhante usando tipos de objetos, métodos e outras características da linguagem. A abordagem de Nim para orientação a objetos é mais flexível e permite misturar paradigmas de programação conforme necessário.
 
 # Anexos
 
