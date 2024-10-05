@@ -2,7 +2,7 @@
 
 ## Introdução
 
-Este documento é uma coletânea de conteúdos provenientes de diversas fontes sobre a linguagem Nim (como o [guia oficial da linguagem](https://nim-lang.org/documentation.html), tutoriais de terceiros, o [ebook de Stefan Salewski](https://nimprogrammingbook.com/), IA e etc...), além de experimentos próprios. Embora seja uma verdadeira colcha de retalhos, está organizado de forma lógica, buscando cobrir a linguagem desde o nível introdutório até o avançado, tanto quanto possível. Este trabalho tem como objetivo ser continuamente atualizado, com o intuito de aprimorá-lo e trazer novos conteúdos sobre essa linguagem, que é, no mínimo, fascinante.
+Este documento é uma coletânea de conteúdos provenientes de diversas fontes sobre a linguagem Nim (como o [guia oficial da linguagem](https://nim-lang.org/documentation.html), tutoriais de terceiros, o [ebook de Stefan Salewski](https://nimprogrammingbook.com/), IA e etc...), além de experimentos próprios. Embora seja uma verdadeira colcha de retalhos, está organizado de forma lógica, buscando cobrir a linguagem desde o nível introdutório até o avançado, tanto quanto possível.
 
 ## Instalação do Nim no sistema
 
@@ -1461,7 +1461,7 @@ echo p.idade  # --> 26
 >   result = Pessoa(nome: nome, idade: idade)
 > 
 > proc aniversario(self: Pessoa) = # Foi removido `var` onde
->   self.idade += 1                # antes havia `var Pessoa`
+>   self.idade += 1                  # antes havia `var Pessoa`
 > 
 > var p = newPessoa("Bob", 25)
 > p.aniversario()
@@ -1477,9 +1477,9 @@ Nim não tem modificadores de acesso como `private` ou `public`, mas podemos usa
 ```nim
 # Arquivo: pessoa.nim
 type
-  Pessoa* = object  # O asterisco torna o tipo público
-    nome*: string   # Campo público
-    idade: int      # Campo "privado" (acessível apenas dentro deste módulo)
+  Pessoa* = ref object  # O asterisco torna o tipo público
+    nome*: string       # Campo público
+    idade: int          # Campo "privado" (acessível apenas dentro deste módulo)
 
 proc newPessoa*(nome: string, idade: int): Pessoa =
   result = Pessoa(nome: nome, idade: idade)
@@ -1491,8 +1491,8 @@ proc getIdade*(self: Pessoa): int =
 import pessoa
 
 var p = newPessoa("Charlie", 35)
-echo p.nome       # OK
-echo p.getIdade() # OK
+echo p.nome       # --> Charlie
+echo p.getIdade() # --> 35
 # echo p.idade   # Erro! 'idade' não é acessível fora do módulo pessoa
 ```
 
@@ -1502,16 +1502,19 @@ Nim suporta herança simples usando `object of`:
 
 ```nim
 type
-  Animal = object of RootObj
+  Animal = ref object of RootObj
     nome: string
 
-  Cachorro = object of Animal
+  Cachorro = ref object of Animal
     raca: string
 
 proc newCachorro(nome, raca: string): Cachorro =
   result = Cachorro(nome: nome, raca: raca)
 
-var d = newCachorro("Rex", "Labrador")
+let cachorro = newCachorro("Rex", "Labrador")
+
+echo cachorro.nome # --> Rex
+echo cachorro.raca # --> labrador
 ```
 
 > <img src="icons/sticky-notes01.png" width=48/> **Obs.:** O objeto do qual será herdado precisa herdar de `RootObj`.
@@ -1543,10 +1546,10 @@ Para suportar polimorfismo, use a palavra-chave `method` em vez de `proc`:
 
 ```nim
 type
-  Animal = object of RootObj
+  Animal = ref object of RootObj
     nome: string
 
-  Cachorro = object of Animal
+  Cachorro = ref object of Animal
     raca: string
 
 method somQueProduz(self: Animal) {.base.} =
@@ -1565,7 +1568,7 @@ Podemos simular propriedades usando procedimentos:
 
 ```nim
 type
-  Retangulo = object
+  Retangulo = ref object
     base, altura: float
 
 proc area(self: Retangulo): float =
@@ -1587,7 +1590,7 @@ Nim não tem métodos estáticos, mas podemos usar procedimentos regulares para 
 
 ```nim
 type
-  MathUtils = object
+  MathUtils = ref object
 
 # associando o procedimento `quadrado` ao objeto `MatUtils`
 proc quadrado*(self: MathUtils, n: int): int =
@@ -1610,25 +1613,25 @@ Embora Nim não tenha interfaces explícitas, podemos simular comportamento seme
 
 ```nim
 type
-  FiguraGeometrica = object of RootObj
+  FiguraGeometrica = ref object of RootObj
 
 method desenhar(self: FiguraGeometrica) {.base.} =
   raise newException(CatchableError,
     "Método desenhar não implementado")
 
 type
-  Circulo = object of FiguraGeometrica
+  Circulo = ref object of FiguraGeometrica
     raio: float
 
 method desenhar(self: Circulo) =
   echo "Desenhando um círculo de raio ", self.raio
 
-var d = Circulo(raio: 5.0)
-d.desenhar()
+var circ = Circulo(raio: 5.0)
+circ.desenhar()
 # --> Desenhando um círculo de raio 5.0
 
 discard """
-var d: FiguraGeometrica = Circulo(raio: 5.0)
+var circ: FiguraGeometrica = Circulo(raio: 5.0)
 d.desenhar()
 # --> Desenhando um círculo de raio 4.940656458412465e-324
 """
@@ -1640,10 +1643,10 @@ Ao trabalhar com herança, podemos criar construtores que inicializam tanto os c
 
 ```nim
 type
-  Veiculo = object of RootObj
+  Veiculo = ref object of RootObj
     marca: string
 
-  Carro = object of Veiculo
+  Carro = ref object of Veiculo
     modelo: string
 
 proc newCarro(marca, modelo: string): Carro =
@@ -1663,7 +1666,7 @@ Nim suporta genéricos, que podem ser usados com objetos:
 
 ```nim
 type
-  Caixa[T] = object
+  Caixa[T] = ref object
     valor: T
 
 proc getValor[T](self: Caixa[T]): T =
@@ -1679,7 +1682,7 @@ Podemos definir operadores personalizados para nossas "classes":
 
 ```nim
 type
-  Vector = object
+  Vector = ref object
     x, y: float
 
 proc `+`(a, b: Vector): Vector =
