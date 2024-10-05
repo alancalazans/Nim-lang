@@ -339,7 +339,7 @@ except ValueError as e:
 > # Erro: Você entrou com um valor inválido que não é um número: A
 > ```
 >
-> <img src="icons/location01.png" width=48/> Mais sobre regex no [Anexo I](#anexo-i). <a name="ancora-i"><img src="icons/ancora01.png" width=48/></a>
+> <img src="icons/location01.png" width=48/> Mais sobre regex no [Anexo II](#anexo-ii). <a name="ancora-ii"><img src="icons/ancora01.png" width=48/></a>
 
 ```nim
 import strutils
@@ -516,7 +516,7 @@ var
 ### Biblioteca para sequências
 
 ```nim
-import std/sequtils
+import sequtils
 
 var frutas = newSeqOfCap[string](10)
 
@@ -1258,6 +1258,8 @@ Instalar a biblioteca results:
 $ nimble install results
 ```
 
+> <img src="icons/location01.png" width=48/> Mais sobre o gestor de pacotes nimble no [Anexo I](#anexo-i). <a name="ancora-i"><img src="icons/ancora01.png" width=48/></a>
+
 Agora refatorando o código anterior:
 
 ```nim
@@ -1702,7 +1704,182 @@ Este tópico cobre os principais aspectos de como criar e usar "classes" em Nim.
 
 ## <img src="icons/annex01.png" width=48/> <a name="anexo-i">Anexo I</a> [<img src="icons/up-arrow01.png" width=48/>](#ancora-i)
 
-### Nim - Regex
+## Nimble
+
+Embora o Nim tenha uma biblioteca padrão relativamente grande, é provável que em algum momento você queira usar alguma biblioteca de terceiros. Nas seções a seguir mostraremos os comandos *"nimble"* mais utilizados para esse fim.
+
+### nimble install
+
+O comando *"install"*  irá baixar e instalar um pacote. Você precisa passar o nome do pacote (ou pacotes) que deseja instalar. Se algum dos pacotes depender de outros pacotes do Nimble, o Nimble também os instalará. Exemplo:
+
+```shell
+$ nimble install nake
+Downloading https://github.com/fowlmouth/nake using git
+      ...
+  Success:  nake installed successfully.
+```
+
+Nimble sempre busca e instala a versão mais recente de um pacote. Observe que a versão mais recente é definida como a versão mais recente marcada no repositório Git (ou Mercurial). Se o pacote não tiver versões marcadas, o commit mais recente no repositório remoto será instalado. Se você já possui essa versão instalada, o Nimble perguntará se deseja substituir sua cópia local.
+
+### Instalando uma versão específica
+
+Você pode forçar o Nimble a baixar o commit mais recente do repositório do pacote, por exemplo:
+
+```shell
+$ nimble install nimgame@#head
+```
+
+É claro que isso é específico do Git, para Mercurial, use `tip`em vez de `head`. Um branch, tag ou hash de commit também pode ser especificado no lugar de `head`.
+
+Em vez de especificar uma ramificação do VCS, você também pode especificar uma versão concreta ou um intervalo de versões, por exemplo:
+
+```shell
+$ nimble install nimgame@0.5
+$ nimble install nimgame@"> 0.5"
+```
+
+Os seguintes operadores seletores de versão estão disponíveis:
+
+| Operador                 | Significado                                                  |
+| :----------------------- | :----------------------------------------------------------- |
+| `==`                     | Instale a versão exata.                                      |
+| `>`                      | Instale uma versão superior.                                 |
+| `<`                      | Instale a versão inferior.                                   |
+| `>=`                     | Instale *pelo menos* a versão fornecida.                     |
+| `<=`                     | Instale *no máximo* a versão fornecida.                      |
+| `^=`                     | Instale a versão compatível mais recente de acordo com [semver](https://semver.npmjs.com/) . |
+| `~=`                     | Instale a versão mais recente aumentando o último dígito fornecido |
+| para a versão mais alta. |                                                              |
+
+Os sinalizadores Nim fornecidos ao *"nimble install"* serão encaminhados ao compilador ao construir qualquer binário. Esses sinalizadores do compilador podem se tornar persistentes usando arquivos [de configuração](https://nim-lang.org/docs/nimc.html#compiler-usage-configuration-files) do Nim .
+
+### URLs de pacotes
+
+Uma URL válida para um repositório Git ou Mercurial também pode ser especificada. O Nimble detectará automaticamente o tipo de repositório para o qual a URL aponta e o instalará. Desta forma, os pacotes que não estão na lista oficial de pacotes podem ser instalados.
+
+Para repositórios que contêm o pacote Nimble em um subdiretório, você pode instruir o Nimble sobre a localização do seu pacote usando o `?subdir=<path>` parâmetro de consulta. Por exemplo:
+
+```shell
+$ nimble install https://github.com/nimble-test/multi?subdir=alpha
+```
+
+### Desenvolvimento de pacotes locais
+
+O comando *"install"* também pode ser usado para testar localmente ou desenvolver um pacote Nimble, deixando de fora o parâmetro do nome do pacote. Seu diretório de trabalho atual deve ser um pacote Nimble e conter um *"package.nimble"* arquivo válido.
+
+Nimble instalará o pacote que reside no diretório de trabalho atual quando você não especificar um nome de pacote e o diretório contiver um *"package.nimble"* arquivo. Isso pode ser útil para desenvolvedores que estão testando localmente seus *".nimble"* arquivos antes de enviá-los para a lista oficial de pacotes. Consulte o [guia Criar pacotes](https://nim-lang.github.io/nimble/create-packages.html) para obter mais informações sobre isso.
+
+As dependências necessárias para desenvolver ou testar um projeto podem ser instaladas passando *"--depsOnly"* sem especificar um nome de pacote. O Nimble instalará então todas as dependências ausentes listadas no *"package.nimble"* arquivo do pacote no diretório de trabalho atual. Observe que as dependências serão instaladas globalmente.
+
+Por exemplo, para instalar as dependências de um projeto Nimble *"myPackage"*:
+
+```shell
+$ cd myPackage
+$ nimble install --depsOnly
+```
+
+### nimble list
+
+Se quiser listar todos os pacotes disponíveis, você pode usar o *"nimble list"*, mas cuidado: é uma lista muito longa (e pouco útil). Talvez seja melhor usar *"nimble search"* (explicado abaixo) para procurar um pacote específico.
+
+Se você quiser ver uma lista de pacotes instalados localmente e suas versões, use *"--installed"* ou, *"-i"* abreviadamente:
+
+```shell
+$ nimble list -i
+```
+
+### nimble search
+
+Se você não quiser percorrer toda a saída do comando *"list"*, você pode usar o `search`comando especificando como parâmetros o nome do pacote e/ou tags que deseja filtrar. Nimble examinará a lista conhecida de pacotes disponíveis e exibirá apenas aqueles que correspondem às palavras-chave especificadas (que podem ser substrings). Exemplo:
+
+```shell
+$ nimble search math
+
+
+linagl:
+url:         https://bitbucket.org/BitPuffin/linagl (hg)
+tags:        library, opengl, math, game
+description: OpenGL math library
+license:     CC0
+website:     https://bitbucket.org/BitPuffin/linagl
+
+
+extmath:
+url:         git://github.com/achesak/extmath.nim (git)
+tags:        library, math, trigonometry
+description: Nim math library
+license:     MIT
+website:     https://github.com/achesak/extmath.nim
+
+
+glm:
+url:         https://github.com/stavenko/nim-glm (git)
+tags:        opengl, math, matrix, vector, glsl
+description: Port of c++ glm library with shader-like syntax
+license:     MIT
+website:     https://github.com/stavenko/nim-glm
+
+
+...
+```
+
+As pesquisas não diferenciam maiúsculas de minúsculas.
+
+Um parâmetro opcional *"--ver"* pode ser especificado para instruir o Nimble a consultar os repositórios Git remotos para obter a lista de versões dos pacotes e, em seguida, imprimir as versões. No entanto, observe que isso pode ser lento, pois cada pacote deve ser consultado separadamente.
+
+### Site Nimble Directory
+
+Como alternativa ao comando *"nimble search"*, você pode usar o site do [Nimble Directory](https://nimble.directory/) para procurar pacotes.
+
+### nimble uninstall
+
+O comando *"uninstall"* removerá um pacote instalado.
+
+> <img src="icons/exclamation01.png" width=48/> **Aviso:** 
+>
+> Tentar remover um pacote do qual outros pacotes dependem resultará em erro.
+>
+> Você pode usar o sinalizador `--inclDeps`ou `-i`para remover todos os pacotes dependentes junto com o pacote.
+
+Semelhante ao comando *"install"*, você pode especificar um intervalo de versões, por exemplo:
+
+```shell
+$ nimble uninstall nimgame@0.5
+```
+
+### nimble refresh
+
+O comando *"refresh"* é usado para buscar e atualizar a lista de pacotes Nimble. Não há mecanismo de atualização automática, portanto, você mesmo precisará executá-lo se precisar atualizar sua lista local de pacotes Nimble disponíveis e conhecidos. Exemplo:
+
+```shell
+$ nimble refresh
+    Copying local package list
+    Success Package list copied.
+Downloading Official package list
+    Success Package list downloaded.
+```
+
+As listas de pacotes podem ser especificadas na configuração do Nimble. Você também pode fornecer opcionalmente um URL a este comando se desejar usar uma lista de pacotes de terceiros.
+
+Alguns comandos podem lembrá-lo de executá- `nimble refresh`los ou executá-los se falharem.
+
+### nimble path
+
+O comando *"nimble path"* mostrará o caminho absoluto para os pacotes instalados que correspondem aos parâmetros especificados. Como pode haver muitas versões do mesmo pacote instaladas, este comando listará todas elas, por exemplo:
+
+```shell
+$ nimble path itertools
+/home/user/.nimble/pkgs2/itertools-0.4.0-5a3514a97e4ff2f6ca4f9fab264b3be765527c7f
+/home/user/.nimble/pkgs2/itertools-0.2.0-ab2eac22ebda6512d830568bfd3052928c8fa2b9
+```
+
+
+
+---
+
+## <img src="icons/annex01.png" width=48/> <a name="anexo-ii">Anexo II</a> [<img src="icons/up-arrow01.png" width=48/>](#ancora-ii)
+
+### Regex
 
 Aqui está um tutorial completo sobre expressões regulares (regex) na linguagem Nim:
 
