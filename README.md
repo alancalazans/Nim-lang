@@ -1706,11 +1706,11 @@ Este tópico cobre os principais aspectos de como criar e usar "classes" em Nim.
 
 ## Nimble
 
-Embora o Nim tenha uma biblioteca padrão relativamente grande, é provável que em algum momento você queira usar alguma biblioteca de terceiros. Nas seções a seguir mostraremos os comandos *"nimble"* mais utilizados para esse fim.
+Embora o Nim tenha uma biblioteca padrão relativamente grande, é provável que em algum momento você queira usar alguma biblioteca de terceiros. Nas seções a seguir mostraremos os comandos **nimble** mais utilizados para esse fim.
 
 ### nimble install
 
-O comando *"install"*  irá baixar e instalar um pacote. Você precisa passar o nome do pacote (ou pacotes) que deseja instalar. Se algum dos pacotes depender de outros pacotes do Nimble, o Nimble também os instalará. Exemplo:
+O comando **install** irá baixar e instalar um pacote. Você precisa passar o nome do pacote (ou pacotes) que deseja instalar. Se algum dos pacotes depender de outros pacotes do Nimble, o Nimble também os instalará. Exemplo:
 
 ```shell
 $ nimble install nake
@@ -1745,19 +1745,19 @@ Os seguintes operadores seletores de versão estão disponíveis:
 | `==`                     | Instale a versão exata.                                      |
 | `>`                      | Instale uma versão superior.                                 |
 | `<`                      | Instale a versão inferior.                                   |
-| `>=`                     | Instale *pelo menos* a versão fornecida.                     |
-| `<=`                     | Instale *no máximo* a versão fornecida.                      |
+| `>=`                     | Instale pelo menos a versão fornecida.                       |
+| `<=`                     | Instale no máximo a versão fornecida.                        |
 | `^=`                     | Instale a versão compatível mais recente de acordo com [semver](https://semver.npmjs.com/) . |
 | `~=`                     | Instale a versão mais recente aumentando o último dígito fornecido |
 | para a versão mais alta. |                                                              |
 
-Os sinalizadores Nim fornecidos ao *"nimble install"* serão encaminhados ao compilador ao construir qualquer binário. Esses sinalizadores do compilador podem se tornar persistentes usando arquivos [de configuração](https://nim-lang.org/docs/nimc.html#compiler-usage-configuration-files) do Nim .
+Os sinalizadores Nim fornecidos ao **nimble install** serão encaminhados ao compilador ao construir qualquer binário. Esses sinalizadores do compilador podem se tornar persistentes usando arquivos [de configuração](https://nim-lang.org/docs/nimc.html#compiler-usage-configuration-files) do Nim .
 
 ### URLs de pacotes
 
 Uma URL válida para um repositório Git ou Mercurial também pode ser especificada. O Nimble detectará automaticamente o tipo de repositório para o qual a URL aponta e o instalará. Desta forma, os pacotes que não estão na lista oficial de pacotes podem ser instalados.
 
-Para repositórios que contêm o pacote Nimble em um subdiretório, você pode instruir o Nimble sobre a localização do seu pacote usando o `?subdir=<path>` parâmetro de consulta. Por exemplo:
+Para repositórios que contêm o pacote Nimble em um subdiretório, você pode instruir o Nimble sobre a localização do seu pacote usando o **?subdir=\<path\>** parâmetro de consulta. Por exemplo:
 
 ```shell
 $ nimble install https://github.com/nimble-test/multi?subdir=alpha
@@ -1765,13 +1765,13 @@ $ nimble install https://github.com/nimble-test/multi?subdir=alpha
 
 ### Desenvolvimento de pacotes locais
 
-O comando *"install"* também pode ser usado para testar localmente ou desenvolver um pacote Nimble, deixando de fora o parâmetro do nome do pacote. Seu diretório de trabalho atual deve ser um pacote Nimble e conter um *"package.nimble"* arquivo válido.
+O comando **install** também pode ser usado para testar localmente ou desenvolver um pacote Nimble, deixando de fora o parâmetro do nome do pacote. Seu diretório de trabalho atual deve ser um pacote Nimble e conter um **package.nimble** arquivo válido.
 
-Nimble instalará o pacote que reside no diretório de trabalho atual quando você não especificar um nome de pacote e o diretório contiver um *"package.nimble"* arquivo. Isso pode ser útil para desenvolvedores que estão testando localmente seus *".nimble"* arquivos antes de enviá-los para a lista oficial de pacotes. Consulte o [guia Criar pacotes](https://nim-lang.github.io/nimble/create-packages.html) para obter mais informações sobre isso.
+Nimble instalará o pacote que reside no diretório de trabalho atual quando você não especificar um nome de pacote e o diretório contiver um **package.nimble** arquivo. Isso pode ser útil para desenvolvedores que estão testando localmente seus **.nimble** arquivos antes de enviá-los para a lista oficial de pacotes. Consulte o [guia Criar pacotes](https://nim-lang.github.io/nimble/create-packages.html) para obter mais informações sobre isso.
 
-As dependências necessárias para desenvolver ou testar um projeto podem ser instaladas passando *"--depsOnly"* sem especificar um nome de pacote. O Nimble instalará então todas as dependências ausentes listadas no *"package.nimble"* arquivo do pacote no diretório de trabalho atual. Observe que as dependências serão instaladas globalmente.
+As dependências necessárias para desenvolver ou testar um projeto podem ser instaladas passando **--depsOnly** sem especificar um nome de pacote. O Nimble instalará então todas as dependências ausentes listadas no **package.nimble** arquivo do pacote no diretório de trabalho atual. Observe que as dependências serão instaladas globalmente.
 
-Por exemplo, para instalar as dependências de um projeto Nimble *"myPackage"*:
+Por exemplo, para instalar as dependências de um projeto Nimble **myPackage**:
 
 ```shell
 $ cd myPackage
@@ -1780,9 +1780,9 @@ $ nimble install --depsOnly
 
 ### nimble list
 
-Se quiser listar todos os pacotes disponíveis, você pode usar o *"nimble list"*, mas cuidado: é uma lista muito longa (e pouco útil). Talvez seja melhor usar *"nimble search"* (explicado abaixo) para procurar um pacote específico.
+Se quiser listar todos os pacotes disponíveis, você pode usar o **nimble list**, mas cuidado: é uma lista muito longa (e pouco útil). Talvez seja melhor usar **nimble search** (explicado abaixo) para procurar um pacote específico.
 
-Se você quiser ver uma lista de pacotes instalados localmente e suas versões, use *"--installed"* ou, *"-i"* abreviadamente:
+Se você quiser ver uma lista de pacotes instalados localmente e suas versões, use **--installed** ou, **-i** abreviadamente:
 
 ```shell
 $ nimble list -i
@@ -1790,7 +1790,7 @@ $ nimble list -i
 
 ### nimble search
 
-Se você não quiser percorrer toda a saída do comando *"list"*, você pode usar o `search`comando especificando como parâmetros o nome do pacote e/ou tags que deseja filtrar. Nimble examinará a lista conhecida de pacotes disponíveis e exibirá apenas aqueles que correspondem às palavras-chave especificadas (que podem ser substrings). Exemplo:
+Se você não quiser percorrer toda a saída do comando **list**, você pode usar o `search`comando especificando como parâmetros o nome do pacote e/ou tags que deseja filtrar. Nimble examinará a lista conhecida de pacotes disponíveis e exibirá apenas aqueles que correspondem às palavras-chave especificadas (que podem ser substrings). Exemplo:
 
 ```shell
 $ nimble search math
@@ -1825,15 +1825,15 @@ website:     https://github.com/stavenko/nim-glm
 
 As pesquisas não diferenciam maiúsculas de minúsculas.
 
-Um parâmetro opcional *"--ver"* pode ser especificado para instruir o Nimble a consultar os repositórios Git remotos para obter a lista de versões dos pacotes e, em seguida, imprimir as versões. No entanto, observe que isso pode ser lento, pois cada pacote deve ser consultado separadamente.
+Um parâmetro opcional **--ver** pode ser especificado para instruir o Nimble a consultar os repositórios Git remotos para obter a lista de versões dos pacotes e, em seguida, imprimir as versões. No entanto, observe que isso pode ser lento, pois cada pacote deve ser consultado separadamente.
 
 ### Site Nimble Directory
 
-Como alternativa ao comando *"nimble search"*, você pode usar o site do [Nimble Directory](https://nimble.directory/) para procurar pacotes.
+Como alternativa ao comando **nimble search**, você pode usar o site do [Nimble Directory](https://nimble.directory/) para procurar pacotes.
 
 ### nimble uninstall
 
-O comando *"uninstall"* removerá um pacote instalado.
+O comando **uninstall** removerá um pacote instalado.
 
 > <img src="icons/exclamation01.png" width=48/> **Aviso:** 
 >
@@ -1841,7 +1841,7 @@ O comando *"uninstall"* removerá um pacote instalado.
 >
 > Você pode usar o sinalizador `--inclDeps`ou `-i`para remover todos os pacotes dependentes junto com o pacote.
 
-Semelhante ao comando *"install"*, você pode especificar um intervalo de versões, por exemplo:
+Semelhante ao comando **install**, você pode especificar um intervalo de versões, por exemplo:
 
 ```shell
 $ nimble uninstall nimgame@0.5
@@ -1849,7 +1849,7 @@ $ nimble uninstall nimgame@0.5
 
 ### nimble refresh
 
-O comando *"refresh"* é usado para buscar e atualizar a lista de pacotes Nimble. Não há mecanismo de atualização automática, portanto, você mesmo precisará executá-lo se precisar atualizar sua lista local de pacotes Nimble disponíveis e conhecidos. Exemplo:
+O comando **refresh** é usado para buscar e atualizar a lista de pacotes Nimble. Não há mecanismo de atualização automática, portanto, você mesmo precisará executá-lo se precisar atualizar sua lista local de pacotes Nimble disponíveis e conhecidos. Exemplo:
 
 ```shell
 $ nimble refresh
@@ -1865,7 +1865,7 @@ Alguns comandos podem lembrá-lo de executá- `nimble refresh`los ou executá-lo
 
 ### nimble path
 
-O comando *"nimble path"* mostrará o caminho absoluto para os pacotes instalados que correspondem aos parâmetros especificados. Como pode haver muitas versões do mesmo pacote instaladas, este comando listará todas elas, por exemplo:
+O comando **nimble path** mostrará o caminho absoluto para os pacotes instalados que correspondem aos parâmetros especificados. Como pode haver muitas versões do mesmo pacote instaladas, este comando listará todas elas, por exemplo:
 
 ```shell
 $ nimble path itertools
