@@ -2,7 +2,7 @@
 
 ## Introdução
 
-Este documento é uma coletânea de conteúdos provenientes de diversas fontes sobre a linguagem Nim (como o [guia oficial da linguagem](https://nim-lang.org/documentation.html), tutoriais de terceiros, o [ebook de Stefan Salewski](https://nimprogrammingbook.com/), IA e etc...), além de experimentos próprios. Embora seja uma verdadeira colcha de retalhos, está organizado de forma lógica, buscando cobrir a linguagem desde o nível introdutório até o avançado, tanto quanto possível.
+Este documento é uma coletânea de conteúdos provenientes de diversas fontes sobre a linguagem Nim (como o [guia oficial da linguagem](https://nim-lang.org/documentation.html), tutoriais de terceiros, o [ebook de Stefan Salewski](https://nimprogrammingbook.com/), IA e etc...), além de experimentos próprios. Está organizado de forma lógica, buscando cobrir a linguagem desde o nível introdutório até o avançado, tanto quanto possível.
 
 ## Instalação do Nim no sistema
 
