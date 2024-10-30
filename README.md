@@ -65,31 +65,6 @@ Extraia o arquivo zip e execute o script runme.bat. Siga todas as instruções n
 
 > <img src="icons/sticky-notes01.png" width=48/> **Obs.:** Mais informações sobre o choosenim na [página do projeto](https://github.com/dom96/choosenim)
 
-## Nosso primeiro programa Nim
-
-test.nim
-
-```nim
-var
-  soma: int = 0 # Ou:
-  num:  int = 0 # var soma, num: int = 0
- 
-while num < 4:
-  inc(num, 1) # Ou: inc(num)
-  echo "Nº: ", num
-  inc(soma, num)
-
-echo "\nA soma destes: ", soma
-
-# --> saída:
-# Nº: 1
-# Nº: 2
-# Nº: 3
-# Nº: 4
-#
-# A soma destes: 10
-```
-
 ### Iniciando o compilador e executando o programa
 
 **O comando**
@@ -111,6 +86,45 @@ A opção do compilador `-d:release` remove a maioria das verificações e depur
 Para testar scripts pequenos, compilar e executar um programa sem gerar um arquivo executável permanente:
 
 ```sh
+$ nim r test.nim
+```
+
+## [Comentários](https://nim-lang.org/docs/tut1.html#lexical-elements-comments)
+
+Os comentários começam em qualquer lugar fora de uma cadeia de caracteres ou literal de caractere com o caractere `de hash #`. Os comentários da documentação começam com `##`:
+
+```nim
+# Um comentário.
+
+var myVariable: int ## um comentário de documentação
+```
+
+Os comentários da documentação são tokens; eles só são permitidos em determinados lugares no arquivo de entrada, pois pertencem à árvore de sintaxe! Esse recurso permite geradores de documentação mais simples.
+
+Os comentários de várias linhas são iniciados com `#[` e terminados com `]#`. Comentários de várias linhas também podem ser aninhados.
+
+```nim
+#[
+Você pode comentar qualquer texto de código Nim
+dentro disso sem restrições de indentação.
+      yes("Posso fazer uma pergunta inútil?")
+  #[
+     Nota: estes podem ser aninhados!!
+  ]#
+]#
+```
+
+## Nosso primeiro programa Nim
+
+```nim
+# test.nim
+# Imprimindo algo na tela
+echo "Bem vindo ao Nim!!!"
+```
+
+Agora no terminal:
+
+```bash
 $ nim r test.nim
 ```
 
@@ -155,7 +169,7 @@ var b = 7
 
 Ao atribuir nomes, é importante escolher nomes que signifiquem algo para o seu programa. Simplesmente nomeá-los como a, b, c, e assim por diante, rapidamente se tornará confuso. Não é possível usar espaços em um nome, pois isso iria dividi-lo em dois. Portanto, se o nome que você escolher consistir em mais de uma palavra, a maneira usual é escrevê-lo no estilo camelCase (observe que a primeira letra de um nome deve ser minúscula).
 
-Observe, entretanto, que <strong style="text-decoration: underline; font-style: italic;">Nim não faz distinção entre maiúsculas e minúsculas e sublinhados</strong>, o que significa que ***olaMundo*** e ***ola_mundo*** teriam o mesmo nome. <strong style="text-decoration: underline; font-style: italic;">A exceção a isso é o primeiro caractere, que diferencia maiúsculas de minúsculas</strong>. Os nomes também podem incluir números e outros caracteres ***UTF-8***, até mesmo emojis, caso deseje, mas lembre-se de que você e possivelmente outras pessoas terão de digitá-los.
+Observe, entretanto, que <strong style="text-decoration: underline; font-style: italic;">Nim não faz distinção entre maiúsculas e minúsculas e sublinhados</strong>, o que significa que ***olaMundo*** e ***ola_mundo*** seriam o mesma variável. <strong style="text-decoration: underline; font-style: italic;">A exceção a isso é o primeiro caractere, que diferencia maiúsculas de minúsculas</strong>. Os nomes também podem incluir números e outros caracteres ***UTF-8***, até mesmo emojis, caso deseje, mas lembre-se de que você e possivelmente outras pessoas terão de digitá-los.
 
 Em vez de digitar ***var*** para cada variável, várias variáveis (não necessariamente do mesmo tipo) podem ser declaradas no mesmo bloco ***var***. No Nim, os blocos são partes do código com o mesmo recuo (mesmo número de espaços antes do primeiro caractere) e o nível de recuo padrão é de dois espaços. Você verá esses blocos em todos os lugares em um programa Nim, não apenas para atribuir nomes.
 
@@ -170,7 +184,7 @@ var
 > Você pode configurar seu editor de código para converter o pressionamento de Tab em qualquer número de espaços.
 > No VS Code, a configuração padrão é converter Tab em quatro espaços. Isso é facilmente substituído nas configurações (Ctrl +,) definindo 'editor.tabSize': 2.
 
-Como as variáveis mencionadas anteriormente são mutáveis, ou seja, seu valor pode mudar (várias vezes), mas seu tipo deve permanecer o mesmo que o declarado.
+Como as variáveis do tipo ***var*** mencionadas anteriormente são mutáveis, ou seja, seu valor pode mudar (várias vezes), mas seu tipo deve permanecer o mesmo que o declarado.
 
 ```nim
 # A variável `f` tem um valor inicial de `7`
@@ -180,13 +194,10 @@ var f = 7
 # O valor de `f` é alterado primeiro para `-3` e depois para `19`.
 # Ambos são inteiros, iguais ao valor original.
 f = -3
+f = 19
 
 # Tentar alterar o valor de `f` para `Hello` produz um erro porque `Hello`
 # não é um número e isso mudaria o tipo de `f` de um inteiro para uma `string`.
-f = 19
-
-# error - é um comentário. Os comentários no código Nim são escritos após um
-# caractere `#`. Tudo o que vier depois na mesma linha será ignorado.
 f = "Hello" # error 
 ```
 
@@ -194,9 +205,54 @@ f = "Hello" # error
 
 Ao contrário das variáveis declaradas com a palavra-chave ***var***, mais dois tipos de atribuição existem em Nim, cujo valor não pode ser alterado, um declarado com a palavra-chave ***const*** e o outro declarado com a palavra-chave ***let***.
 
-### `var`, `let` e `const`
+### Const
 
-- ***var***: São variáveis que podem ser criadas em <u>*runtime*</u> (tempo de execução) - quando valores são solicitados durante a execução do programa ou em <u>*compiletime*</u> (tempo de compilação) - valores são conhecidos durante a compilação e em ambos os casos estas variáveis podem ser atualizadas seu valor durante a execução do programa.
+O valor de uma atribuição imutável declarada com a palavra-chave `const` <span style="font-style: italic; font-weight: bold; text-decoration: underline;">deve ser conhecido em tempo de compilação</span> (antes que o programa seja executado).
+
+Por exemplo, podemos declarar a aceleração da gravidade como ***const g = 9.81*** ou ***pi*** como ***const pi = 3.14***, pois sabemos seus valores de antemão e esses valores não mudarão durante a execução de nosso programa.
+
+```nim
+const
+  pi = 3.14
+  g  = 9.81
+# O valor de uma constante não pode ser alterado.
+g = -27 # error
+
+# A variável `h` não é avaliada em tempo de compilação
+# (é uma variável e seu valor pode mudar durante a
+# execução de um programa), conseqüentemente o valor da
+# constante `i` não pode ser conhecido em tempo de
+# compilação, e isso gerará um erro.
+var h = -5
+const i = h + 7 # error
+```
+
+Em algumas linguagens de programação, é uma prática comum ter os nomes das constantes escritos em ***ALL_CAPS*** (caixa alta). As constantes em Nim são escritas como qualquer outra variável.
+
+### Let
+
+Atribuições imutáveis declaradas com ***let*** <span style="font-style: italic; text-decoration: underline; font-weight: bold;">não precisam ser conhecidas em tempo de compilação</span>, seu valor pode ser definido a qualquer momento durante a execução de um programa, mas uma vez definido, seu valor não pode ser alterado.
+
+```nim
+let j = 35
+# O valor de um imutável não pode ser alterado.
+j = -27 # error
+
+var k = -5
+# Em contraste com o exemplo `const` acima,
+# isso funciona.
+let l = k + 7
+```
+
+> **Obs.:**
+>
+> Na prática, você verá ou usará ***let*** com mais freqüência do que ***const***.
+>
+> Embora você possa usar ***var*** para tudo, sua escolha padrão deve ser ***let***. Use ***var*** apenas para as variáveis que serão modificadas.
+
+### Resumindo `var`, `let` e `const`
+
+- ***var***: São variáveis que podem ser criadas em <u>*runtime*</u> (tempo de execução) - quando valores são solicitados durante a execução do programa ou em <u>*compiletime*</u> (tempo de compilação) - valores são conhecidos durante a compilação e em ambos os casos estas variáveis podem ter seu valor atualizado durante a execução do programa.
 
 - ***let*** e ***const***: São constantes, o símbolo definido como ***const*** seu valor deve ser conhecido em <u>*compiletime*</u> enquanto ***let*** seu valor é atribuído uma única vez tanto em <u>*runtime*</u> quanto em <u>*compiletime*</u>.
 
@@ -214,47 +270,6 @@ Ao contrário das variáveis declaradas com a palavra-chave ***var***, mais dois
 > const constante: int = 7 # Certo!
 > ```
 
-### Const
-
-O valor de uma atribuição imutável declarada com a palavra-chave `const` <span style="font-style: italic; font-weight: bold; text-decoration: underline;">deve ser conhecido em tempo de compilação</span> (antes que o programa seja executado).
-
-Por exemplo, podemos declarar a aceleração da gravidade como ***const g = 9.81*** ou ***pi*** como ***const pi = 3.14***, pois sabemos seus valores de antemão e esses valores não mudarão durante a execução de nosso programa.
-
-```nim
-const g = 35
-# O valor de uma constante não pode ser alterado.
-g = -27 # error
-
-# A variável `h` não é avaliada em tempo de compilação
-# (é uma variável e seu valor pode mudar durante a
-# execução de um programa), conseqüentemente o valor da
-# constante `i` não pode ser conhecido em tempo de
-# compilação, e isso gerará um erro.
-var h = -5
-const i = h + 7 # error
-```
-
-Em algumas linguagens de programação, é uma prática comum ter os nomes das constantes escritos em ***ALL_CAPS*** (caixa alta). As constantes em Nim são escritas como qualquer outra variável.
-
-### Let
-
-Atribuições imutáveis declaradas com let <span style="font-style: italic; text-decoration: underline; font-weight: bold;">não precisam ser conhecidas em tempo de compilação</span>, seu valor pode ser definido a qualquer momento durante a execução de um programa, mas uma vez definido, seu valor não pode ser alterado.
-
-```nim
-let j = 35
-# O valor de um imutável não pode ser alterado.
-j = -27 # error
-
-var k = -5
-# Em contraste com o exemplo `const` acima,
-# isso funciona.
-let l = k + 7
-```
-
-Na prática, você verá ou usará ***let*** com mais freqüência do que ***const***.
-
-Embora você possa usar ***var*** para tudo, sua escolha padrão deve ser ***let***. Use ***var*** apenas para as variáveis que serão modificadas.
-
 ## Tipos de dados básicos
 
 ### Inteiros (integers)
@@ -271,25 +286,25 @@ A divisão inteira (divisão em que a parte fracionária é descartada) pode ser
 
 ```nim
 let
-  a = 11
-  b = 4
+  a = 10
+  b = 3
 
 # Comandos e suas respectivas saídas:
-echo "a + b = ", a + b # --> a + b = 15
-echo "a - b = ", a - b # --> a - b = 7
-echo "a * b = ", a * b # --> a * b = 44
-echo "a / b = ", a / b # --> a / b = 2.75
-echo "a div b = ", a div b # --> a div b = 2
-echo "a mod b = ", a mod b # --> a mod b = 3
+echo "a + b = ", a + b     # --> a + b = 13
+echo "a - b = ", a - b     # --> a - b = 7
+echo "a * b = ", a * b     # --> a * b = 30
+echo "a / b = ", a / b     # --> a / b = 3.333333333333333
+echo "a div b = ", a div b # --> a div b = 3
+echo "a mod b = ", a mod b # --> a mod b = 1
 ```
 
 ### Números em ponto fluante (Floats)
 
 Os números de vírgula flutuante, ou simplesmente flutuantes, são uma representação aproximada de números reais.
 
-Por exemplo: ***2.73, -3.14, 5.0, 4e7*** são flutuantes. Observe que podemos usar notação científica para grandes flutuadores, onde o número após o `e` é o expoente. Neste exemplo, ***4e7*** é uma notação que representa ***4 \* 10 ^ 7***.
+Por exemplo: ***2.73, -3.14, 5.0, 4e7*** são flutuantes. Observe que podemos usar notação científica para grandes flutuadores, onde o número após o ***"e"***  é o expoente. Neste exemplo, ***4e7*** é uma notação que representa ***4 \* 10 ^ 7***.
 
-Também podemos usar as quatro operações matemáticas básicas entre dois flutuadores. Operadores ***div*** e ***mod*** não são definidos para flutuadores.
+Também podemos usar as quatro operações matemáticas básicas entre dois números flutuantes. Operadores ***div*** e ***mod*** não são definidos para números flutuantes.
 
 ***floats.nim***
 
@@ -305,12 +320,10 @@ echo "c * d = ", c * d # --> c * d = 15.1875
 echo "c / d = ", c / d # --> c / d = 3.0
 ```
 
-Observe que nos exemplos de ***adição*** e ***divisão***, embora obtenhamos um número sem uma parte decimal, o resultado ainda é do tipo flutuante.
-
 A precedência das operações matemáticas é como seria de esperar: ***multiplicação*** e ***divisão*** têm prioridade mais alta do que ***adição*** e ***subtração***.
 
 ```nim
-echo 2 + 3 * 4 # --> saída: 14
+echo 2 + 3 * 4  # --> saída: 14
 echo 24 - 8 / 4 # --> saída: 22.0
 ```
 
@@ -349,7 +362,7 @@ echo float(e) + f # --> saída: 28.987
 echo e + int(f) # --> saída: 28
 ```
 
-> Ao usar a função ***int*** para converter um ***float*** em um ***inteiro***, nenhum arredondamento será executado. O número simplesmente elimina quaisquer casas decimais.
+> Ao usar a função ***int()*** para converter um ***float*** em um ***inteiro***, nenhum arredondamento será executado. O número simplesmente elimina quaisquer casas decimais.
 > Para realizar o arredondamento devemos chamar outra função, mas para isso devemos saber um pouco mais sobre como usar o Nim.
 
 ### Caracteres (Characters)
@@ -387,7 +400,8 @@ let
   p = "32"
     
   # Embora seja apenas um caractere, não é um
-  # caractere porque está entre aspas duplas.
+  # caractere mas uma `string` pois está entre
+  # aspas duplas.
   q = "!"  
 ```
 
