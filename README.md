@@ -180,6 +180,8 @@ var
   e = '!'
 ```
 
+> <img src="icons/sticky-notes01.png" width=48/> **Obs.:**
+>
 > No Nim, as guias de indentação não são permitidas como recuo (tabulação).
 > Você pode configurar seu editor de código para converter o pressionamento de Tab em qualquer número de espaços.
 > No VS Code, a configuração padrão é converter Tab em quatro espaços. Isso é facilmente substituído nas configurações (Ctrl +,) definindo 'editor.tabSize': 2.
@@ -244,7 +246,7 @@ var k = -5
 let l = k + 7
 ```
 
-> **Obs.:**
+> <img src="icons/sticky-notes01.png" width=48/> **Obs.:**
 >
 > Na prática, você verá ou usará ***let*** com mais freqüência do que ***const***.
 >
@@ -362,6 +364,8 @@ echo float(e) + f # --> saída: 28.987
 echo e + int(f) # --> saída: 28
 ```
 
+> <img src="icons/sticky-notes01.png" width=48/> **Obs.:**
+>
 > Ao usar a função ***int()*** para converter um ***float*** em um ***inteiro***, nenhum arredondamento será executado. O número simplesmente elimina quaisquer casas decimais.
 > Para realizar o arredondamento devemos chamar outra função, mas para isso devemos saber um pouco mais sobre como usar o Nim.
 
@@ -432,8 +436,8 @@ Se quisermos imprimir o exemplo acima como foi escrito, temos duas possibilidade
 - Use ***strings*** brutas com sintaxe ***r '...'*** (colocando uma letra ***r*** imediatamente antes da primeira aspa), nas quais não haja caracteres de escape e nenhum significado especial: tudo é impresso como está.
 
 ```nim
-echo "some\\nim\\tips" # --> saída: some\nim\tips
-echo r"some\nim\tips" # --> saída: some\nim\tips
+echo "some\\nim\\tips" # --> some\nim\tips
+echo r"some\nim\tips"  # --> some\nim\tips
 ```
 
 Existem mais caracteres especiais do que os listados acima, e todos eles são encontrados no [manual do Nim](https://nim-lang.org/docs/manual.html#lexical-analysis-string-literals).
@@ -456,19 +460,19 @@ var
 # `string` existente `p` no local,
 # alterando seu valor.
 p.add("def")            
-echo "p é agora: ", p # --> saída: p é agora: abcdef
+echo "p é agora: ", p # --> p é agora: abcdef
 
 # Também podemos adicionar um
 # `char` a uma `string`.
 q.add(r)                
-echo "q é agora: ", q # --> saída: q é agora: xyz
+echo "q é agora: ", q # --> q é agora: xyz
 
 # Concatenar duas `strings` produz uma nova `string`,
 # sem modificar as `strings` originais.
-echo "concateanado: ", p & q # --> saída: concatenado: abcdefxyz
+echo "concateanado: ", p & q # --> concatenado: abcdefxyz
 
-echo "p ainda é: ", p # --> saída: p ainda é: abcdef
-echo "q ainda é: ", q # --> saída: q ainda é: xyz
+echo "p ainda é: ", p # --> p ainda é: abcdef
+echo "q ainda é: ", q # --> q ainda é: xyz
 ```
 
 ### Boleano
@@ -481,7 +485,7 @@ A convenção de nomenclatura usual para variáveis booleanas é escrevê-las co
 
 Os operadores relacionais testam a relação entre duas entidades, que devem ser comparáveis.
 
-Para comparar se dois valores são iguais, **==** (dois sinais de igual) é usado. Não confunda com **=**, que é usado para atribuição como vimos anteriormente.
+Para comparar se dois valores são iguais, **==** dois sinais de igual são usados. Não confunda com **=**, que é usado para atribuição como vimos anteriormente.
 
 Aqui estão todos os operadores relacionais definidos para inteiros:
 
@@ -493,10 +497,10 @@ let
   h = 99
 
 # Instruções e suas respectivas saídas:
-echo "g é maior que h: ", g > h # --> g é maior que h: false
-echo "g é menor que h: ", g < h # --> g é menor que h: true
-echo "g é igual a h: ", g == h # --> g é igual a h: false
-echo "g é diferente de h: ", g != h # --> g é diferente de h: true
+echo "g é maior que h: ", g > h         # --> g é maior que h: false
+echo "g é menor que h: ", g < h         # --> g é menor que h: true
+echo "g é igual a h: ", g == h          # --> g é igual a h: false
+echo "g é diferente de h: ", g != h     # --> g é diferente de h: true
 echo "g é maior ou igual a h: ", g >= h # --> g é maior ou igual a h: false
 echo "g é menor ou igual a h: ", g <= h # --> g é menor ou igual a h: true
 ```
@@ -511,11 +515,11 @@ let
   j = 'd'
   k = 'Z'
 
-echo i < j # --> saída: true
+echo i < j # --> true
     
 # Todas as letras maiúsculas vêm
 # antes das letras minúsculas.
-echo i < k # --> saída: false
+echo i < k # --> false
 
 let
   m = "axyb"
@@ -527,16 +531,16 @@ let
 # por caractere. Os três primeiros caracteres
 # são iguais e o caractere `b` é menor que o
 # caractere `z`.
-echo m < n #  --> saída: true
+echo m < n # --> true
 
 # O comprimento da `string` não importa para
 # comparação se seus caracteres não forem
 # idênticos.
-echo n < o # --> saída: true
+echo n < o # --> true
 
 # A `string` mais curta é menor do que a
 # mais longa.
-echo o < p # --> saída: true
+echo o < p # --> true
 ```
 
 ### Operadores lógicos
