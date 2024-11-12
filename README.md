@@ -59,7 +59,7 @@ As versões podem ser selecionadas via Choosenim 1.6.6 ou pelo nome da ramifica�
 
 ### Windows
 
-Baixe a versão mais recente do Windows na página de [releases](https://github.com/dom96/choosenim/releases) (o arquivo .zip, por exemplo, aqui é [`v0.8.4`](https://github.com/dom96/choosenim/releases/download/v0.8.4/choosenim-installer-0.8.4_windows_amd64-download-this-not-the-exe.zip)).
+Baixe a versão mais recente do Windows na página de [releases](https://github.com/nim-lang/choosenim/releases/) (o arquivo .zip, por exemplo, aqui é [`v0.8.10`](https://github.com/nim-lang/choosenim/releases/download/v0.8.10/choosenim-0.8.10_windows_amd64.zip)).
 
 Extraia o arquivo zip e execute o script runme.bat. Siga todas as instruções na tela e aproveite sua nova instalação do Nim e do Choosenim.
 
